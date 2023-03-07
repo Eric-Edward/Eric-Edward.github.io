@@ -1,0 +1,868 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Spring 技术学习Spring Framework系统架构  Core Container：核心容器 AOP：面向切面编程 Aspects：AOP思想的实现 Data Access&#x2F;Integration：数据访问和数据集成 Web：Web开发 Test：单元测试与集成测试  Spring Framework的学习路线第一部分：核心容器 第二部分：整合 第三部分：AOP 第四部分：事">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 技术学习">
+<meta property="og:url" content="http://example.com/2023/03/07/Spring-%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Eric的算法之旅">
+<meta property="og:description" content="Spring 技术学习Spring Framework系统架构  Core Container：核心容器 AOP：面向切面编程 Aspects：AOP思想的实现 Data Access&#x2F;Integration：数据访问和数据集成 Web：Web开发 Test：单元测试与集成测试  Spring Framework的学习路线第一部分：核心容器 第二部分：整合 第三部分：AOP 第四部分：事">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20221231113544025.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20221231115233333.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230103151646054.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20221231173704551.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20221231173732783.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230103152140817.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230103152447070.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230103155319048.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230103163447402.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230103164140436.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230103164859252.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230107163557837.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230107163611145.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230107163643591.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230107164641639.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230107165941336.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230107170004127.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230110225608733.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230110225621257.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230110232435874.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230110232449265.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230112113606634.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230112113757069.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230118111837073.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230118112006554.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230118112710532.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230118112740067.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230122130321357.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230122130340250.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230122131658910.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230122200444350.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230126164532963.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230201004352293.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230201004449877.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230201004915108.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230201010626373.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230201010713790.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230201210821294.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230201222418356.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203012708394.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203014005747.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203014232631.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203014329993.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203153004609.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203153323071.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203153333305.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203153633165.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203162135678.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230218235643400.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230219000705746.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230219000722709.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230219000738514.png">
+<meta property="og:image" content="c:\Users\25787\Documents\image-20230219000750913.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230219000814572.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230219000836540.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230219000850966.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230219000901949.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220192843880.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220201249593.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220201323510.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220202911144.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220203037107.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220205327608.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220205338757.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220205549395.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220210739701.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220231959005.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220232021061.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220232031565.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220232431587.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230221141719453.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230221142703327.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230221145109820.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230221152107614.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230221152756419.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230221153432140.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230221161803706.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303150536572.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303150847866.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303151112981.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303154152416.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303154319861.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303154922294.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303161530730.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303161640395.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303162224520.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303163609189.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303165552726.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230306190713439.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230306190911489.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230306191521575.png">
+<meta property="og:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230306191614719.png">
+<meta property="article:published_time" content="2023-03-07T00:34:46.000Z">
+<meta property="article:modified_time" content="2023-03-07T00:57:25.258Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="学习Spring">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="c:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20221231113544025.png">
+  
+  
+  
+  <title>Spring 技术学习 - Eric的算法之旅</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"AB6blMPeImXU9py0s8hTUeyv-gzGzoHsz","app_key":"01KQc7Ox5p5M9Rnq1oF35pLU","server_url":"https://ab6blmpe.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>谈</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Spring 技术学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-07 08:34" pubdate>
+          2023年3月7日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          89 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<article class="page-content">
+  <h1 id="Spring-技术学习"><a href="#Spring-技术学习" class="headerlink" title="Spring 技术学习"></a>Spring 技术学习</h1><h2 id="Spring-Framework系统架构"><a href="#Spring-Framework系统架构" class="headerlink" title="Spring Framework系统架构"></a>Spring Framework系统架构</h2><p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20221231113544025.png" srcset="/img/loading.gif" lazyload alt="image-20221231113544025"></p>
+<ul>
+<li>Core Container：核心容器</li>
+<li>AOP：面向切面编程</li>
+<li>Aspects：AOP思想的实现</li>
+<li>Data Access&#x2F;Integration：数据访问和数据集成</li>
+<li>Web：Web开发</li>
+<li>Test：单元测试与集成测试</li>
+</ul>
+<h2 id="Spring-Framework的学习路线"><a href="#Spring-Framework的学习路线" class="headerlink" title="Spring Framework的学习路线"></a>Spring Framework的学习路线</h2><p>第一部分：核心容器</p>
+<p>第二部分：整合</p>
+<p>第三部分：AOP</p>
+<p>第四部分：事务</p>
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h3 id="IOC（Inversion-of-Control）控制反转"><a href="#IOC（Inversion-of-Control）控制反转" class="headerlink" title="IOC（Inversion of Control）控制反转"></a>IOC（Inversion of Control）控制反转</h3><ul>
+<li>使用对象时，由主动new产生对象转换为由&#x3D;&#x3D;外部&#x3D;&#x3D;提供对象，此过程中对象创建控制权由程序转移到外部，此思想称为控制反转。</li>
+<li>Spring技术对IOC思想就行了实现，它提供了一个容器，成为IOC容器，用来充当IOC思想中的外部。</li>
+<li>IOC容器负责对对象的创建、初始化等一系列的工作，被创建或者管理的对象在IOC容器中统称为Bean</li>
+<li><font color='red'>使用IOC容器管理Bean</font></li>
+</ul>
+<h3 id="DI（Dependency-Injection）依赖注入"><a href="#DI（Dependency-Injection）依赖注入" class="headerlink" title="DI（Dependency Injection）依赖注入"></a>DI（Dependency Injection）依赖注入</h3><ul>
+<li>在容器中建立bean与bean之间的依赖关系的整个过程，成为依赖注入</li>
+<li><font color='red'>在IOC容器中将有依赖关系的bean进行关系绑定</font></li>
+</ul>
+<p>下面放一个图片进行解释说明。 </p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20221231115233333.png" srcset="/img/loading.gif" lazyload alt="image-20221231115233333"></p>
+<p><font color='red'>下面解释以下这个内容。</font></p>
+<p><font color='red'>我们可以看到业务层的类中对象的创建和数据层对象的创建都被放到了IOC容器中。且在Book Service类中需要用到Book Dao的类，所以在容器中需要实现两个类的绑定（这就叫做依赖注入）</font></p>
+<hr>
+<h3 id="Bean的配置"><a href="#Bean的配置" class="headerlink" title="Bean的配置"></a>Bean的配置</h3><h4 id="1-bean基础配置"><a href="#1-bean基础配置" class="headerlink" title="1.bean基础配置"></a>1.bean基础配置</h4><p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230103151646054.png" srcset="/img/loading.gif" lazyload alt="image-20230103151646054"></p>
+<h4 id="2-bean别名配置"><a href="#2-bean别名配置" class="headerlink" title="2.bean别名配置"></a>2.bean别名配置</h4><p><font color='red'>所以我们这里可是使用name的属性来配置&#x3D;&#x3D;别名&#x3D;&#x3D;，可以使用逗号和空格进行间隔。</font></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20221231173704551.png" srcset="/img/loading.gif" lazyload alt="image-20221231173704551"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20221231173732783.png" srcset="/img/loading.gif" lazyload alt="image-20221231173732783"></p>
+<p><font color='green'>通过在xml文件中配置依赖关系，然后在相应的类中设置相应的setter函数就可以实现相应的依赖注入。</font></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230103152140817.png" srcset="/img/loading.gif" lazyload alt="image-20230103152140817"></p>
+<h4 id="3-bean的作用范围"><a href="#3-bean的作用范围" class="headerlink" title="3.bean的作用范围"></a>3.bean的作用范围</h4><p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230103152447070.png" srcset="/img/loading.gif" lazyload alt="image-20230103152447070"></p>
+<p>&#x3D;&#x3D;思考：&#x3D;&#x3D;为什么bean默认为单例？</p>
+<p>答：因为我们在实现相应的业务中，有很多操作只需要一个对象即可完成，不需要每个操作都去创建一个对象。所以，Spring实现了这种单例的对象容器。</p>
+<p>适合交给容器进行管理的bean</p>
+<ul>
+<li>表现层对象</li>
+<li>业务层对象</li>
+<li>数据层对象</li>
+<li>工具对象</li>
+</ul>
+<p>不适合交给容器进行管理的bean</p>
+<ul>
+<li>封装实体的域对象</li>
+</ul>
+<h4 id="4-bean的实例化"><a href="#4-bean的实例化" class="headerlink" title="4.bean的实例化"></a>4.bean的实例化</h4><p>&#x3D;&#x3D;1.Spring使用无参的构造方法创建对象。&#x3D;&#x3D;</p>
+<p>在Spring实例化的过程中，Spring会使用我们的类的无参构造方法来实现创建类的对象。</p>
+<p><font color='blue'>注意：这里作用范围不管是public还是private，Spring都可以实现对象的创建，因为Spring是使用&#x3D;&#x3D;反射&#x3D;&#x3D;来实现对象的创建的。</font></p>
+<p>&#x3D;&#x3D;2.使用静态工厂实例化对象&#x3D;&#x3D;</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230103155319048.png" srcset="/img/loading.gif" lazyload alt="image-20230103155319048"></p>
+<p>注意：这里在配置bean的时候要写工厂的类名，然后还需要添加一个工厂方法的属性，来进行调用。同时还要实现一个工厂类（&#x3D;&#x3D;这个类的目的是用于生产一个对象，但是这个对象的生产过程是解耦的&#x3D;&#x3D;）</p>
+<p>&#x3D;&#x3D;3.使用实例化工厂和FactoryBean创建实例化对象&#x3D;&#x3D;</p>
+<p>使用实例化工厂时，需要实现两个bean，一个是工厂的bean，一个是对象的bean。在对象的bean中需要添加两个属性，分别是factory-method和factory-bean。这里的实例化工厂和静态工厂的实现方法相同。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230103163447402.png" srcset="/img/loading.gif" lazyload alt="image-20230103163447402"></p>
+<p>使用FactoryBean的方式实现对象的实例化</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230103164140436.png" srcset="/img/loading.gif" lazyload alt="image-20230103164140436"></p>
+<p>首先我们需要实现一个xxxFactoryBean的对象，并且该对象实现Factory Bean的接口。重写该接口中的两个函数。在getObject()中返回一个自己接口的实现类。在getObjectType()中，返回该实现类接口的类型。</p>
+<p><font color='green'>注意：这个Factory Bean的接口默认情况下是创建单例的对象。如果要实现多例对象的创建，需要重写该接口中isSingleton()方法。将其设置为false则是多例对象。如果是true则是单例对象。这个函数默认是true。</font></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230103164859252.png" srcset="/img/loading.gif" lazyload alt="image-20230103164859252"></p>
+<h4 id="5-bean的生命周期"><a href="#5-bean的生命周期" class="headerlink" title="5.bean的生命周期"></a>5.bean的生命周期</h4><ul>
+<li>初始化容器<ul>
+<li>创建对象（内存分配）</li>
+<li>执行构造方法</li>
+<li>执行属性注入（set操作）</li>
+<li>执行bean初始化方法</li>
+</ul>
+</li>
+<li>使用bean<ul>
+<li>执行业务操作</li>
+</ul>
+</li>
+<li>关闭&#x2F;销毁容器<ul>
+<li>执行bean销毁方法</li>
+</ul>
+</li>
+</ul>
+<p><font color='red'>这里注意，我们在观察一个bean的生命周期时，如果不加入初始化和销毁容器的方法，是看不出bean的创建与销毁的。所以，我们可以通过以下两种方法来观察和操作bean的生命周期。</font></p>
+<p>1.我们可以在实现类中自己添加一个初始换函数和一个销毁函数。并在配置文件中添加两个属性，分别是init-method和destory-method。如下图所示。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230107163557837.png" srcset="/img/loading.gif" lazyload alt="image-20230107163557837"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230107163611145.png" srcset="/img/loading.gif" lazyload alt="image-20230107163611145"></p>
+<p>运行结果如下。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230107163643591.png" srcset="/img/loading.gif" lazyload alt="image-20230107163643591"></p>
+<p>&#x3D;&#x3D;注意这里可以看到初始化的函数已经开始运行了，但是销毁的函数并没有运行。&#x3D;&#x3D;</p>
+<p>这是因为我们所有的程序是运行在java虚拟机中的，如果对于我们的程序，如果在完成业务之后不主动的去关闭Spring容器，java虚拟机就直接自己关闭了，所以就看不到destory（）函数的运行。如果，我们想要实现在java虚拟机关闭之前让容器退出就可以进行如下操作。</p>
+<ul>
+<li>在业务代码的最后手动的使用close（）方法关闭容器。<img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230107164641639.png" srcset="/img/loading.gif" lazyload alt="image-20230107164641639"></li>
+</ul>
+<p>我们可以看到在加上close方法之后，程序发生了报错，因为close方法并没有在ApplicationContext接口进行定义。而是在他的子接口ConfigurableApplicationContext接口中进行了定义。所以在使用这种方法的时候我们这里容器的创建可以指定类型为ClassPathXmlApplicationContext。</p>
+<ul>
+<li>我们可以添加一个容器退出的钩子函数,如果使用registerShutdownHook也是要在ClassPathXmlApplicationContext类的基础下使用。<font color='red'>这里的意思是，当java虚拟机在退出时要看一看容器是否已经关闭。如果没有关闭容器，则先关闭容器。</font></li>
+</ul>
+<p>&#x3D;&#x3D;细节：注意这里的两种方法是有区别的，第一种方法的close必须卸载指定的位置（即业务代码的最后）。而第二种方法则没有这种限制，它可以卸载业务代码的任何地方。&#x3D;&#x3D;</p>
+<p>2.使用官方提供的接口实现初始化和销毁的工作（InitializingBean和DisposableBean）</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230107165941336.png" srcset="/img/loading.gif" lazyload alt="image-20230107165941336"></p>
+<p>运行结果如下。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230107170004127.png" srcset="/img/loading.gif" lazyload alt="image-20230107170004127"></p>
+<p>总结：我们之后在使用容器时，最好使用ClassPathXmlApplicationContext类进行定义。因为这样我们可以控制bean在生命周期中使用初始化函数和销毁函数做一些初始和收尾的工作。</p>
+<h2 id="依赖注入方式"><a href="#依赖注入方式" class="headerlink" title="依赖注入方式"></a>依赖注入方式</h2><h3 id="setter注入"><a href="#setter注入" class="headerlink" title="setter注入"></a>setter注入</h3><p>&#x3D;&#x3D;其实，就是引用类型的属性使用ref方法进行注入，简单类型的属性使用value进行注入。&#x3D;&#x3D;</p>
+<h4 id="1-引用类型注入"><a href="#1-引用类型注入" class="headerlink" title="1.引用类型注入"></a>1.引用类型注入</h4><p>这种方法其实就是我们一直在写的方法。在一个类中引用另外一个类的内容时，需要在引用的类中添加相应的属性，然后并设置相应的setter方法。最后在配置文件中，创建被引用类型的bean和引用类型的bean。并在引用类型的bean中添加property属性来添加依赖。</p>
+<h4 id="2-简单类型注入"><a href="#2-简单类型注入" class="headerlink" title="2.简单类型注入"></a>2.简单类型注入</h4><p>如果实现类中有简单类型的属性。我们在使用setter进行注入的时候。<font color='red'>但是需要注意的是，这里我们在配置文件的property中对简单类型的属性进行依赖注入时，需要使用value的方法进行。</font></p>
+<p>例子如下。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230110225608733.png" srcset="/img/loading.gif" lazyload alt="image-20230110225608733"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230110225621257.png" srcset="/img/loading.gif" lazyload alt="image-20230110225621257"></p>
+<p><font color='red'>但是，我感觉这里还是有一点点死板的，如果我们是需要用户输入的数据怎么办？这样就不能够自己赋值了，需要根据用户的输入来进行赋值。后面的教程应该会有提到这个问题，敬请期待吧！！！</font></p>
+<p>&#x3D;&#x3D;注意这里还有一个用户输入的问题还没有解决。&#x3D;&#x3D;</p>
+<h3 id="构造器注入"><a href="#构造器注入" class="headerlink" title="构造器注入"></a>构造器注入</h3><p>构造器注入是比较简单的一种方法。在实现类中使用构造方法写入。但是在配置文件需要使用constructor-arg方法进行注入。下面图片展示。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230110232435874.png" srcset="/img/loading.gif" lazyload alt="image-20230110232435874"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230110232449265.png" srcset="/img/loading.gif" lazyload alt="image-20230110232449265"></p>
+<p><font color='red'>注意：这里有一个问题。当我们在使用构造器注入的时候，会和我们的实现类的工厂的构造器创建类的实例化对象冲突。所以，最好不要让这两种情况碰到一起。</font></p>
+<h3 id="自动装配"><a href="#自动装配" class="headerlink" title="自动装配"></a>自动装配</h3><p>&#x3D;&#x3D;在使用自动装配时，主要是通过&#x3D;&#x3D;</p>
+<p>自动装配特征</p>
+<ul>
+<li>自动装配用于引用类型依赖注入，不能对简单乐星进行操作。</li>
+<li>使用按类型装配时（byType）必须保障容器中相同类型的bean唯一，推荐使用。</li>
+<li>使用按名称装配时（byName）必须保证容器中具有指定名称的bean，因变量名与配置耦合，不推荐使用。</li>
+<li>自动装配优先级低于setter注入与构造器注入，同时出现时自动装配配置失效。</li>
+</ul>
+<p>下面进行案例分析：</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230112113606634.png" srcset="/img/loading.gif" lazyload alt="image-20230112113606634"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230112113757069.png" srcset="/img/loading.gif" lazyload alt="image-20230112113757069"></p>
+<p>这里没有在配置文件中对ConnectionNumber和databaseName两个属性就行配置。</p>
+<h3 id="集合注入"><a href="#集合注入" class="headerlink" title="集合注入"></a>集合注入</h3><p>这一部分的内容十分的简单。就是在属性中分别添加数组，集合，列表，图，properties这几类文件。</p>
+<p>这几类分别要在<bean>中使用<property>属性来进行设置。他们的名字都是相对应的，但是要注意map是使用<entry>进行配置，且里面有key和value两个属性。property也是类似的方法。只不过使用的属性名是不一样的。自己注意即可。</p>
+<h2 id="数据源对象管理"><a href="#数据源对象管理" class="headerlink" title="数据源对象管理"></a>数据源对象管理</h2><p>我们这里主要是可以使用两种第三方的bean来进行管理（druid和c3p0）.</p>
+<h3 id="使用druid来进行连接池的管理。"><a href="#使用druid来进行连接池的管理。" class="headerlink" title="使用druid来进行连接池的管理。"></a>使用druid来进行连接池的管理。</h3><p>第一步：首先在maven中导入druid和mysql的依赖。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230118111837073.png" srcset="/img/loading.gif" lazyload alt="image-20230118111837073"></p>
+<p>第二步：在配置文件中设置DruidDATa Source的bean，用于实现数据库连接池的管理。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230118112006554.png" srcset="/img/loading.gif" lazyload alt="image-20230118112006554"></p>
+<p>第三步：编写代码。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230118112710532.png" srcset="/img/loading.gif" lazyload alt="image-20230118112710532"></p>
+<p>第四步：运行测试。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230118112740067.png" srcset="/img/loading.gif" lazyload alt="image-20230118112740067"></p>
+<p>可以看到，Druidbean已经成功的运行，并且打印出了当前数据库的状态。可以之后在用于数据库的其他事务。</p>
+<h3 id="使用c3p0实现数据库连接池的管理"><a href="#使用c3p0实现数据库连接池的管理" class="headerlink" title="使用c3p0实现数据库连接池的管理"></a>使用c3p0实现数据库连接池的管理</h3><p>这个使用的方法与上面的Druid方法相同。只是管理数据库连接池的实现类不同。</p>
+<p>c3p0使用的是Combo pooledData Source。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230122130321357.png" srcset="/img/loading.gif" lazyload alt="image-20230122130321357"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230122130340250.png" srcset="/img/loading.gif" lazyload alt="image-20230122130340250"></p>
+<h3 id="使用外部property文件加载数据库信息"><a href="#使用外部property文件加载数据库信息" class="headerlink" title="使用外部property文件加载数据库信息"></a>使用外部property文件加载数据库信息</h3><p>需要在配置文件中加入xmlns：context的命名空间（这里需要添加如下信息）来加载property文件。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230122131658910.png" srcset="/img/loading.gif" lazyload alt="image-20230122131658910"></p>
+<p>这里的第二行和最后一行是我们添加的命名空间。</p>
+<p>之后需要在创建的Druid bean中使用<property>属性来过去信息。使得name和value一一对应。</p>
+<p>&#x3D;&#x3D;这里对应value是使用${}的方式进行引用的。&#x3D;&#x3D;</p>
+<p><font color='red'>注意这里中括号中的内容需要写property文件中对应的key值。</font></p>
+<p>但是需要注意的是，如果我们在加载property的文件时，如果读取的是username，需要加上system-properties-mode&#x3D;Never。因为操作系统中内嵌了一个username的优先级比自己设置的username高，程序在运行时，会优先读取系统的username，导致我们自己传的参数无法被获取。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230122200444350.png" srcset="/img/loading.gif" lazyload alt="image-20230122200444350"></p>
+<p><font color='red'>这里有一个知识点需要注意，如果我们在程序中，用到多个配置文件时，可以在location的属性中，添加多个文件名来进行设置。但是，如果我们引用的配置文件是在第三方提供的jar包中时，就需要在相应的配置文件之前添加&#x3D;&#x3D;classpath*：&#x3D;&#x3D;的字段，这样就可以自动添加第三方jar包中的properties文件。</font></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230126164532963.png" srcset="/img/loading.gif" lazyload alt="image-20230126164532963"></p>
+<p>&#x3D;&#x3D;注意以后可以使用第二种方式来引用properties文件&#x3D;&#x3D;</p>
+<h2 id="容器总结"><a href="#容器总结" class="headerlink" title="容器总结"></a>容器总结</h2><p>这个地方就是对前面所学内容的总结。</p>
+<h2 id="注解开发Spring"><a href="#注解开发Spring" class="headerlink" title="注解开发Spring"></a>注解开发Spring</h2><h3 id="使用非纯注解形式开发spring"><a href="#使用非纯注解形式开发spring" class="headerlink" title="使用非纯注解形式开发spring"></a>使用非纯注解形式开发spring</h3><p>首先，这种方式可以使得我们不用每次都去配置文件中手动的来配置bean，直接在配置文件中进行扫描即可。同时需要在我们编写的类要加上相应的标识。这样Spring就可以自动的去相应的包处进行扫描，然后自动加载bean。</p>
+<p>例子如下：</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230201004352293.png" srcset="/img/loading.gif" lazyload alt="image-20230201004352293"></p>
+<p>在配置文件确定需要扫描的包的位置在哪里。我们这里的位置是“stu.eric”。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230201004449877.png" srcset="/img/loading.gif" lazyload alt="image-20230201004449877"></p>
+<p>然后需要在实现类中添加Component的注解，当然也可以添加Service、Repository、Controller也可以，这三者与Component的效果相同。我们通常用来表示不同层的类。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230201004915108.png" srcset="/img/loading.gif" lazyload alt="image-20230201004915108"></p>
+<p>可以看到我们这种方式的注解开发运行成功。</p>
+<h3 id="使用纯注解方法开发Spring"><a href="#使用纯注解方法开发Spring" class="headerlink" title="使用纯注解方法开发Spring"></a>使用纯注解方法开发Spring</h3><p>使用纯注解方式开发Spring与我们上面使用的方法略有不同。在这种方法中，我们不会再使用xml的配置文件。而是使用一个配置类来代替配置文件实现相应的操作。</p>
+<p>实例如下：</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230201010626373.png" srcset="/img/loading.gif" lazyload alt="image-20230201010626373"></p>
+<p>首先我们需要创建一个配置类，其上需要添加Configuration和ComponentScan的属性。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230201010713790.png" srcset="/img/loading.gif" lazyload alt="image-20230201010713790"></p>
+<p>同时执行类中需要使用AnnotationConfigApplicationContext的类来调用配置类。其余的内容不发生任何的变化。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230201210821294.png" srcset="/img/loading.gif" lazyload alt="image-20230201210821294"></p>
+<p>运行结果如下。</p>
+<h3 id="使用纯注解的方式控制bean的生命周期"><a href="#使用纯注解的方式控制bean的生命周期" class="headerlink" title="使用纯注解的方式控制bean的生命周期"></a>使用纯注解的方式控制bean的生命周期</h3><p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230201222418356.png" srcset="/img/loading.gif" lazyload alt="image-20230201222418356"></p>
+<p>我们需要在实现类中添加Scope属性用于显示该bean是单例还是多例。</p>
+<p>同时，如果存在初始化的需求则需要自己添加PostConstruct和PreDestroy的属性。这样就可以控制bean在初始和销毁时的相应功能了。</p>
+<h3 id="纯注解格式下的依赖注入"><a href="#纯注解格式下的依赖注入" class="headerlink" title="纯注解格式下的依赖注入"></a>纯注解格式下的依赖注入</h3><p>首先，在纯注解格式下，spring使用autowired通配符来进行依赖注入。同时使用Qualifier来确定bean的类型或者id。</p>
+<p>实例如下。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203012708394.png" srcset="/img/loading.gif" lazyload alt="image-20230203012708394"></p>
+<p>在Book ServiceImpl类中使用了Book Dao的类。我们首先使用了autowired通配符，然后使用了qualifier来表示确定的bean。&#x3D;&#x3D;但是，这个有一个需要注意的问题就是，qualifier需要搭配auto wired一起使用。&#x3D;&#x3D;</p>
+<p>如果，我们需要引用的内容来自于property文件。则我们需要在配置类中添加property文件的路径。并且需要设置与property文件中对应的变量参数。然后在实现类中，可以通过使用value（${}）的方式来获取property文件中相应的参数变量。</p>
+<p>实例如下：</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203014005747.png" srcset="/img/loading.gif" lazyload alt="image-20230203014005747"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203014232631.png" srcset="/img/loading.gif" lazyload alt="image-20230203014232631"></p>
+<p>我们这里通过value通配符给name属性赋值，然后在save方法中打印输出name属性。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203014329993.png" srcset="/img/loading.gif" lazyload alt="image-20230203014329993"></p>
+<h3 id="使用第三方提供的包来管理"><a href="#使用第三方提供的包来管理" class="headerlink" title="使用第三方提供的包来管理"></a>使用第三方提供的包来管理</h3><p>首先我们要把第三方提供的bean给注册出来。</p>
+<p>这里我们要在SpringConfig类中，添加一个@bean的通配符来表示一个bean。如下实例：</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203153004609.png" srcset="/img/loading.gif" lazyload alt="image-20230203153004609"></p>
+<p>然后在Service类中获取这个bean即可。</p>
+<p>&#x3D;&#x3D;但是，我们并不推荐这种用法。&#x3D;&#x3D;</p>
+<p>因为这样添加外部的bean会使得config类变得极其冗余，我们一般会写一个工具类，然后在配置类中进行引用即可。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203153323071.png" srcset="/img/loading.gif" lazyload alt="image-20230203153323071"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203153333305.png" srcset="/img/loading.gif" lazyload alt="image-20230203153333305"></p>
+<p>这里在写Import的时候，如果有多个config的类，要写成数组的形式即可。</p>
+<p>注意：我们在config类中，可以采用过去外部property文件属性的方法来获取config中所需要的信息。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203153633165.png" srcset="/img/loading.gif" lazyload alt="image-20230203153633165"></p>
+<p>这样的作法是使得代码更加的灵活和简洁客观。</p>
+<h3 id="实现第三方bean的依赖注入"><a href="#实现第三方bean的依赖注入" class="headerlink" title="实现第三方bean的依赖注入"></a>实现第三方bean的依赖注入</h3><p>我们在使用第三方bean进行开发时，可能会使用到一些依赖注入。</p>
+<h4 id="注入简单类型"><a href="#注入简单类型" class="headerlink" title="注入简单类型"></a>注入简单类型</h4><p>在注入简单类型的属性时，我们可以使用@Value通配符进行注入。前面也多此使用过这个方法进行注入。比较容易理解。</p>
+<h4 id="注入引用类型"><a href="#注入引用类型" class="headerlink" title="注入引用类型"></a>注入引用类型</h4><p>在注入引用类型的数据时，我们可以在形参的位置上直接写上相应的接口或者类即可。因为&#x3D;&#x3D;spring在检测配置类的Import时，会看Import类中是否需要其他的bean作为属性。如果发现有，则会在当前的容器中来查找并自动装配该bean。如果没有找到，则会出现报错，提示没有该类型的bean。&#x3D;&#x3D;</p>
+<p><font color='red'>注意自动装配是按照类型装配的。</font></p>
+<p>下面模拟一个依赖注入的情况。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230203162135678.png" srcset="/img/loading.gif" lazyload alt="image-20230203162135678"></p>
+<h2 id="Spring整合MyBaits"><a href="#Spring整合MyBaits" class="headerlink" title="Spring整合MyBaits"></a>Spring整合MyBaits</h2><p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230218235643400.png" srcset="/img/loading.gif" lazyload alt="image-20230218235643400"></p>
+<p>首先，我们本次整合至少要构建成这个样子 才可以。在进行整合时，我们需要使用3个配置文件（或者更多，主要看你使用了多少个数据库）。其中包括SpringConfig注解开发时使用类进行配置的文件和JdbcConfig数据库的相关配置文件。在这个文件中，主要是用来产生一个数据库连接池的第三方bean来管理数据库的连接。之后需要配置一个MybatisConfig配置文件。在这中间我们需要传入DATa Source的相关信息。同时需要指明Mapper文件在那个地方，其实这个就相当于我们在mybatis开发时使用mapper代理时自动生成的代理相同。只不过这里使用注解开发的形式。我们这个地方使用AccountDao来代表这个接口（这个接口就相当于mapper代理时自动生成的接口，只不过我们使用了注解开发的形式，所以没有配置文件）。然后需要一个创建一个Account类来对数据库中返回的数据进行封装。</p>
+<p>对于业务层的类以及接口，我们使用serive中的完成即可。这里面的相关函数主要跟AccountDao中的方法有关。</p>
+<p>下面给出每一个类及接口的编写。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230219000705746.png" srcset="/img/loading.gif" lazyload alt="image-20230219000705746"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230219000722709.png" srcset="/img/loading.gif" lazyload alt="image-20230219000722709"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230219000738514.png" srcset="/img/loading.gif" lazyload alt="image-20230219000738514"></p>
+<p><img src="C:\Users\25787\Documents\image-20230219000750913.png" srcset="/img/loading.gif" lazyload alt="image-20230219000750913"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230219000814572.png" srcset="/img/loading.gif" lazyload alt="image-20230219000814572"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230219000836540.png" srcset="/img/loading.gif" lazyload alt="image-20230219000836540"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230219000850966.png" srcset="/img/loading.gif" lazyload alt="image-20230219000850966"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230219000901949.png" srcset="/img/loading.gif" lazyload alt="image-20230219000901949"></p>
+<p>&#x3D;&#x3D;注意这里有一个持久化的问题，之后再看！！！&#x3D;&#x3D;</p>
+<h2 id="Spring整合Junit"><a href="#Spring整合Junit" class="headerlink" title="Spring整合Junit"></a>Spring整合Junit</h2><p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220192843880.png" srcset="/img/loading.gif" lazyload alt="image-20230220192843880"></p>
+<p>我们在进行spring与junit整合时，需要添加两个标识符。一个是@Runwith（SpringJunit4ClassRunner.class）。这个标识符使得这个类成为spring与junit整合的一个类。使得在该类中可以直接将我们容器中的bean进行装配。然后我们需要使用ContextConfiguration标识符来确定可以注入那个容器中的bean。</p>
+<p>可以在这个测试类中，我们可以添加spring容器中的bean，然后使用autowired自动装配直接注入我们当前的测试类中。我们在测试类中写具体的测试方法时，在相应的方法前面加上@Test即可。</p>
+<h2 id="AOP内容学习"><a href="#AOP内容学习" class="headerlink" title="AOP内容学习"></a>AOP内容学习</h2><p>aop设计是一种思想。他是在不惊动原始设计的基础上为其进行功能怎强的。（&#x3D;&#x3D;这就是spring无入侵式的思想理念&#x3D;&#x3D;）</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220201249593.png" srcset="/img/loading.gif" lazyload alt="image-20230220201249593"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220201323510.png" srcset="/img/loading.gif" lazyload alt="image-20230220201323510"></p>
+<h3 id="AOP案例快速启动"><a href="#AOP案例快速启动" class="headerlink" title="AOP案例快速启动"></a>AOP案例快速启动</h3><p>1.导入AOP所需要的坐标。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220202911144.png" srcset="/img/loading.gif" lazyload alt="image-20230220202911144"></p>
+<p>我们在进行AOP的开发时，需要导入aspectjweaver包以及spring-aop的包。但是spring-context的包中已经包含了spring-aop的内容，所以我们只需要导入spring-context即可。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220203037107.png" srcset="/img/loading.gif" lazyload alt="image-20230220203037107"></p>
+<p>2.定义相应的Dao及接口</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220205327608.png" srcset="/img/loading.gif" lazyload alt="image-20230220205327608"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220205338757.png" srcset="/img/loading.gif" lazyload alt="image-20230220205338757"></p>
+<p>我们定义了一个接口以及一个接口的实现类，接口中的两个方法，一个比另外一个方法多出一条功能。</p>
+<p>3.定义功能类</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220205549395.png" srcset="/img/loading.gif" lazyload alt="image-20230220205549395"></p>
+<p>这个类作为我们的通知类（即写我们共性功能方法的位置）</p>
+<p>4.定义切入点</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220210739701.png" srcset="/img/loading.gif" lazyload alt="image-20230220210739701"></p>
+<p>我们需要在通知类中定义通知的位置加上@PointCut来表示我们下面的方法代表一个切入点。然后在我们写的通知函数上面添加相应的标识来规定我们的函数什么时候开始执行。</p>
+<p>我们这里可以将我们的Dao中的接口看成&#x3D;&#x3D;连接点&#x3D;&#x3D;，这些连接点都有机会成为切入点。这个过程需要我们在通知类中进行配置，我们在定义完接入点之后，然后再将接入点和通知函数结合就能够实现接口函数中所没有的操作。从而实现了切面开发的思想。</p>
+<h3 id="SpringAOP工作流程"><a href="#SpringAOP工作流程" class="headerlink" title="SpringAOP工作流程"></a>SpringAOP工作流程</h3><p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220231959005.png" srcset="/img/loading.gif" lazyload alt="image-20230220231959005"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220232021061.png" srcset="/img/loading.gif" lazyload alt="image-20230220232021061"></p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220232031565.png" srcset="/img/loading.gif" lazyload alt="image-20230220232031565"></p>
+<p>我们可以看到对于同样的一份代码，我们查看bookDao的类型发现两个结果时不相同的。这是为什么呢？</p>
+<p>因为，SpringAOP的本质是代理模式，当我们的通知类在注册切入点后，程序运行时，spring会检查是否有</p>
+<p>对应的类能够匹配上通知类中的切面。如果可以匹配的上，spring会创建一个代理对象，并填充原本类中不存在的方法。如果对应不上，则使用原本容器中的bean。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230220232431587.png" srcset="/img/loading.gif" lazyload alt="image-20230220232431587"></p>
+<p>&#x3D;&#x3D;注意&#x3D;&#x3D;，这里AOP读取搜友切面配置中的切入点是指，有切入点并且有被使用的切入点。如果没有使用，则该切入点不会被读取。</p>
+<h3 id="SpringAOP切入点表达式"><a href="#SpringAOP切入点表达式" class="headerlink" title="SpringAOP切入点表达式"></a>SpringAOP切入点表达式</h3><p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230221141719453.png" srcset="/img/loading.gif" lazyload alt="image-20230221141719453"></p>
+<p>这是我们切入点表达式的书写规范。主要有两个需要注意。</p>
+<p>一个是&#x3D;&#x3D;<em>&#x3D;&#x3D;，</em>代表的是全部的意思。如果是在方法或者类、接口名中或者包名中都可以代表全部的意思。如果 * 在参数中出现，则代表着切入口对应的参数是随意的但是参数不能够为空。</p>
+<p>另一个是&#x3D;&#x3D;..&#x3D;&#x3D;，..，代表也是全部的意思，在包中与 * 的作用类似。但是 .. 在参数中时，就可以代表任意参数，且参数可以为空。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230221142703327.png" srcset="/img/loading.gif" lazyload alt="image-20230221142703327"></p>
+<p>可以看到我们在加入&#x3D;&#x3D;* 和 ..&#x3D;&#x3D; 后，任然能够匹配到。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230221145109820.png" srcset="/img/loading.gif" lazyload alt="image-20230221145109820"></p>
+<p>将通配改成如下设置时，也是可以达到相同的效果。这个时候，我们最好从后面向前面看。小括号前面的是函数名。所以，这个地方就代表着函数名随意匹配且最后是以e结尾的函数。</p>
+<h3 id="AOP的通知5种类型"><a href="#AOP的通知5种类型" class="headerlink" title="AOP的通知5种类型"></a>AOP的通知5种类型</h3><p>1.Before通知</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230221152107614.png" srcset="/img/loading.gif" lazyload alt="image-20230221152107614"></p>
+<p>在使用before之后，我们可以实现在我们原始方法执行之前来运行切入点的方法。在我们原始操作之前就输出了编写的通知函数。</p>
+<p>2.After通知</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230221152756419.png" srcset="/img/loading.gif" lazyload alt="image-20230221152756419"></p>
+<p>同理，我们加入了after类型的通知之后，就可以实现在完成我们原始函数后完成通知函数的功能。</p>
+<p>3.Around通知</p>
+<p>同理，如果我们想要实现在原始函数的前面以及后面同时实现相应的操作该如何进行？</p>
+<p>因此，我们产生了如下的想法。我们可以写两个方法，分别来与当前对的切入点进行绑定。如下。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230221153432140.png" srcset="/img/loading.gif" lazyload alt="image-20230221153432140"></p>
+<p>结果，发现不出所料。成功了。</p>
+<p>但是，这种做法会产生一种问题。就是我们不能够实现隔离的效果。因此，我们产生了如下的方法（即Around）。Around通知，是通过在Around通知的函数中来调用我们的原始函数实现的隔离功能。（如果某用户请求一个没有权限的内容，我们可以在Around函数获取用户的权限。如果，不能够达到所需的权限，则直接不运行相应的原始函数即可。<font color='red'>从而实现了通过Around通知实现隔离的功能。</font>）</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230221161803706.png" srcset="/img/loading.gif" lazyload alt="image-20230221161803706"></p>
+<p>试验成功。</p>
+<p>4.AfterReturning</p>
+<p>顾名思义，这个通知函数的执行实在我们原始函数正常执行之后，才会执行。不是特别常用</p>
+<p>5.AfterThrowing</p>
+<p>这个通知函数的执行实在我们原始函数在抛出异常时，才会被调用。</p>
+<p>&#x3D;&#x3D;注意：&#x3D;&#x3D;这里有一个细节，需要我们特别的注意一下，就是我们在使用Around通知的时候，在调用原始函数的时候，需要返回一个Object的返回值。然后再通过通知函数返回即可。如果没有这个返回值，会导致问题的出现，使得程序出现bug。</p>
+<h2 id="Spring事物"><a href="#Spring事物" class="headerlink" title="Spring事物"></a>Spring事物</h2><p>Spring事物管理。需要惊醒三步设置。</p>
+<p>1.一般Spring事物开启的注解是写在类接口的方法或者整个接口上面的。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303150536572.png" srcset="/img/loading.gif" lazyload alt="image-20230303150536572"></p>
+<p>这样我们接口中的方法就是实现了事务的处理。如果我们把这个注解卸载整个接口的上上面代表的意思是，这个接口的所有的方法都是自动开启了事务的功能。</p>
+<p>2.在JDBCConfig中配置事务管理的Bean。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303150847866.png" srcset="/img/loading.gif" lazyload alt="image-20230303150847866"></p>
+<p>注意这个事务管理不是配置MyBatisConfig中的，</p>
+<p>3.在SpringConfig中开启事务管理的功能。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303151112981.png" srcset="/img/loading.gif" lazyload alt="image-20230303151112981"></p>
+<h3 id="事务属性的相关配置"><a href="#事务属性的相关配置" class="headerlink" title="事务属性的相关配置"></a>事务属性的相关配置</h3><p>事务的相关配置主要有一下几点</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303154152416.png" srcset="/img/loading.gif" lazyload alt="image-20230303154152416"></p>
+<p>其中特别重要的是rollbackFor的属性。因为我们事务的回滚只有在Error和运行时异常才会进行。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303154319861.png" srcset="/img/loading.gif" lazyload alt="image-20230303154319861"></p>
+<p>通过这张图我们可以清晰的看出来当出现IOException和SQLException的时候，程序会发生报错。但是事务并不会发生回滚。</p>
+<p>因此，我们可以通过使用rollbackFor的属性，为这两类异常添加回滚的效果。</p>
+<p>下面实现一个转账时，必须显示日志的事务。</p>
+<p>1.首先我们创建一个用于存储log的表</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303154922294.png" srcset="/img/loading.gif" lazyload alt="image-20230303154922294"></p>
+<p>2.写一个log的Service类，并写一个用于mybatis生成mapper的接口用作代理对象的生成。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303161530730.png" srcset="/img/loading.gif" lazyload alt="image-20230303161530730"></p>
+<p>我们这里时通过在UserService中装配log Service然后调用来使用当前的方法和函数。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303161640395.png" srcset="/img/loading.gif" lazyload alt="image-20230303161640395"></p>
+<p>&#x3D;&#x3D;注意：&#x3D;&#x3D;我们这里在Transactional后面加了一个propagation的属性，是为将我们日志的事务与其他的事务分离开来。我们理解事物管理员和事物协调员之间的关系后，就可以明白。因为数据库的每一个操作都是一条事物，所以spring做了一套方案如下：</p>
+<p>spring作为一个事物的发起者，其余的事物可以作为该事务的一部分加入该事务一起执行。但是我们这里的要求是不管钱财有没有成功的输入数据库，log都必须要正常的输出。所以我们必须要实现事物的分离。通过propagation就可以实现。</p>
+<h3 id="事物的传播行为"><a href="#事物的传播行为" class="headerlink" title="事物的传播行为"></a>事物的传播行为</h3><p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303162224520.png" srcset="/img/loading.gif" lazyload alt="image-20230303162224520"></p>
+<p>除了上面介绍的REQUIRES_NEW,事物还有以下的几个行为。都是在工作总经常使用到的几个数据。</p>
+<h2 id="SpringMVC"><a href="#SpringMVC" class="headerlink" title="SpringMVC"></a>SpringMVC</h2><h2 id="Maven学习"><a href="#Maven学习" class="headerlink" title="Maven学习"></a>Maven学习</h2><h4 id="分模块开发"><a href="#分模块开发" class="headerlink" title="分模块开发"></a>分模块开发</h4><p>意义：将原始模块按照功能拆分成若干子模块，方面模块间的调用、共享接口。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303163609189.png" srcset="/img/loading.gif" lazyload alt="image-20230303163609189"></p>
+<p>这样可以使得别人在调用你的模块中的内容是，更加的方便快捷。</p>
+<h4 id="如何实现分模块开发"><a href="#如何实现分模块开发" class="headerlink" title="如何实现分模块开发"></a>如何实现分模块开发</h4><p>1.首先创建一个新的模块，并将原来模块中的内容复制到新的模块中。</p>
+<p>2.将新模块的pom文件中的以下几个记录复制到原来模块中的依赖中。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230303165552726.png" srcset="/img/loading.gif" lazyload alt="image-20230303165552726"></p>
+<p>3.但是在正式上线运行之前需要使用maven将新的模块安装到本地仓库（install命令）。<font color='red'>因为maven是在运行时，是检测你的本地仓库中是否包含所需要的jar包，所以我们呢需要将我们的模块安装到本地maven仓库中。</font></p>
+<p>4.依赖管理：</p>
+<p>可选依赖 <optional>使用可以在自己的项目中添加，这样可以使得别人在引用你的内容时，看不见你所需要的依赖。</p>
+<p>排除依赖<exclusion>使用时，可以排除导入的别人的包中的依赖。</p>
+<h4 id="Maven聚合工程"><a href="#Maven聚合工程" class="headerlink" title="Maven聚合工程"></a>Maven聚合工程</h4><p>1.创建一个空的模块</p>
+<p>2.在新模块的pom文件中添加以下打包的方式为pom</p>
+<p><packaging>pom</packaging></p>
+<p>3.将有关联的module都放在新模块的<modules></modules>中</p>
+<h4 id="Maven多环境开发"><a href="#Maven多环境开发" class="headerlink" title="Maven多环境开发"></a>Maven多环境开发</h4><p>许多项目开发、生产以及测试的环境都是不同的，所以对应的数据库的url、username等也是不相同的。所以我们就需要进行多环境的配置。</p>
+<p>1.在父模块的pom文件中添加<profiles>属性。然后再一次添加<profile>，每一个profile都是一个环境。因为环境不同，所以我们可以对每一个环境设置一个<id>，同时添加相应的<properties>即可。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230306190713439.png" srcset="/img/loading.gif" lazyload alt="image-20230306190713439"></p>
+<p>2.我们可以在一个环境中设置<activation>属性，来设置当前的环境为默认环境。</p>
+<p>3.我们可以通过idea右边的maven来启动不同的环境。此时需要使用如下指令。</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230306190911489.png" srcset="/img/loading.gif" lazyload alt="image-20230306190911489"></p>
+<h4 id="Maven跳过测试"><a href="#Maven跳过测试" class="headerlink" title="Maven跳过测试"></a>Maven跳过测试</h4><p>1.使用命令</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230306191521575.png" srcset="/img/loading.gif" lazyload alt="image-20230306191521575"></p>
+<p>2.在pom文件中进行配置</p>
+<p><img src="C:\Users\25787\AppData\Roaming\Typora\typora-user-images\image-20230306191614719.png" srcset="/img/loading.gif" lazyload alt="image-20230306191614719"></p>
+<p>测试的插件名称为maven-surefire-plugin，这个maven自带的，所以没有groupid</p>
+
+
+  
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"AB6blMPeImXU9py0s8hTUeyv-gzGzoHsz","appKey":"01KQc7Ox5p5M9Rnq1oF35pLU","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+</article>
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
