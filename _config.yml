@@ -103,7 +103,7 @@ theme: next
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: git@github.com:Eric-Edward/Eric-Edward.github.io.git
+  repo: https://oauth2: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@github.com/Eric-Edward/Eric-Edward.github.io.git
   branch: main
 
 
