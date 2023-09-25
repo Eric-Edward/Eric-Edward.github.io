@@ -26,11 +26,13 @@
 <meta property="og:site_name" content="Eric&#39;s Blog">
 <meta property="og:description" content="用于记录刷算法过程中碰到的好题及优雅的思路。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://eric-edward.github.io/Users/eric/Documents/blog/source/_posts/%E7%AE%97%E6%B3%95/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.png">
 <meta property="article:published_time" content="2023-09-18T03:06:48.000Z">
-<meta property="article:modified_time" content="2023-09-18T03:09:17.042Z">
+<meta property="article:modified_time" content="2023-09-25T12:56:55.481Z">
 <meta property="article:author" content="Eric">
 <meta property="article:tag" content="posts">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://eric-edward.github.io/Users/eric/Documents/blog/source/_posts/%E7%AE%97%E6%B3%95/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.png">
 
 
 <link rel="canonical" href="http://eric-edward.github.io/2023/09/18/%E7%AE%97%E6%B3%95/">
@@ -140,7 +142,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -153,6 +155,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">链表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">1.1.</span> <span class="nav-text">思路</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D"><span class="nav-number">2.</span> <span class="nav-text">字符串匹配</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -236,9 +239,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-09-18 11:06:48 / 修改时间：11:09:17" itemprop="dateCreated datePublished" datetime="2023-09-18T11:06:48+08:00">2023-09-18</time>
+      <time title="创建时间：2023-09-18 11:06:48" itemprop="dateCreated datePublished" datetime="2023-09-18T11:06:48+08:00">2023-09-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-25 20:56:55" itemprop="dateModified" datetime="2023-09-25T20:56:55+08:00">2023-09-25</time>
     </span>
 
   
@@ -262,14 +271,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>0</span>
+      <span>944</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -280,7 +289,28 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
+    <div class="post-body" itemprop="articleBody"><h1 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h1><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/linked-list-cycle-ii/">1.循环链表出口问题</a></p>
+<blockquote>
+<p>题目描述：给出一个链表的头节点head，返回链表开始入环的第一个节点，没有则返回nul。</p>
+</blockquote>
+<p>实例：</p>
+<p><img src="/Users/eric/Documents/blog/source/_posts/%E7%AE%97%E6%B3%95/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.png" alt="实例"></p>
+<blockquote>
+<p>输入：head &#x3D; [3,2,0,-4], pos &#x3D; 1<br>输出：返回索引为 1 的链表节点<br>解释：链表中有一个环，其尾部连接到第二个节点。</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>​	我们可以定义两个指针，一个慢指针slow每次走一格，一个快指针fast每次走两格。如果链表存在环路则fast一定会追上slow。如果fast经过一定的循环变为NULL则该链表不存在环路。</p>
+<p>​	如果链表中存在环路，那么设从头节点到环路入口的长度为x，设从环路入口到快慢节点相遇的位置长度为y，环中剩下的长度为z。<br>$$<br>slow指针走的距离&#x3D;x+y<br>$$</p>
+<p>$$<br>fast指针走的距离&#x3D;x+y+n(y+z)<br>$$</p>
+<p>​	又因为fast移动的速度是slow的两倍<br>$$<br>(x+y)*2&#x3D;x+y+n(y+z)<br>$$</p>
+<p>$$<br>x&#x3D;n(y+z)-y<br>$$</p>
+<p>$$<br>x&#x3D;(n-1)(y+z)+z<br>$$</p>
+<p>​	所以可以看出来，在进入环之前的长度，是N-1倍的环长加上相遇点到入口点的距离之外的距离。而且n必定大于等于1。因为快慢节点相遇之前，快节点肯定要先在环中跑一圈才能遇到slow。</p>
+<p>​	如果此时我们设置两个指针分别从head和入口点每次跳动一格的距离，那么下次相遇的时候必定是在入口点。下面给出具体的代码。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!head) <span class="keyword">return</span> head; <span class="comment">//如果头节点为空，直接返回</span></span><br><span class="line">ListNode* fast = head; <span class="comment">//让快慢节点从头开始</span></span><br><span class="line">ListNode* slow = head;</span><br><span class="line"><span class="keyword">while</span>(fast&amp;&amp;slow)&#123;</span><br><span class="line">  slow = slow-&gt;next;</span><br><span class="line">  <span class="keyword">if</span>(fast-&gt;next) fast = fast-&gt;next-&gt;next;</span><br><span class="line">  <span class="keyword">if</span>(fast==slow) <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!fast) <span class="keyword">return</span> null; <span class="comment">//如果快指针为空，则证明该链表没有环路</span></span><br><span class="line"></span><br><span class="line">ListNode*p = head;</span><br><span class="line">ListNode*q = fast;</span><br><span class="line"><span class="keyword">while</span>(p!=q)&#123;</span><br><span class="line">  p=p-&gt;next;</span><br><span class="line">  q=q-&gt;next;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> p;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="字符串匹配"><a href="#字符串匹配" class="headerlink" title="字符串匹配"></a>字符串匹配</h1>
     </div>
 
     
@@ -369,13 +399,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">0k</span>
+    <span title="站点总字数">1k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1 分钟</span>
+    <span title="站点阅读时长">2 分钟</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
