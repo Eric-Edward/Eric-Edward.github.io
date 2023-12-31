@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hello World</title>
+    <url>/2023/09/17/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<span id="more"></span>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>科软高级软件工程课堂问答</title>
     <url>/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/</url>
     <content><![CDATA[<ol>
@@ -96,7 +116,7 @@
 <img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-25%2011.39.14-8205177.png" class="">
 </blockquote>
 </li>
-<li><p>瀑布模型的优缺点？（最好课本和课件上各种模型的优缺点）</p>
+<li><p>瀑布模型的优缺点？（最好看看课本和课件上各种模型的优缺点）</p>
 <blockquote>
 <p>优点：</p>
 <ol>
@@ -113,11 +133,11 @@
 </li>
 <li><p>人的认知是螺旋上升的，所以就可以看出演化模型螺旋形状的合理性。</p>
 </li>
-<li><p>传统强调物性、现代强调任性</p>
+<li><p>传统强调物性、现代强调人性</p>
 </li>
-<li><p>RUP的定义：用例驱动、体系结构为核心、迭代及增量的软件工程框架</p>
+<li><p>RUP的定义：用例驱动、以体系结构为核心、迭代及增量的软件工程框架，由UML方法和工具支持。</p>
 </li>
-<li><p>请描述一下RUP的可伸缩性，去个例子说明？（可伸缩就是在瀑布和敏捷之间的调节）</p>
+<li><p>请描述一下RUP的可伸缩性，举个例子说明？（可伸缩就是在瀑布和敏捷之间的调节）</p>
 </li>
 <li><p>RUP是否是每个阶段都是全过程的，构建阶段是否是只需要写代码？如果不是，那请问还要做什么？如果也需要做需求，那需要做什么样的需求？</p>
 </li>
@@ -130,10 +150,57 @@
 <li>人大于物</li>
 <li>软件大于文档</li>
 <li>合作大于谈判</li>
-<li>人的认知时间在两周之内，所以相应变化也需要在两周之内（即敏捷的增量迭代需要短时间内的开发）</li>
+<li>人的认知时间在两周之内，所以相应变化也需要在两周之内（即敏捷的增量迭代需要短时间内的开发，这个就是相应变化胜过遵循计划）</li>
 </ul>
 <ol start="19">
 <li><p>敏捷的12条原则</p>
+<blockquote>
+<ol>
+<li>我们的最高优先级是持续不断地、及早地交付</li>
+</ol>
+<p>有价值的软件来使客户满意</p>
+<ol start="2">
+<li>拥抱变化，即使是在项目开发的后期，愿意为</li>
+</ol>
+<p>了客户的竞争优势而采取变化</p>
+<ol start="3">
+<li>经常地交付可工作的软件，相隔几星期或一两</li>
+</ol>
+<p>个月，倾向于采取较短的周期</p>
+<ol start="4">
+<li><p>业务人员和开发人员在整个过程中紧密合作</p>
+</li>
+<li><p>围绕着被激励的个体构建项目，为个体提供所</p>
+</li>
+</ol>
+<p>需的环境和支持，给予信任，从而达成目标</p>
+<ol start="6">
+<li>在团队内和团队间沟通信息的最有效和最高效</li>
+</ol>
+<p>的方式是面对面的交流</p>
+<ol start="7">
+<li><p>可工作的软件是衡量进度的首要标准</p>
+</li>
+<li><p>倡导可持续开发，项目发起者、开发人员和</p>
+</li>
+</ol>
+<p>用户应该维持一个可持续的步调</p>
+<ol start="9">
+<li>持续地追求技术卓越和良好设计，可以提高</li>
+</ol>
+<p>敏捷性</p>
+<ol start="10">
+<li><p>以简洁为本，它是减少不必要工作的艺术</p>
+</li>
+<li><p>最好的体系结构、需求和设计是从自组织的</p>
+</li>
+</ol>
+<p>团队中涌现出来的</p>
+<ol start="12">
+<li>团队定期地反思如何变得更加高效，并相应</li>
+</ol>
+<p>地调整自身的行为</p>
+</blockquote>
 </li>
 <li><p>测试驱动开发的优点：</p>
 </li>
@@ -145,51 +212,21 @@
 <li>有利于改变软件的体系结构</li>
 </ul>
 <ol start="21">
-<li><p>怎么理解这个内容？（我们在进行极限编程时只需要使用其中的一点就是属于极限编程）<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-24%2017.07.12-8164113.png" class=""></p>
-</li>
-<li><p>表面的需求和真实的需求？（挖掘真正的需求、细化需求）</p>
-</li>
-<li><p>什么是需求和需求工程？（需求工程：课件上有）</p>
-</li>
-<li><p>银弹问题（即没有解决问题一劳永逸的方法：No sliver Bult）</p>
-</li>
-<li><p>工程实践中会用到7中方法中的哪些方法？</p>
-</li>
-<li><p>请结合自己的工程实践说明一下需求导出的过程？</p>
-</li>
-<li><p>对三个文档的理解：（初步“产品要求”文档、产品需求说明文档、SRS）</p>
-</li>
-<li><p>结合抽象层次谈一下多态（老师使用的神行走于人世间，可以编程男人和女人）</p>
-</li>
-<li><p>面向对象开发的过程模型和结构化开发的过程模型，从产出产品的角度来说明？</p>
-</li>
-<li><p>过程论和对象论的区别？</p>
-</li>
+<li>怎么理解这个内容？（我们在进行极限编程时只需要使用其中的一点就是属于极限编程）<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-24%2017.07.12-8164113.png" class=""></li>
+<li>表面的需求和真实的需求？（挖掘真正的需求、细化需求）</li>
+<li>什么是需求和需求工程？（需求工程：课件上有）</li>
+<li>银弹问题（即没有解决问题一劳永逸的方法：No sliver Bullet）</li>
+<li>工程实践中会用到7中方法中的哪些方法？</li>
+<li>请结合自己的工程实践说明一下需求导出的过程？</li>
+<li>对三个文档的理解：（初步“产品要求”文档、产品需求说明文档、SRS）</li>
+<li>结合抽象层次谈一下多态（老师使用的神行走于人世间，可以编程男人和女人）</li>
+<li>面向对象开发的过程模型和结构化开发的过程模型，从产出产品的角度来说明？</li>
+<li>过程论和对象论的区别？</li>
 </ol>
 ]]></content>
       <tags>
         <tag>posts</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2023/09/17/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<span id="more"></span>
-
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>算法</title>
