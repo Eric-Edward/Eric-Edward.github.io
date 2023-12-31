@@ -271,7 +271,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>944</span>
+      <span>1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -307,7 +307,24 @@
 <p>$$<br>x&#x3D;(n-1)(y+z)+z<br>$$</p>
 <p>​	所以可以看出来，在进入环之前的长度，是N-1倍的环长加上相遇点到入口点的距离之外的距离。而且n必定大于等于1。因为快慢节点相遇之前，快节点肯定要先在环中跑一圈才能遇到slow。</p>
 <p>​	如果此时我们设置两个指针分别从head和入口点每次跳动一格的距离，那么下次相遇的时候必定是在入口点。下面给出具体的代码。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!head) <span class="keyword">return</span> head; <span class="comment">//如果头节点为空，直接返回</span></span><br><span class="line">ListNode* fast = head; <span class="comment">//让快慢节点从头开始</span></span><br><span class="line">ListNode* slow = head;</span><br><span class="line"><span class="keyword">while</span>(fast&amp;&amp;slow)&#123;</span><br><span class="line">  slow = slow-&gt;next;</span><br><span class="line">  <span class="keyword">if</span>(fast-&gt;next) fast = fast-&gt;next-&gt;next;</span><br><span class="line">  <span class="keyword">if</span>(fast==slow) <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!fast) <span class="keyword">return</span> null; <span class="comment">//如果快指针为空，则证明该链表没有环路</span></span><br><span class="line"></span><br><span class="line">ListNode*p = head;</span><br><span class="line">ListNode*q = fast;</span><br><span class="line"><span class="keyword">while</span>(p!=q)&#123;</span><br><span class="line">  p=p-&gt;next;</span><br><span class="line">  q=q-&gt;next;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> p;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">if(!head) return head; &#x2F;&#x2F;如果头节点为空，直接返回
+ListNode* fast &#x3D; head; &#x2F;&#x2F;让快慢节点从头开始
+ListNode* slow &#x3D; head;
+while(fast&amp;&amp;slow)&#123;
+  slow &#x3D; slow-&gt;next;
+  if(fast-&gt;next) fast &#x3D; fast-&gt;next-&gt;next;
+  if(fast&#x3D;&#x3D;slow) break;
+&#125;
+
+if(!fast) return null; &#x2F;&#x2F;如果快指针为空，则证明该链表没有环路
+
+ListNode*p &#x3D; head;
+ListNode*q &#x3D; fast;
+while(p!&#x3D;q)&#123;
+  p&#x3D;p-&gt;next;
+  q&#x3D;q-&gt;next;
+&#125;
+return p;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
