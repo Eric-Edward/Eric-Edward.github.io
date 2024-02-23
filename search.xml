@@ -363,6 +363,7 @@ withDefaults(defineProps&lt;&#123; ren?: Person &#125;&gt;(), &#123;
 
 <p>​	vue3生命周期的创建阶段时通过setup来完成了，而且我们在使用这个钩子函数的时候需要自己手动的引入这些函数才行。</p>
 <p>&#x3D;&#x3D;注意，不管是vue2还是vue3都不止这几个钩子，还有其他的钩子，我们会在后面的学习中不断的遇到。&#x3D;&#x3D;</p>
+<h1 id="自定义hooks"><a href="#自定义hooks" class="headerlink" title="自定义hooks"></a>自定义hooks</h1><p>​	我们可以自己定义对于不同数据的处理方法，并且把不同的属性和方法封装在一个文件中，形成一个useXXX的hook，我们只需要在需要使用的文件中进行调用即可。同时，这种方法也体现出了&#x3D;&#x3D;高内聚、低耦合&#x3D;&#x3D;的思想</p>
 ]]></content>
       <tags>
         <tag>posts</tag>
