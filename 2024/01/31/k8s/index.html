@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eric-edward.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.18.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Docker内容Docker容器底层隔离​	docker容器的底层隔离主要通过Linux的namespace和cgroup来进行的，其中通过namespace来进行资源的隔离，使不同的资源只能够看到需要的内容。通过cgroup来约束进程对于资源的使用。详细的可以查看https:&#x2F;&#x2F;www.cnblogs.com&#x2F;DarkH&#x2F;p&#x2F;16366020.html。 Docker的一些知识点 在pull时关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k8s">
+<meta property="og:url" content="http://eric-edward.github.io/2024/01/31/k8s/index.html">
+<meta property="og:site_name" content="Eric&#39;s Blog">
+<meta property="og:description" content="Docker内容Docker容器底层隔离​	docker容器的底层隔离主要通过Linux的namespace和cgroup来进行的，其中通过namespace来进行资源的隔离，使不同的资源只能够看到需要的内容。通过cgroup来约束进程对于资源的使用。详细的可以查看https:&#x2F;&#x2F;www.cnblogs.com&#x2F;DarkH&#x2F;p&#x2F;16366020.html。 Docker的一些知识点 在pull时关">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://eric-edward.github.io/2024/01/31/k8s/%E6%88%AA%E5%B1%8F2024-02-22%2000.58.02.png">
+<meta property="article:published_time" content="2024-01-31T14:53:02.000Z">
+<meta property="article:modified_time" content="2024-02-21T17:24:24.409Z">
+<meta property="article:author" content="Eric">
+<meta property="article:tag" content="posts">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://eric-edward.github.io/2024/01/31/k8s/%E6%88%AA%E5%B1%8F2024-02-22%2000.58.02.png">
+
+
+<link rel="canonical" href="http://eric-edward.github.io/2024/01/31/k8s/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://eric-edward.github.io/2024/01/31/k8s/","path":"2024/01/31/k8s/","title":"k8s"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>k8s | Eric's Blog</title>
+  
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="https://my-hexo-ijnwgpewe-eric-edward.vercel.app/"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css"><style>
+#needsharebutton-postbottom {
+  cursor: pointer;
+  height: 26px;
+  margin-top: 10px;
+  position: relative;
+}
+#needsharebutton-postbottom .btn {
+  border: 1px solid $btn-default-border-color;
+  border-radius: 3px;
+  display: initial;
+  padding: 1px 4px;
+}
+</style>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eric's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一生清贫怎敢入繁华<br>两袖清风岂敢误佳人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker%E5%86%85%E5%AE%B9"><span class="nav-number">1.</span> <span class="nav-text">Docker内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E5%AE%B9%E5%99%A8%E5%BA%95%E5%B1%82%E9%9A%94%E7%A6%BB"><span class="nav-number">1.1.</span> <span class="nav-text">Docker容器底层隔离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-number">1.2.</span> <span class="nav-text">Docker的一些知识点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">Docker中的一些底层原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker%E5%AD%98%E5%82%A8"><span class="nav-number">1.3.1.</span> <span class="nav-text">Docker存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E4%B8%8E%E9%95%9C%E5%83%8F%E7%9A%84%E5%86%99%E6%97%B6%E5%A4%8D%E5%88%B6%E6%9C%BA%E5%88%B6"><span class="nav-number">1.3.2.</span> <span class="nav-text">容器与镜像的写时复制机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker%E5%A6%82%E6%9E%9C%E4%BF%9D%E5%AD%98%E5%AE%B9%E5%99%A8%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.3.</span> <span class="nav-text">Docker如果保存容器中的数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile"><span class="nav-number">1.4.</span> <span class="nav-text">Dockerfile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FROM%E6%8C%87%E4%BB%A4"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">FROM指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ARG%E6%8C%87%E4%BB%A4"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">ARG指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ENV%E6%8C%87%E4%BB%A4"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">ENV指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ADD%E5%92%8CCOPY%E5%91%BD%E4%BB%A4"><span class="nav-number">1.4.0.4.</span> <span class="nav-text">ADD和COPY命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WORKDIR%E6%8C%87%E4%BB%A4"><span class="nav-number">1.4.0.5.</span> <span class="nav-text">WORKDIR指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMD%E5%92%8CENTRYPOINT%E6%8C%87%E4%BB%A4"><span class="nav-number">1.4.0.6.</span> <span class="nav-text">CMD和ENTRYPOINT指令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E7%BD%91%E7%BB%9C"><span class="nav-number">1.5.</span> <span class="nav-text">Docker网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-compose%E5%86%85%E5%AE%B9"><span class="nav-number">1.5.1.</span> <span class="nav-text">Docker compose内容</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CICD%E5%86%85%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">CICD内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jenkins%E5%86%85%E5%AE%B9"><span class="nav-number">3.</span> <span class="nav-text">Jenkins内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Jenkins%E6%B5%81%E6%B0%B4%E7%BA%BF%E4%BD%BF%E7%94%A8docker%E5%90%AF%E5%8A%A8sidecar%E5%AE%B9%E5%99%A8"><span class="nav-number">3.1.</span> <span class="nav-text">Jenkins流水线使用docker启动sidecar容器</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Eric"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Eric</p>
+  <div class="site-description" itemprop="description">小菜鸡Eric的博客网站</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Eric-Edward" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Eric-Edward" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:EricEdward.pro@gmail.com" title="E-Mail → mailto:EricEdward.pro@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://eric-edward.github.io/2024/01/31/k8s/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Eric">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric's Blog">
+      <meta itemprop="description" content="小菜鸡Eric的博客网站">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="k8s | Eric's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          k8s
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-31 22:53:02" itemprop="dateCreated datePublished" datetime="2024-01-31T22:53:02+08:00">2024-01-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-02-22 01:24:24" itemprop="dateModified" datetime="2024-02-22T01:24:24+08:00">2024-02-22</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">评论数：</span>
+  
+    <a title="waline" href="/2024/01/31/k8s/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2024/01/31/k8s/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>10 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Docker内容"><a href="#Docker内容" class="headerlink" title="Docker内容"></a>Docker内容</h1><h2 id="Docker容器底层隔离"><a href="#Docker容器底层隔离" class="headerlink" title="Docker容器底层隔离"></a>Docker容器底层隔离</h2><p>​	docker容器的底层隔离主要通过Linux的namespace和cgroup来进行的，其中通过namespace来进行资源的隔离，使不同的资源只能够看到需要的内容。通过cgroup来约束进程对于资源的使用。详细的可以查看<a target="_blank" rel="noopener" href="https://www.cnblogs.com/DarkH/p/16366020.html%E3%80%82">https://www.cnblogs.com/DarkH/p/16366020.html。</a></p>
+<h2 id="Docker的一些知识点"><a href="#Docker的一些知识点" class="headerlink" title="Docker的一些知识点"></a>Docker的一些知识点</h2><ol>
+<li><p>在pull时关于版本的问题，之前学习docker的时候没有关注这一块的内容。不过这里需要注意，因为一个容器是包含这个软件本身和它运行所需要的环境的。而且一般的运行环境都需要linux，这时如果我们随意的选择Linux版本的话，就可能导致相同功能的两个镜像，大小（size）的差别是很大的。&#x3D;&#x3D;我们一般推荐在pull镜像的时候，优先选择精简版本的运行环境，例如：alpine，slim&#x3D;&#x3D;</p>
+</li>
+<li><p>注意docker create 命令只是创建一个容器，但是这个容器并不是启动的。</p>
+</li>
+<li><p>再写端口映射的时候，xxx：xxx，前面的是宿主机端口，外网可以直接访问。后面的是容器内部的端口</p>
+</li>
+<li><p>注意一个容器可以绑定多个宿主机的端口（即写多个-p）</p>
+</li>
+<li><p>docker run默认是前台启动，所以我们需要手动的添加-d来让容器后台启动（其实docker run -d&#x3D;&#x3D;docker create+docker start）</p>
+</li>
+<li><p>注意之前没有特别的学习过docker logs，主要用于查看后台启动的容器的日志。</p>
+</li>
+<li><p>注意我们如果需要使用docker attach这个命令的时候，attach是将当前的一个控制台绑定到容器，当我们控制台与容器断开连接时（即按了ctrl+c），就可能会导致容器停止。</p>
+</li>
+<li><p>所以我们一般使用docker exec这个命令来与容器进行交互。在这个命令中我们可以加上本次操作的用户名以及用户组，以及可以加上操作的权限。可以让我们最大程度的对容器进行操作。</p>
+</li>
+<li><p>我们在需要修改容器内部文件的时候，可以现在外面配置好，然后使用docker cp的命令来进行文件复制的操作。这样就有利于我们操作的便捷性。</p>
+<blockquote>
+<p>但是我们需要注意的是，src和dest分别为不同值时，cp命令的效果</p>
+<ul>
+<li>当src是一个指定文件时<ul>
+<li>dest如果不存在，则会先创建一个dest的文件，并且dest的内容为src的内容</li>
+<li>dest不存在且以&#x2F;结束，报错</li>
+<li>dest存在且是一个文件，则dest的内容替换为src的内容</li>
+<li>dest存在且是一个目录，src会复制到dest目录下面</li>
+</ul>
+</li>
+<li>当src是一个目录时<ul>
+<li>dest不存在，则创建一个名为dest的文件夹，并复制src中的内容</li>
+<li>dest是一个文件时，报错</li>
+<li>dest是一个目录<ul>
+<li>如果src路径不是以&#x2F;.结尾，那么src整个目录会被复制到dest下面</li>
+<li>如果src路径是以&#x2F;.结尾的，那么src中的内容会被复制到dest下面</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>我们可以使用docker diff来查看当前的容器内部的内容与之前有什么不同，之后我们可以使用docker commit来提交我们当前的最新版本。具体的指令使用可以参考docker commit –help。</p>
+</li>
+<li><p>&#x3D;&#x3D;需要注意一下，我们之前提到的游离镜像在commit时会出现&#x3D;&#x3D;，当我们同名的镜像在commit的时候(并且版本号也相同的时候)，之前的镜像的名字和版本都会变成none（即游离镜像），这个时候我们在使用docker image prune即可删除游离镜像。</p>
+</li>
+<li><p>&#x3D;&#x3D;重点：推送镜像&#x3D;&#x3D;</p>
+<blockquote>
+<ol>
+<li>注册docker hub并登陆。</li>
+<li>创建一个仓库</li>
+<li>修改本地的容器名为docker hub的用户名&#x2F;容器名（因为在dockerhub上，每一个镜像都有一个完整的路径，其中官方的路径是docker.io&#x2F;library&#x2F;xxx，而用户自己创建的镜像的完整路径是：docker.io&#x2F;用户名&#x2F;镜像名:tag。所以，我们在推送自己的镜像之前需要先修改镜像的名称）</li>
+<li>我们在推送之前先需要在控制台上登陆我们的docker，否则无法判断推送到哪个用户下。使用docker login进行登陆。可以看.docker下面的config.json来查看是否登陆成功。</li>
+<li>使用docker push 用户名&#x2F;镜像名：tag进行推送</li>
+</ol>
+</blockquote>
+</li>
+<li><p>当我们使用u盘等工具进行容器和镜像的传输时，有相应的命令可以使用</p>
+<blockquote>
+<p>docker export和docker import</p>
+<p>这两个命令是操作容器时使用的，我们可以使用docker export将一个容器中的内容到处为一个tar文件，然后我们可以使用docker import将这个tar文件创建为一个镜像。&#x3D;&#x3D;但是这个镜像是无法正常启动的，他需要之前容器启动时的命令，我们可以通过docker ps –no-trunc来查看原来的容器的命令&#x3D;&#x3D;。</p>
+<p>docker save和docker load</p>
+<p>这两个命令是操作镜像用的，我们可以使用docker save直接讲一个镜像设置成一个tar文件，然后使用docker load将这个tar文件直接加载为一个镜像。<del>&#x3D;&#x3D;注意这个也是需要用之前的命令来启动的&#x3D;&#x3D;</del></p>
+</blockquote>
+</li>
+<li><p>Docker 容器长久运行的原理。</p>
+<blockquote>
+<p>我们知道docker容器中跑了一个软件，这个软件会有一个阻塞的进程在一直运行，所以才能够让我们的容器一直运行。如果我们容器中的软件没有一个阻塞的进程的话，容器会启动，完成相应的命令之后就会关闭容器。例如：busybox默认会运行一个sh，在这个sh运行完成之后就会关闭容器。</p>
+</blockquote>
+</li>
+<li><p>我们可以使用docker events来查看docker的事件（包含了几乎所有的内容）</p>
+</li>
+</ol>
+<h2 id="Docker中的一些底层原理"><a href="#Docker中的一些底层原理" class="headerlink" title="Docker中的一些底层原理"></a>Docker中的一些底层原理</h2><h3 id="Docker存储"><a href="#Docker存储" class="headerlink" title="Docker存储"></a>Docker存储</h3><p>​	docker的镜像和容器的存储是分层，他可以是根据dockerfile的每一句话来生成一层。因为分层之后我们就可以只需要修改当前层的内容即可，底层的内容可以共同进行使用降低存储的成本。</p>
+<h3 id="容器与镜像的写时复制机制"><a href="#容器与镜像的写时复制机制" class="headerlink" title="容器与镜像的写时复制机制"></a>容器与镜像的写时复制机制</h3><p>​	我们的容器是在镜像的基础上运行的，一个镜像启动的容器会共同使用这个镜像的底层层次。如果一个容器需要读某个文件的话，直接读取镜像中对应的文件即可。但是如果容器需要对镜像中的某个文件进行修改的话，例如：nginx的配置文件需要修改，这是我们需要在容器中新创建一个文件对应镜像中的文件，当容器需要修改的时候，直接修改自己新建的文件即可。从此之后容器再次访问这个文件时，会直接访问当前容器上层中的文件，而不是镜像中的文件。（&#x3D;&#x3D;需要注意的是，如果我们要查看的话，需要在宿主机中查看，而不是进入到容器内部来查看。而且无论我们如何修改，底层的镜像是不会改变的&#x3D;&#x3D;）<del>但是自己并没有实验出来，在外面查看的时候发现进不去&#x2F;etc&#x2F;nginx（这里以nginx为例）</del>(最终经过实验后成功了！！！)</p>
+<h3 id="Docker如果保存容器中的数据"><a href="#Docker如果保存容器中的数据" class="headerlink" title="Docker如果保存容器中的数据"></a>Docker如果保存容器中的数据</h3><p>容器挂载：</p>
+<p>​	每一个容器里面的内容，支持三种挂载的方式：</p>
+<blockquote>
+<ol>
+<li>docker自动在外部创建文件夹并与容器内部的文件夹相关联（Dockerfile VOLUME指令的作用）</li>
+<li>自己手动在外部创建文件夹，并且手动的进行挂载（使用Bind mounts）</li>
+<li>将数据挂载到内存中（tmpfs mounts）</li>
+</ol>
+</blockquote>
+<p>​	</p>
+<p>​	docker使用 <code>-v</code>进行挂载有一下几种情况（以nginx为例）:</p>
+<blockquote>
+<ol>
+<li>不挂载：默认访问欢迎页</li>
+<li>使用以&#x2F;开头的绝对路径进行挂载：会访问绝对路径下面下的index.html</li>
+<li>使用不已&#x2F;开头的路径进行挂载：会访问默认欢迎页面</li>
+</ol>
+</blockquote>
+<p>​	下面来解释一下具体的原因，当我们不进行挂载的时候，容器中的数据会默认保存在容器中。当我们的容器删除的时候，容器内的数据也会被相应的删除掉。所以我们必须要进行数据的迁移和挂载。</p>
+<p>​	当我们使用以&#x2F;开头的绝对路径进行挂载时，容器会将对应路径下面的内容替换为我们设置的绝对路径，注意&#x3D;&#x3D;这个时候很容器出现空挂载的问题（即容器的配置文件在宿主机中的对应路径下面是一个空的文件夹这样就会导致容器启动失败）&#x3D;&#x3D;</p>
+<p>​	当我们使用不以&#x2F;开头的路径进行挂载时，其实就是让docker来帮我们来创建一个以给出的名字命名的卷来存储我们需要启动的容器的数据。&#x3D;&#x3D;而且，这个卷会复制容器初始的config和一些页面之类的内容&#x3D;&#x3D;，所以我们用这种方式打开的时候能够看到默认的访问页面。(&#x3D;&#x3D;注意这里删除了容器之后也不会删除这个卷，其实也是正常的，如果删除了这个卷，那我们创建创建这个卷有什么用呢&#x3D;&#x3D;)</p>
+<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><h4 id="FROM指令"><a href="#FROM指令" class="headerlink" title="FROM指令"></a>FROM指令</h4><p>​	from指令是用来为我们镜像确定一个基础的环境的语句，而且一个dockerfile中只能够有一个from指令。</p>
+<h4 id="ARG指令"><a href="#ARG指令" class="headerlink" title="ARG指令"></a>ARG指令</h4><p>​	arg指令是用来设置一些&#x3D;&#x3D;构建阶段&#x3D;&#x3D;中使用的临时变量而使用的指令，只有在arg指令设置了之后才能够在之后的构建过程中进行使用。而且我们也可以通过在docker build的时候使用 –build-arg选项来修改我们的arg指令设置的参数。可以在RUN指令进行使用。</p>
+<h4 id="ENV指令"><a href="#ENV指令" class="headerlink" title="ENV指令"></a>ENV指令</h4><p>​	env指令设置的变量可以在&#x3D;&#x3D;构建和运行阶段&#x3D;&#x3D;使用，但是指令的&#x3D;&#x3D;修改只能够在运行时&#x3D;&#x3D;通过添加–env来进行修改。</p>
+<h4 id="ADD和COPY命令"><a href="#ADD和COPY命令" class="headerlink" title="ADD和COPY命令"></a>ADD和COPY命令</h4><p>​	这两个命令都是从宿主机中选择相应的文件复制到容器中，其中ADD可以从远程remote拉取文件或者从本地复制文件，而copy只能够从本地获取。&#x3D;&#x3D;需要注意的是，我们在写src的时候，一定要让src在镜像构建时可以访问的上下文范围内，否则将会构建失败。&#x3D;&#x3D;</p>
+<p>​	这两个命令都可以在复制文件时，添加文件访问的相关权限。&#x3D;&#x3D;但是需要注意这里添加的用户名和用户组必须是容器或者镜像环境中存在的才可以，否则构建时报错。&#x3D;&#x3D;</p>
+<p>​	需要注意一点，如果我们的镜像的基础环境中，没有&#x2F;etc&#x2F;passwd和&#x2F;etc&#x2F;group，并且我们在使用这两个命令时使用用户名和用户组添加相关的权限会出现无法匹配，从而导致报错。但是，如果使用的是数字来设置相关的访问权限的话，就不会导致报错。</p>
+<h4 id="WORKDIR指令"><a href="#WORKDIR指令" class="headerlink" title="WORKDIR指令"></a>WORKDIR指令</h4><p>​	我们可以通过这个指令来设置我们之后的一些指令工作的目录。如果不设置这个选项的话，默认情况下为&#x2F;或者由你的基础环境设置。同时workdir支持相对路径的设置（即可以设置多个，他自己默认讲这些路径结合起来）</p>
+<h4 id="CMD和ENTRYPOINT指令"><a href="#CMD和ENTRYPOINT指令" class="headerlink" title="CMD和ENTRYPOINT指令"></a>CMD和ENTRYPOINT指令</h4><p>​	这两个指令都是用于容器启动时的命令，这两个单独作用都是可以的。而且这两个命令都有两种写法（即exec写法和shell写法，其中需要注意的是：&#x3D;&#x3D;直接使用exec是无法读到ENV设置的参数的，不过我们可以让指令为&#x2F;bin&#x2F;sh -c，然后再接上参数就可以读取到相应的参数了&#x3D;&#x3D;）</p>
+<p>​	其中CMD的优先级是低于ENTRYPOINT的。当这两个都写的时候，&#x3D;&#x3D;运行的指令为ENTRYPOINT+CMD的内容，且二者合起来的命令是一个正确完整的命令&#x3D;&#x3D;。</p>
+<p>​	我们可以通过在启动容器时添加相应的参数来修改掉CMD的内容，但是ENTRYPOINT是一定运行的。</p>
+<p>​	当dockerfile中出现多个CMD和ENTRYPOINT的时候，只有最后一个会生效。</p>
+<h2 id="Docker网络"><a href="#Docker网络" class="headerlink" title="Docker网络"></a>Docker网络</h2><p>​	在我们的应用中，有时需要两个容器进行通信或者容器可以与外界进行交互。这个时候就会产生一些问题。而我们的docker会先创建一个名为docker0的网络，我们在没有自定义网络的情况下，都会将运行的容器加入到这个网络中。</p>
+<p>​	桥接模式可以看下面这个博客的文章，讲的比较详细：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/hahaha111122222/p/13370773.html%E3%80%82%E5%85%B6%E4%B8%AD%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%88%91%E4%BB%AC%E4%BD%BF%E7%94%A8%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%E7%9A%84%E8%AF%9D%EF%BC%8C%E4%B8%8D%E8%83%BD%E5%A4%9F%E9%80%9A%E8%BF%87%E5%9F%9F%E5%90%8D%E6%9D%A5%E8%BF%9B%E8%A1%8C%E4%BA%92%E9%80%9A%EF%BC%8C%E5%8F%AA%E8%83%BD%E9%80%9A%E8%BF%87ip%E6%9D%A5%E8%BF%9B%E8%A1%8C%E9%80%9A%E4%BF%A1%E3%80%82%E4%BD%86%E6%98%AF%EF%BC%8C%E8%BF%99%E6%A0%B7%E5%B0%B1%E4%BC%9A%E6%9C%89%E5%B1%80%E9%99%90%E6%80%A7%EF%BC%8C%E5%9B%A0%E4%B8%BA%E6%88%91%E4%BB%AC%E6%AF%8F%E6%AC%A1%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8%E6%97%B6%EF%BC%8Cdhcp%E7%BB%99%E5%88%86%E9%85%8D%E7%9A%84ip%E5%8F%AF%E8%83%BD%E4%BC%9A%E4%B8%8D%E5%90%8C%EF%BC%8C%E8%BF%99%E6%A0%B7%E5%B0%B1%E5%8F%AF%E8%83%BD%E5%AF%BC%E8%87%B4%E8%AE%BF%E9%97%AE%E7%9A%84ip%E5%87%BA%E9%94%99%E3%80%82">https://www.cnblogs.com/hahaha111122222/p/13370773.html。其中，如果我们使用桥接模式的话，不能够通过域名来进行互通，只能通过ip来进行通信。但是，这样就会有局限性，因为我们每次启动容器时，dhcp给分配的ip可能会不同，这样就可能导致访问的ip出错。</a></p>
+<p>​	下面我们说一下自定义网络，我们在自定义网络时，可以添加一些子网掩码、网关之类的信息。我们之前使用网络想要实现几个容器之间的通信需要使用–link（其实就是修改&#x2F;etc&#x2F;host 来增加一个解析项来使得能够解析到）。但是这种方式会出现一种问题，就是容器重新启动的时候ip可能会发生改变，从而导致这种设置失效。但是如果我们自己创建一个网络的话，每当启动一个容器的时候就将这个容器加入到这个网络中，我们的网络为这个容器分配一个ip。每次重启每次重新分配，这时通过自定义网络的记录，就可以准确的找到需要转发的目的地。&#x3D;&#x3D;如果我们需要两个网络中的容器进行通信的话，可以使用“docker network connnet 网络名 容器名”的方式来将我们这个容器加入到指定的网络中&#x3D;&#x3D;</p>
+<h3 id="Docker-compose内容"><a href="#Docker-compose内容" class="headerlink" title="Docker compose内容"></a>Docker compose内容</h3><p>​	这个部分的内容，自己根据docker的官网手册来做一遍就可以，基本的都是之前学过的东西，只不过写在一个yaml文件中而已。</p>
+<h1 id="CICD内容"><a href="#CICD内容" class="headerlink" title="CICD内容"></a>CICD内容</h1><p>​	持续集成、持续部署</p>
+<h1 id="Jenkins内容"><a href="#Jenkins内容" class="headerlink" title="Jenkins内容"></a>Jenkins内容</h1><p>​	注意docker pipeline是我们在Jenkinsfile中需要镜像时，直接使用docker的镜像时所需要的工具。</p>
+<h2 id="Jenkins流水线使用docker启动sidecar容器"><a href="#Jenkins流水线使用docker启动sidecar容器" class="headerlink" title="Jenkins流水线使用docker启动sidecar容器"></a>Jenkins流水线使用docker启动sidecar容器</h2><img src="/2024/01/31/k8s/%E6%88%AA%E5%B1%8F2024-02-22%2000.58.02.png" class="">
+
+<p>​	这个地方再去看看docker  pipeline之后再做结论，感觉是docker pipeline实现的这个功能。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer"><div class="post-widgets">
+      <div id="needsharebutton-postbottom">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    </div><script src="//sdk.jinrishici.com/v2/browser/jinrishici.js"></script>
+<script>
+  jinrishici.load((result) => {
+    let jrsc = document.getElementById('jrsc');
+    const data = result.data;
+    let author = data.origin.author;
+    let title = '《' + data.origin.title + '》';
+    let content = data.content.substr(0, data.content.length - 1);
+    let dynasty = data.origin.dynasty.substr(0, data.origin.dynasty.length - 1);
+    jrsc.innerText = content + ' -- ' + dynasty + '·' + author + title;
+  });
+</script>
+<div style="text-align: center"><span id="jrsc" >正在加载今日诗词....</span></div>
+
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Eric
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://eric-edward.github.io/2024/01/31/k8s/" title="k8s">http://eric-edward.github.io/2024/01/31/k8s/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/posts/" rel="tag"># posts</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/01/23/vue-ts%E5%AD%A6%E4%B9%A0/" rel="prev" title="vue+ts学习">
+                  <i class="fa fa-angle-left"></i> vue+ts学习
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Eric</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">26k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">44 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"https://my-hexo-ijnwgpewe-eric-edward.vercel.app/","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"libUrl":"https://unpkg.com/@waline/client@v2/dist/waline.js","el":"#waline","comment":true,"path":"/2024/01/31/k8s/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+      pbOptions = {};
+        pbOptions.iconStyle = "default";
+        pbOptions.boxForm = "horizontal";
+        pbOptions.position = "bottomLeft";
+        pbOptions.networks = "Wechat,Douban,QQZone,Weibo,Twitter,Facebook";
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

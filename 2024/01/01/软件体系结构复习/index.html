@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eric-edward.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.18.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="什么是非功能性需求以及非功能性需求有哪些？  非功能需求是与系统的运行、性能、可靠性等相关的需求，通常不直接涉及系统功能，但对系统的整体质量和性能有着重要影响。以下是一些常见的非功能需求：  性能需求： 包括系统的响应时间、吞吐量、并发用户数等。例如，系统需要在500毫秒内响应用户请求。 可用性需求： 描述系统的可靠性和可用性，通常以百分比或时间表达。例如，系统每年至少可用99.9%的时间。 可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件体系结构复习">
+<meta property="og:url" content="http://eric-edward.github.io/2024/01/01/%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Eric&#39;s Blog">
+<meta property="og:description" content="什么是非功能性需求以及非功能性需求有哪些？  非功能需求是与系统的运行、性能、可靠性等相关的需求，通常不直接涉及系统功能，但对系统的整体质量和性能有着重要影响。以下是一些常见的非功能需求：  性能需求： 包括系统的响应时间、吞吐量、并发用户数等。例如，系统需要在500毫秒内响应用户请求。 可用性需求： 描述系统的可靠性和可用性，通常以百分比或时间表达。例如，系统每年至少可用99.9%的时间。 可">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://eric-edward.github.io/2024/01/01/%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/%E6%88%AA%E5%B1%8F2024-01-01%2011.42.05.png">
+<meta property="article:published_time" content="2024-01-01T03:05:12.000Z">
+<meta property="article:modified_time" content="2024-01-06T07:35:45.198Z">
+<meta property="article:author" content="Eric">
+<meta property="article:tag" content="posts">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://eric-edward.github.io/2024/01/01/%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/%E6%88%AA%E5%B1%8F2024-01-01%2011.42.05.png">
+
+
+<link rel="canonical" href="http://eric-edward.github.io/2024/01/01/%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://eric-edward.github.io/2024/01/01/%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/","path":"2024/01/01/软件体系结构复习/","title":"软件体系结构复习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>软件体系结构复习 | Eric's Blog</title>
+  
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="https://my-hexo-ijnwgpewe-eric-edward.vercel.app/"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css"><style>
+#needsharebutton-postbottom {
+  cursor: pointer;
+  height: 26px;
+  margin-top: 10px;
+  position: relative;
+}
+#needsharebutton-postbottom .btn {
+  border: 1px solid $btn-default-border-color;
+  border-radius: 3px;
+  display: initial;
+  padding: 1px 4px;
+}
+</style>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eric's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一生清贫怎敢入繁华<br>两袖清风岂敢误佳人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Eric"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Eric</p>
+  <div class="site-description" itemprop="description">小菜鸡Eric的博客网站</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Eric-Edward" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Eric-Edward" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:EricEdward.pro@gmail.com" title="E-Mail → mailto:EricEdward.pro@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://eric-edward.github.io/2024/01/01/%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Eric">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric's Blog">
+      <meta itemprop="description" content="小菜鸡Eric的博客网站">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="软件体系结构复习 | Eric's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件体系结构复习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-01 11:05:12" itemprop="dateCreated datePublished" datetime="2024-01-01T11:05:12+08:00">2024-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-01-06 15:35:45" itemprop="dateModified" datetime="2024-01-06T15:35:45+08:00">2024-01-06</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">评论数：</span>
+  
+    <a title="waline" href="/2024/01/01/%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2024/01/01/%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>10k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>17 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><ol>
+<li><p>什么是非功能性需求以及非功能性需求有哪些？</p>
+<blockquote>
+<p>非功能需求是与系统的运行、性能、可靠性等相关的需求，通常不直接涉及系统功能，但对系统的整体质量和性能有着重要影响。以下是一些常见的非功能需求：</p>
+<ol>
+<li><strong>性能需求：</strong> 包括系统的响应时间、吞吐量、并发用户数等。例如，系统需要在500毫秒内响应用户请求。</li>
+<li><strong>可用性需求：</strong> 描述系统的可靠性和可用性，通常以百分比或时间表达。例如，系统每年至少可用99.9%的时间。</li>
+<li><strong>可维护性和可扩展性需求：</strong> 系统的易维护性和可扩展性。例如，系统应该容易进行修改和添加新功能。</li>
+<li><strong>安全性需求：</strong> 包括对数据的保护、访问控制、身份验证等方面的需求。例如，用户敏感数据必须加密存储。</li>
+<li><strong>兼容性需求：</strong> 描述系统与其他软硬件组件或系统的集成程度。例如，系统需要与特定浏览器兼容。</li>
+<li><strong>可靠性和容错性需求：</strong> 描述系统在面对错误或故障时的表现。例如，系统应该能够自动从硬件故障中恢复。</li>
+<li><strong>可测试性需求：</strong> 描述系统易于测试的程度，包括单元测试、集成测试和系统测试。例如，系统应该支持自动化测试。</li>
+<li><strong>用户体验需求：</strong> 描述系统的用户界面、易用性和用户满意度。例如，系统的界面应该直观、易学易用。</li>
+<li><strong>法规和标准需求：</strong> 描述系统需要符合的法规和标准，例如数据保护法规或行业标准。</li>
+<li><strong>性能需求：</strong> 包括系统的响应时间、吞吐量、资源利用率等。例如，系统需要在高并发情况下保持稳定的响应时间。</li>
+<li><strong>资源需求：</strong> 描述系统对硬件、软件和其他资源的需求。例如，系统需要至少2GB的内存。</li>
+</ol>
+<p>这些非功能需求对于确保系统的整体性能、安全性和用户满意度至关重要。在项目开发的早期阶段就明确定义和考虑这些需求，有助于避免后期的问题和提高系统的质量。</p>
+</blockquote>
+</li>
+<li><p>4+1视图内容，以及结合uml的情况？</p>
+<img src="/2024/01/01/%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/%E6%88%AA%E5%B1%8F2024-01-01%2011.42.05.png" class="">
+
+<ol>
+<li><p>用例视图</p>
+<blockquote>
+<p>作用：描述系统的功能需求，找出用例和执行者</p>
+<p>使用对象：客户、分析者、设计者、开发者和测试者</p>
+<p>使用的图：&#x3D;&#x3D;用例图、交互图、活动图和状态图&#x3D;&#x3D;</p>
+<p>重要性：系统的中心，它决定了其他视图的开发，用于确认和最终验证系统。</p>
+</blockquote>
+</li>
+<li><p>逻辑视图</p>
+<blockquote>
+<p>作用：描述如何实现系统内部的功能 ；</p>
+<p>适用对象：分析者、设计者、开发者 ；</p>
+<p>描述使用的图：&#x3D;&#x3D;类图和对象图、状态图、顺序图、协作图和活动图&#x3D;&#x3D; ；</p>
+<p>重要性：描述了系统的静态结构和因发送消息而出现的动态协作关系。</p>
+</blockquote>
+</li>
+<li><p>实现视图</p>
+<blockquote>
+<p>作用：描述系统代码构件组织和实现模块，及它们之间的依赖关系；</p>
+<p>适用对象：设计者、开发者和测试者；</p>
+<p>描述使用的图：&#x3D;&#x3D;构件图&#x3D;&#x3D;；</p>
+<p>重要性：描述系统如何划分软件构件，如何进行编程。</p>
+</blockquote>
+</li>
+<li><p>进程视图</p>
+<blockquote>
+<p>作用：描述系统的并发性，并处理这些线程间的通信和同步。展示与系统处理性能相关的主要元素，包括可伸缩性、吞吐量、基本时间性能。（考虑分布式系统）</p>
+<p>适用对象：开发者和系统集成者；</p>
+<p>描述使用的图：&#x3D;&#x3D;状态图、顺序图、合作图、活动图、构件图和配置图&#x3D;&#x3D;；</p>
+<p>重要性：将系统分割成并发执行的控制线程及处理这些线程的通信和同步。</p>
+</blockquote>
+</li>
+<li><p>配置视图</p>
+<blockquote>
+<p>作用：描述系统的物理设备配置，如计算机、硬件设备以及它们相互间的连接；</p>
+<p>适用对象：开发者、系统集成者和测试者；</p>
+<p>描述使用的图：&#x3D;&#x3D;配置图&#x3D;&#x3D;；</p>
+<p>重要性：描述硬件设备的连接和哪个程序或对象驻留在哪台计算机上执行。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><p>架构风格</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_47872288/article/details/133921088">https://blog.csdn.net/weixin_47872288/article/details/133921088</a></p>
+</li>
+<li><p>质量属性、策略</p>
+<blockquote>
+<p>质量属性是衡量软件系统特定方面质量的特征，它们通常包括性能、可靠性、可维护性、安全性等。为了满足这些质量属性，软件架构师采用不同的设计策略和决策。以下是一些常见的质量属性及相应的设计策略：</p>
+<ol>
+<li><strong>性能（Performance）：</strong><ul>
+<li><strong>策略：</strong> 使用缓存技术、优化数据库查询、采用并发和并行处理、使用负载均衡器、采用异步处理等，以提高系统响应时间和吞吐量。</li>
+</ul>
+</li>
+<li><strong>可靠性（Reliability）：</strong><ul>
+<li><strong>策略：</strong> 实现冗余和备份机制、使用事务管理、设计容错机制、定期进行系统备份、监控系统状态以及采用健壮的错误处理。</li>
+</ul>
+</li>
+<li><strong>可维护性（Maintainability）：</strong><ul>
+<li><strong>策略：</strong> 使用模块化和松散耦合的设计、采用设计模式、提供清晰的文档、实施自动化测试、使用版本控制系统、遵循编码标准。</li>
+</ul>
+</li>
+<li><strong>安全性（Security）：</strong><ul>
+<li><strong>策略：</strong> 实施身份认证和授权、使用加密技术保护数据传输和存储、进行安全审计、定期进行漏洞扫描、更新系统和依赖项。</li>
+</ul>
+</li>
+<li><strong>可用性（Availability）：</strong><ul>
+<li><strong>策略：</strong> 设计冗余系统组件、实施负载均衡、采用灾难恢复计划、监控系统性能并进行实时故障检测。</li>
+</ul>
+</li>
+<li><strong>可扩展性（Scalability）：</strong><ul>
+<li><strong>策略：</strong> 使用水平和垂直扩展策略、采用微服务架构、使用云服务提供商的弹性计算资源。</li>
+</ul>
+</li>
+<li><strong>可移植性（Portability）：</strong><ul>
+<li><strong>策略：</strong> 使用跨平台的技术和框架、避免平台特定的依赖、尽量使用标准化的编程语言和库。</li>
+</ul>
+</li>
+<li><strong>灵活性（Flexibility）：</strong><ul>
+<li><strong>策略：</strong> 采用可配置的组件、使用插件架构、实施参数化设计、避免硬编码。</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>设计模式：</p>
+<ul>
+<li><p>oo设计原则</p>
+<blockquote>
+<ol>
+<li><strong>单一职责原则（Single Responsibility Principle - SRP）：</strong><ul>
+<li><strong>原则：</strong> 一个类应该只有一个引起变化的原因。</li>
+<li><strong>优点：</strong> 提高类的可维护性，降低变更引起的风险。</li>
+<li><strong>缺点：</strong> 可能会导致类的数量增加。</li>
+<li><strong>适用场景：</strong> 当一个类负责的功能过于庞大，难以管理时。</li>
+</ul>
+</li>
+<li><strong>开闭原则（Open&#x2F;Closed Principle - OCP）：</strong><ul>
+<li><strong>原则：</strong> 软件实体（类、模块、函数等）应该对扩展开放，对修改关闭。</li>
+<li><strong>优点：</strong> 提高系统的可扩展性，降低修改带来的风险。</li>
+<li><strong>缺点：</strong> 需要一定的抽象设计，增加系统的复杂性。</li>
+<li><strong>适用场景：</strong> 在系统需要频繁变化的地方，通过扩展而不是修改来适应变化。</li>
+</ul>
+</li>
+<li><strong>里氏替换原则（Liskov Substitution Principle - LSP）：</strong><ul>
+<li><strong>原则：</strong> 子类必须能够替换其基类而不影响程序的正确性。</li>
+<li><strong>优点：</strong> 提高代码的可维护性和可扩展性。</li>
+<li><strong>缺点：</strong> 需要对继承关系进行深入理解和设计。</li>
+<li><strong>适用场景：</strong> 在有继承关系的场景中，确保子类可以完全替代基类。</li>
+</ul>
+</li>
+<li><strong>依赖倒置原则（Dependency Inversion Principle - DIP）：</strong><ul>
+<li><strong>原则：</strong> 高层模块不应该依赖于低层模块，二者都应该依赖于抽象；抽象不应该依赖于细节，细节应该依赖于抽象。</li>
+<li><strong>优点：</strong> 降低模块之间的耦合性，提高系统的可维护性和可扩展性。</li>
+<li><strong>缺点：</strong> 需要引入抽象层次，增加设计的复杂性。</li>
+<li><strong>适用场景：</strong> 在模块之间存在依赖关系的场景中，通过抽象解耦。</li>
+</ul>
+</li>
+<li><strong>接口隔离原则（Interface Segregation Principle - ISP）：</strong><ul>
+<li><strong>原则：</strong> 客户端不应该强制依赖于它们不使用的接口。</li>
+<li><strong>优点：</strong> 提高接口的灵活性和可维护性。</li>
+<li><strong>缺点：</strong> 可能会导致接口的数量增加。</li>
+<li><strong>适用场景：</strong> 当一个接口过于庞大，客户端只使用其中一部分功能时。</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>创建型模式</p>
+<ul>
+<li><p>工厂模式</p>
+<blockquote>
+<p>工厂模式主要包含以下几种形式：</p>
+<ol>
+<li><strong>简单工厂模式（Simple Factory Pattern）：</strong><ul>
+<li>在简单工厂模式中，有一个工厂类，根据传递给它的参数，动态决定应该创建哪个产品类的实例。</li>
+<li>这种模式违反了开闭原则，因为每次添加新产品都需要修改工厂类。</li>
+</ul>
+</li>
+<li><strong>工厂方法模式（Factory Method Pattern）：</strong><ul>
+<li>在工厂方法模式中，定义一个创建对象的接口，但让实现这个接口的类来决定实例化哪个类。</li>
+<li>每个产品都有一个对应的工厂类，客户端通过调用工厂接口来创建产品。</li>
+<li>这种模式符合开闭原则，因为添加新产品只需要添加新的工厂类。</li>
+</ul>
+</li>
+<li><strong>抽象工厂模式（Abstract Factory Pattern）：</strong><ul>
+<li>抽象工厂模式提供一个接口，用于创建相关或依赖对象的家族，而不需要指定具体类。</li>
+<li>客户端使用产品的抽象接口，而不是直接使用具体的实现。</li>
+<li>这种模式有助于确保一组相关的产品可以一起使用，并支持产品家族的替换。</li>
+</ul>
+</li>
+</ol>
+<p><strong>优点：</strong></p>
+<ul>
+<li>封装了对象的创建过程，降低了系统的耦合性。</li>
+<li>提高了代码的可维护性和可扩展性。</li>
+<li>符合开闭原则，对扩展开放，对修改关闭。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>引入了额外的类，增加了系统的复杂性。</li>
+<li>在增加新产品时，可能需要修改工厂类的代码，违反了开闭原则（特别是简单工厂模式）。</li>
+</ul>
+<p><strong>适用场景：</strong></p>
+<ul>
+<li>客户端不关心对象的创建过程，只关心对象的接口。</li>
+<li>系统中的一组相关对象需要一起使用，并且希望将它们的创建和使用分离。</li>
+<li>需要提供一个统一的接口来创建一组相关或相互依赖的对象。</li>
+</ul>
+</blockquote>
+</li>
+<li><p>单例模式</p>
+<blockquote>
+<p>单例模式是一种创建型设计模式，其主要目的是确保类只有一个实例，并提供全局访问点。这对于需要在系统中的多个部分共享某些资源或状态的情况非常有用。</p>
+<p><strong>优点：</strong></p>
+<ol>
+<li><strong>全局唯一性：</strong> 保证一个类只有一个实例，确保全局唯一访问点。</li>
+<li><strong>延迟实例化：</strong> 仅在需要时创建实例，提高性能。</li>
+<li><strong>节省资源：</strong> 由于只有一个实例，节省了系统资源。</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li><strong>全局状态：</strong> 单例模式引入了全局状态，可能对测试造成影响。</li>
+<li><strong>滥用：</strong> 如果过度使用单例模式，可能会导致系统中的耦合问题。</li>
+</ol>
+<p><strong>适用场景：</strong></p>
+<ol>
+<li><strong>需要全局唯一性的对象：</strong> 例如配置管理、日志管理等。</li>
+<li><strong>资源共享：</strong> 在整个系统中共享资源，避免多次创建相同的对象。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>建造者模式</p>
+<blockquote>
+<p>建造者模式是一种创建型设计模式，旨在将一个复杂对象的构建与其表示分离，使得同样的构建过程可以创建不同的表示。</p>
+<p><strong>优点：</strong></p>
+<ol>
+<li><strong>分离构建过程：</strong> 允许你改变一个产品的内部表示，同时不改变构建过程。</li>
+<li><strong>更好的控制：</strong> 可以更好地控制构建过程，根据需要构建不同的对象。</li>
+<li><strong>简化构建过程：</strong> 客户端代码只需指定需要构建的类型和内容，而无需关心具体的构建过程。</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li><strong>代码量增加：</strong> 引入了新的构建者类和指挥者类，可能导致代码量的增加。</li>
+</ol>
+<p><strong>适用场景：</strong></p>
+<ol>
+<li><strong>复杂对象的构建：</strong> 当一个对象的构建过程比较复杂，而且构建过程需要独立于其表示时，可以使用建造者模式。</li>
+<li><strong>需要更好的构建控制：</strong> 当需要更好地控制构建过程，或者需要构建不同表示的对象时，建造者模式是一个不错的选择。</li>
+</ol>
+<p>注意：</p>
+<p>&#x3D;&#x3D;工厂模式关注创建对象的过程，主要解决对象实例化的封装问题。&#x3D;&#x3D;</p>
+<p>&#x3D;&#x3D;建造者模式关注创建复杂对象的过程，主要解决构建过程的复杂性和灵活性问题。&#x3D;&#x3D;</p>
+<p>这个地方可以去想一下MC中的那个ButtonWidge的创建，那个就是使用builder进行创建的。</p>
+</blockquote>
+</li>
+<li><p>原型模式</p>
+<blockquote>
+<p>原型模式是一种创建型设计模式，其主要目的是通过复制现有对象来创建新的对象，而无需直接使用其构造函数。这种模式涉及创建新对象的过程，通过克隆（复制）现有对象而不是通过实例化新对象来完成。</p>
+<p><strong>主要角色和结构：</strong></p>
+<ol>
+<li><strong>原型接口（Prototype Interface）：</strong> 定义了克隆方法的接口，通常包含一个 <code>clone</code> 方法。</li>
+<li><strong>具体原型类（Concrete Prototype）：</strong> 实现了原型接口的具体类。该类的实例可以通过克隆创建新的实例。</li>
+<li><strong>客户端（Client）：</strong> 使用原型模式的客户端，通过克隆现有对象来创建新的对象。</li>
+</ol>
+<p><strong>工作原理：</strong></p>
+<ol>
+<li>客户端通过原型接口请求克隆方法，传递一个现有对象的实例。</li>
+<li>具体原型类实现克隆方法，将自身复制一份，生成一个新的实例。</li>
+<li>客户端接收到克隆的对象，得到一个新的实例，而不需要了解对象是如何创建的。</li>
+</ol>
+<p><strong>优点：</strong></p>
+<ol>
+<li><strong>减少构造过程：</strong> 避免了直接使用构造函数创建对象，通过复制现有对象可以更加灵活、高效地创建新对象。</li>
+<li><strong>简化对象创建：</strong> 对象的创建过程被封装在原型类中，客户端只需要关心克隆方法的调用。</li>
+</ol>
+<p><strong>适用场景：</strong></p>
+<ol>
+<li>当一个系统需要独立于其组成部分，从而允许对这些部分进行替换时。</li>
+<li>当要实例化的类在运行时刻指定时，例如通过动态装载。</li>
+<li>当一个类的实例只能有几个不同状态组合中的一种时。</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>结构型模式</p>
+<ul>
+<li><p>适配器模式</p>
+<blockquote>
+<p>适配器模式是一种结构型设计模式，它允许将一个类的接口转换成客户端期望的另一个接口。适配器允许原本由于接口不匹配而不能一起工作的类可以协同工作。</p>
+<p><strong>主要角色和结构：</strong></p>
+<ol>
+<li><strong>目标接口（Target Interface）：</strong> 客户端期望的接口，适配器通过实现这个接口来使得被适配者能够与客户端协同工作。</li>
+<li><strong>适配器（Adapter）：</strong> 实现了目标接口，并包含一个对被适配者的引用。适配器通过调用被适配者的接口方法来实现目标接口。</li>
+<li><strong>被适配者（Adaptee）：</strong> 需要被适配的类，它的接口与目标接口不匹配。</li>
+<li><strong>客户端（Client）：</strong> 通过目标接口与适配器进行交互，而不直接与被适配者交互。</li>
+</ol>
+<p><strong>工作原理：</strong></p>
+<ol>
+<li>客户端通过目标接口与适配器交互。</li>
+<li>适配器包含一个对被适配者的引用。</li>
+<li>当客户端调用目标接口的方法时，适配器通过调用被适配者的接口方法来实现目标接口。</li>
+</ol>
+<p><strong>优点：</strong></p>
+<ol>
+<li><strong>解耦性：</strong> 允许客户端与被适配者独立工作，无需知道被适配者的具体实现。</li>
+<li><strong>复用性：</strong> 可以复用已有的类，而无需修改其源代码。</li>
+<li><strong>灵活性：</strong> 可以动态选择适配器，使得客户端可以适配多个不同的被适配者。</li>
+</ol>
+<p><strong>适用场景：</strong></p>
+<ol>
+<li>当你希望使用一个已经存在的类，而它的接口不符合你的需求。</li>
+<li>当你希望创建一个可复用的类，与一些不相关的类协同工作。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>装饰器模式</p>
+<blockquote>
+<p>装饰器模式是一种结构型设计模式，它允许动态地将责任附加到对象上。装饰器提供了一种灵活的方式，可以在不改变原始对象接口的情况下，对其功能进行扩展或修改。</p>
+<p><strong>主要角色和结构：</strong></p>
+<ol>
+<li><strong>组件（Component）：</strong> 定义一个对象接口，可以动态地给对象添加职责。</li>
+<li><strong>具体组件（Concrete Component）：</strong> 实现了组件接口的具体对象，是被装饰的原始对象。</li>
+<li><strong>装饰器（Decorator）：</strong> 持有一个指向组件对象的引用，并实现与组件接口一致的接口。可以有多个具体装饰器，它们可以按一定的顺序进行组合。</li>
+<li><strong>具体装饰器（Concrete Decorator）：</strong> 实现了装饰器接口的具体对象，包含一个指向被装饰对象的引用。具体装饰器通常会在调用父类的方法前后添加额外的功能。</li>
+</ol>
+<p><strong>工作原理：</strong></p>
+<ol>
+<li><strong>客户端通过组件接口与具体组件进行交互。</strong></li>
+<li><strong>装饰器类继承自组件接口，持有一个指向具体组件的引用。</strong></li>
+<li><strong>具体装饰器通过调用被装饰对象的方法，并在调用前后添加额外的功能。</strong></li>
+</ol>
+<p><strong>优点：</strong></p>
+<ol>
+<li><strong>灵活性：</strong> 可以动态地添加或修改对象的行为，而无需修改其源代码。</li>
+<li><strong>复用性：</strong> 可以通过组合不同的装饰器实现不同的行为组合，提高代码的复用性。</li>
+<li><strong>开闭原则：</strong> 可以在不修改现有代码的情况下扩展对象的行为。</li>
+</ol>
+<p><strong>适用场景：</strong></p>
+<ol>
+<li>当你希望动态地给对象添加额外的职责，而不影响其接口。</li>
+<li>当你希望通过组合不同的装饰器，实现不同的行为组合。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>代理模式</p>
+<blockquote>
+<p>代理模式是一种结构型设计模式，它允许通过代理对象控制对另一个对象的访问。这种类型的设计模式属于结构型模式，因为它通过组合的方式创建了一个包含原始对象的代理对象。</p>
+<p><strong>工作原理：</strong></p>
+<ol>
+<li><strong>客户端通过与代理对象接口交互。</strong></li>
+<li><strong>代理对象包含一个指向真实对象的引用。</strong></li>
+<li><strong>代理对象在处理客户端请求时，可以在调用真实对象的方法前后添加额外的逻辑。</strong></li>
+</ol>
+<p><strong>优点：</strong></p>
+<ol>
+<li><strong>控制访问：</strong> 代理可以控制对真实对象的访问，例如在访问前后执行一些操作。</li>
+<li><strong>解耦：</strong> 代理模式可以将客户端与真实对象解耦，客户端只需与代理对象交互即可。</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li><strong>增加复杂性：</strong> 引入了代理对象，可能会增加系统的复杂性。</li>
+<li><strong>性能损耗：</strong> 在一些情况下，代理模式可能引入额外的性能开销。</li>
+</ol>
+<p><strong>适用场景：</strong></p>
+<ol>
+<li>当需要控制对对象的访问，并在访问前后执行一些额外的操作时。</li>
+<li>当需要在不改变现有代码的情况下，引入新的功能或修改原有功能时。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>外观模式</p>
+<blockquote>
+<p>外观模式（Facade Pattern）是一种结构型设计模式，它提供了一个简化系统接口的高层接口，使系统更易于使用。外观模式定义了一个高层接口，这个接口使得子系统更容易使用。</p>
+<p><strong>主要角色和结构：</strong></p>
+<ol>
+<li><strong>外观（Facade）：</strong> 提供了一个简化系统操作的高层接口，它包含了对子系统各组件的引用，并负责协调它们的工作。</li>
+<li><strong>子系统（Subsystems）：</strong> 实现了系统的各个组件，处理外观对象指派的任务。子系统并不知道外观的存在，对于子系统而言，外观仅仅是另一个客户端而已。</li>
+</ol>
+<p><strong>工作原理：</strong></p>
+<ol>
+<li><strong>客户端通过与外观对象交互来完成任务。</strong></li>
+<li><strong>外观对象将任务分派给子系统的各个组件，协调它们的工作。</strong></li>
+<li><strong>客户端无需直接与子系统的各个组件交互，而是通过外观对象简化了与系统的交互。</strong></li>
+</ol>
+<p><strong>优点：</strong></p>
+<ol>
+<li><strong>简化接口：</strong> 外观模式提供了一个简化的高层接口，隐藏了系统的复杂性。</li>
+<li><strong>解耦：</strong> 外观模式将客户端与子系统解耦，客户端无需了解子系统的具体实现。</li>
+<li><strong>易于使用：</strong> 外观模式使得系统更易于使用，客户端只需与外观对象交互，而无需了解系统内部的复杂逻辑。</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li><strong>违反开闭原则：</strong> 如果需要添加新的功能，可能需要修改外观类。</li>
+<li><strong>不符合单一职责原则：</strong> 外观对象通常需要知道子系统的各个组件，可能承担过多的职责。</li>
+</ol>
+<p><strong>适用场景：</strong></p>
+<ol>
+<li>当需要为复杂的子系统提供一个简化的接口时。</li>
+<li>当希望将系统的复杂性与客户端分离，使客户端更容易使用系统时。</li>
+<li>当需要划分层次结构时，使用外观模式定义每个层的入口点。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>桥接模式</p>
+<blockquote>
+<p>桥接模式（Bridge Pattern）是一种结构型设计模式，它将一个抽象部分与其实现部分分离，使它们可以独立地变化。这种模式涉及到一个作为桥梁的接口，使得抽象部分和实现部分可以独立地变化而互不影响。</p>
+<p><strong>优点：</strong></p>
+<ol>
+<li><strong>解耦抽象和实现：</strong> 桥接模式将抽象和实现分离，使它们可以独立变化，降低了它们之间的耦合度。</li>
+<li><strong>可扩展性：</strong> 可以独立地扩展抽象和实现，不影响彼此。</li>
+<li><strong>隐藏实现细节：</strong> 客户端只需关心抽象部分，不需要了解具体的实现细节。</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li><strong>增加复杂性：</strong> 桥接模式增加了系统的复杂性，需要额外定义抽象和实现两个层次。</li>
+</ol>
+<p><strong>适用场景：</strong></p>
+<ol>
+<li>当系统有多个独立变化的维度，且希望独立管理这些维度时。</li>
+<li>当希望在抽象和实现部分之间建立稳定的连接，但又不希望使用继承时。</li>
+<li>当希望在多个层次之间建立联系时，例如 GUI 系统中的窗口和不同操作系统的实现。</li>
+</ol>
+<p><strong>示例：</strong> 考虑一个图形绘制的例子，有不同的图形（圆、矩形）和不同的颜色（红色、蓝色），桥接模式可以将图形和颜色分离，通过组合的方式创建不同的图形。这样，即使增加新的图形或颜色，也不会影响彼此。</p>
+</blockquote>
+</li>
+<li><p>组合模式</p>
+<blockquote>
+<p>组合模式（Composite Pattern）是一种结构型设计模式，它允许将对象组合成树形结构来表示“部分-整体”的层次结构。通过组合，客户端可以统一对待单个对象和对象的组合。</p>
+<p><strong>主要角色和结构：</strong></p>
+<ol>
+<li><strong>组件（Component）：</strong> 定义组合中所有对象的通用接口，可以是叶子节点或容器节点。</li>
+<li><strong>叶子节点（Leaf）：</strong> 表示组合中的叶子节点对象，它没有子节点。</li>
+<li><strong>容器节点（Composite）：</strong> 包含叶子节点和&#x2F;或其他容器节点的对象，可以递归地定义子节点。</li>
+</ol>
+<p><strong>优点：</strong></p>
+<ol>
+<li><strong>统一接口：</strong> 客户端对待单个对象和组合对象的方式是一致的，不需要区分。</li>
+<li><strong>灵活性：</strong> 可以在运行时动态地添加或移除子节点，灵活地组织和管理对象。</li>
+<li><strong>可扩展性：</strong> 可以轻松地添加新的叶子节点或容器节点，扩展系统功能。</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li><strong>限制类型：</strong> 定义统一接口可能会限制组件的类型，因为需要满足组件接口的要求。</li>
+</ol>
+<p><strong>适用场景：</strong></p>
+<ol>
+<li>当希望客户端统一处理单个对象和组合对象时。</li>
+<li>当对象的部分-整体层次结构形成树状结构，并且希望客户端能够一致地处理整体和部分时。</li>
+<li>当希望动态地组织和管理对象时。</li>
+</ol>
+<p><strong>示例：</strong> 考虑一个组织结构的例子，其中有部门、员工等不同的对象，可以使用组合模式将它们组织成一个树形结构。这样，可以通过统一的接口处理整个组织，不论是部门还是员工。</p>
+</blockquote>
+</li>
+<li><p>享元模式</p>
+<blockquote>
+<p>享元模式（Flyweight Pattern）是一种结构型设计模式，旨在通过共享尽可能多的相似对象以减少内存和计算开销。它适用于大量细粒度的对象，通过共享这些对象的公共部分来节省内存。</p>
+<p><strong>主要角色和结构：</strong></p>
+<ol>
+<li><strong>享元接口（Flyweight）：</strong> 定义了具体享元类需要实现的接口，通过这个接口可以接受并作用于外部状态。</li>
+<li><strong>具体享元（ConcreteFlyweight）：</strong> 实现了享元接口，包含内部状态和共享的外部状态。具体享元对象需要是可共享的。</li>
+<li><strong>不可共享的享元（UnsharedConcreteFlyweight）：</strong> 通常不被共享的具体享元类，包含内部状态但不包含外部状态。</li>
+<li><strong>享元工厂（FlyweightFactory）：</strong> 负责创建和管理享元对象，提供对享元对象的访问。在创建享元对象时，如果存在相同的对象，可以返回已存在的对象，否则创建新对象。</li>
+</ol>
+<p><strong>工作原理：</strong></p>
+<ol>
+<li><strong>内部状态（Intrinsic State）：</strong> 存储在享元对象内部且不会随外部环境改变的状态。</li>
+<li><strong>外部状态（Extrinsic State）：</strong> 存储在享元对象外部且会随外部环境改变的状态。需要在使用时由客户端传递给享元对象。</li>
+</ol>
+<p><strong>优点：</strong></p>
+<ol>
+<li><strong>节省内存：</strong> 通过共享相似对象的内部状态，减少了存储大量相似对象所需的内存。</li>
+<li><strong>提高性能：</strong> 减少了相似对象的数量，降低了系统的复杂度，提高了性能。</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li><strong>增加复杂性：</strong> 引入了共享机制，可能会使系统变得更加复杂。</li>
+<li><strong>外部状态管理：</strong> 外部状态需要在使用时进行传递，可能需要复杂的管理机制。</li>
+</ol>
+<p><strong>适用场景：</strong></p>
+<ol>
+<li>当一个应用程序使用大量相似对象，占用大量内存时。</li>
+<li>对象的大多数状态可以变为外部状态。</li>
+<li>对象的外部状态相对独立，而且可以在多个对象间共享。</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>行为型模式</p>
+<ul>
+<li><p>策略模式</p>
+<blockquote>
+<p>策略模式（Strategy Pattern）是一种行为型设计模式，它定义了一系列算法，将每个算法封装并使它们可以互换，使得算法的变化独立于使用算法的客户端。</p>
+<p><strong>主要角色和结构：</strong></p>
+<ol>
+<li><strong>上下文（Context）：</strong> 维护一个对策略对象的引用，并可以切换当前的策略。</li>
+<li><strong>策略接口（Strategy）：</strong> 定义了所有支持的算法的公共接口。具体策略类实现了这个接口。</li>
+<li><strong>具体策略（Concrete Strategy）：</strong> 实现了策略接口的具体算法。</li>
+</ol>
+<p><strong>工作原理：</strong></p>
+<ol>
+<li><strong>定义一组算法：</strong> 将一组算法定义成策略接口。</li>
+<li><strong>封装每个算法：</strong> 将每个算法封装成具体策略类。</li>
+<li><strong>维护一个上下文：</strong> 上下文类维护一个对策略对象的引用，可以在运行时切换策略。</li>
+<li><strong>客户端使用：</strong> 客户端通过上下文使用不同的策略，可以动态选择合适的策略。</li>
+</ol>
+<p><strong>优点：</strong></p>
+<ol>
+<li><strong>算法独立性：</strong> 客户端与具体算法解耦，可以独立地改变或替换算法。</li>
+<li><strong>复用性：</strong> 可以在不修改现有代码的情况下引入新的算法。</li>
+<li><strong>扩展性：</strong> 新的策略可以很容易地添加，不影响已有的策略。</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li><strong>客户端需要了解策略：</strong> 客户端需要了解所有的策略，并选择合适的策略。</li>
+</ol>
+<p><strong>适用场景：</strong></p>
+<ol>
+<li>当一个系统有多个变化的算法，并且需要在运行时动态选择其中一个时。</li>
+<li>当一个类定义中有多种行为，可以使用策略模式来定义这些行为，使得类的对象在运行时可以选择行为。</li>
+<li>当一个系统需要动态地在几种算法中选择一种。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>模版方法模式</p>
+</li>
+<li><p>command模式</p>
+<blockquote>
+<p>Command 模式是一种行为设计模式，它将一个请求封装成一个对象，从而允许使用不同的请求、队列或日志来参数化客户端对象。它也支持可撤销的操作。</p>
+<p><strong>结构：</strong></p>
+<ul>
+<li><strong>Command（命令）：</strong> 声明了执行操作的接口。</li>
+<li><strong>ConcreteCommand（具体命令）：</strong> 实现 Command 接口，具体命令对象，通常会包含接收者对象，并调用接收者的方法来执行具体操作。</li>
+<li><strong>Client（客户端）：</strong> 创建命令对象并设置其接收者。</li>
+<li><strong>Invoker（调用者）：</strong> 要求命令执行请求。</li>
+<li><strong>Receiver（接收者）：</strong> 知道如何实施与执行一个请求相关的操作。</li>
+</ul>
+<p><strong>工作流程：</strong></p>
+<ol>
+<li><strong>客户端创建命令对象：</strong> 客户端创建具体的命令对象，并设置该命令对象的接收者。</li>
+<li><strong>命令传递给调用者：</strong> 客户端将命令对象传递给调用者。</li>
+<li><strong>调用者执行命令：</strong> 调用者执行命令，命令对象调用接收者的方法执行具体操作。</li>
+</ol>
+<p><strong>优点：</strong></p>
+<ul>
+<li><strong>解耦发送者和接收者：</strong> 命令模式通过将请求发送者和请求接收者解耦，使得发送者不需要知道接收者的具体实现。</li>
+<li><strong>支持撤销和重做：</strong> 可以轻松实现命令的撤销和重做。</li>
+</ul>
+<p><strong>适用场景：</strong></p>
+<ul>
+<li>需要将请求发送者和请求接收者解耦的情况。</li>
+<li>需要支持撤销和重做操作的情况。</li>
+<li>需要在不同时间指定请求、排队请求、或者对请求进行参数化的情况。</li>
+</ul>
+<p><strong>例子：</strong> 假设我们有一个简单的遥控器（调用者），它有几个按钮，每个按钮对应一个命令。每个命令都与一个特定的电器（接收者）关联，比如电灯、音响等。按下按钮后，命令会执行相应的操作，比如打开电灯、关闭音响。这样，我们就可以通过修改命令对象，而不用修改遥控器来增加或修改功能。这就是 Command 模式的应用。</p>
+</blockquote>
+</li>
+<li><p>中介者模式</p>
+<blockquote>
+<p>中介者模式（Mediator Pattern）是一种行为设计模式，它定义了一个对象，该对象封装了一组对象之间的交互方式。中介者模式使对象之间的通信变得松散，从而减少对象之间的直接依赖关系。</p>
+<p>在中介者模式中，对象不再直接相互通信，而是通过中介者进行通信。这可以减少对象之间的耦合，使系统更容易维护和扩展。中介者模式通常用于处理对象之间复杂的通信和控制流程。</p>
+<p>典型的中介者模式包括一个中介者对象，多个同事对象，这些同事对象通过中介者进行通信。当一个同事对象发生变化时，它不直接通知其他同事对象，而是通过中介者进行通知，由中介者来协调处理。</p>
+<p>中介者模式的优点包括降低了对象之间的耦合度，使系统更易于维护和扩展。然而，过度使用中介者模式可能导致中介者对象过于庞大复杂，不利于维护。</p>
+<p>中介者模式的经典实例是图形用户界面（GUI）框架，其中用户界面组件通过中介者进行交互。</p>
+</blockquote>
+</li>
+<li><p>责任链模式</p>
+<blockquote>
+<p>责任链模式（Chain of Responsibility Pattern）是一种行为设计模式，它允许你将请求沿着处理者链进行发送，直至有一个处理者处理该请求。这种模式将接收者对象连接成一条链，每个接收者对象都包含对另一个接收者对象的引用。如果一个对象不能处理请求，它会将请求传递给链上的下一个接收者。</p>
+<p>主要参与对象包括：</p>
+<ol>
+<li><strong>处理者接口（Handler）</strong>：定义了处理请求的接口，通常包含一个处理请求的方法（如<code>handleRequest</code>）。</li>
+<li><strong>具体处理者类（ConcreteHandler）</strong>：实现了处理者接口，负责处理它所能处理的请求，以及设置下一个处理者的引用。</li>
+</ol>
+<p>责任链模式的特点包括：</p>
+<ul>
+<li>请求者并不知道是哪个对象处理了它的请求，处理者的顺序可以动态改变。</li>
+<li>可以灵活地添加或修改处理者，不影响已有的处理者和客户端代码。</li>
+<li>请求可能因为链上的所有处理者都无法处理而被忽略，也可以被链上的某个处理者成功处理。</li>
+</ul>
+<p>责任链模式通常应用于以下场景：</p>
+<ul>
+<li>多个对象可以处理同一请求，但具体哪个对象处理由运行时决定。</li>
+<li>在不明确指定接收者的情况下，向多个对象中的一个提交一个请求。</li>
+<li>可以动态指定处理请求的对象集合。</li>
+</ul>
+</blockquote>
+</li>
+<li><p>状态模式</p>
+<blockquote>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer"><div class="post-widgets">
+      <div id="needsharebutton-postbottom">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    </div><script src="//sdk.jinrishici.com/v2/browser/jinrishici.js"></script>
+<script>
+  jinrishici.load((result) => {
+    let jrsc = document.getElementById('jrsc');
+    const data = result.data;
+    let author = data.origin.author;
+    let title = '《' + data.origin.title + '》';
+    let content = data.content.substr(0, data.content.length - 1);
+    let dynasty = data.origin.dynasty.substr(0, data.origin.dynasty.length - 1);
+    jrsc.innerText = content + ' -- ' + dynasty + '·' + author + title;
+  });
+</script>
+<div style="text-align: center"><span id="jrsc" >正在加载今日诗词....</span></div>
+
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Eric
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://eric-edward.github.io/2024/01/01/%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/" title="软件体系结构复习">http://eric-edward.github.io/2024/01/01/软件体系结构复习/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/posts/" rel="tag"># posts</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/" rel="prev" title="科软高级软件工程课堂问答">
+                  <i class="fa fa-angle-left"></i> 科软高级软件工程课堂问答
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/01/22/%E5%9F%BA%E4%BA%8EVScode%E5%92%8CCMake%E8%BF%9B%E8%A1%8Cc-c-%E5%BC%80%E5%8F%91/" rel="next" title="基于VScode和CMake进行c/c++开发">
+                  基于VScode和CMake进行c/c++开发 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Eric</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">26k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">44 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"https://my-hexo-ijnwgpewe-eric-edward.vercel.app/","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"libUrl":"https://unpkg.com/@waline/client@v2/dist/waline.js","el":"#waline","comment":true,"path":"/2024/01/01/%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+      pbOptions = {};
+        pbOptions.iconStyle = "default";
+        pbOptions.boxForm = "horizontal";
+        pbOptions.position = "bottomLeft";
+        pbOptions.networks = "Wechat,Douban,QQZone,Weibo,Twitter,Facebook";
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
