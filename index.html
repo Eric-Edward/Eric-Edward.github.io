@@ -352,7 +352,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-02-24 01:24:04" itemprop="dateModified" datetime="2024-02-24T01:24:04+08:00">2024-02-24</time>
+      <time title="修改时间：2024-02-25 01:15:46" itemprop="dateModified" datetime="2024-02-25T01:15:46+08:00">2024-02-25</time>
     </span>
 
   
@@ -376,14 +376,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5.7k</span>
+      <span>6.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>10 分钟</span>
+      <span>11 分钟</span>
     </span>
 </div>
 
@@ -590,13 +590,13 @@ defineProps&lt;&#123; ren: Person &#125;&gt;()
 &lt;&#x2F;template&gt;
 &lt;script lang&#x3D;&quot;ts&quot; setup&gt;
 import type &#123;Person&#125; from &quot;@&#x2F;types&quot;;
-
+   
 withDefaults(defineProps&lt;&#123; ren?: Person &#125;&gt;(), &#123;
   ren: () &#x3D;&gt; (&#123;name: &quot;eric&quot;, age: 20, id: &quot;12345566778888676&quot;&#125;)
 &#125;)
 &lt;&#x2F;script&gt;
 &lt;style scoped&gt;
-
+   
 &lt;&#x2F;style&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>​	这里有不少的坑，这个地方的书写相较于vue2麻烦了不止一点半点。我们这里需要使用<code>withDefaults</code>这个关键词来帮助我们设置默认值，而且默认值需要使用肩头函数返回一个对象，我试了好几次才找到返回一个对象的方法，要不就使用一个小括号包起来，要不就在大括号中写一个return然后再加上需要返回的对象即可。</p>
@@ -611,6 +611,32 @@ withDefaults(defineProps&lt;&#123; ren?: Person &#125;&gt;(), &#123;
 <p>​	vue3生命周期的创建阶段时通过setup来完成了，而且我们在使用这个钩子函数的时候需要自己手动的引入这些函数才行。</p>
 <p>&#x3D;&#x3D;注意，不管是vue2还是vue3都不止这几个钩子，还有其他的钩子，我们会在后面的学习中不断的遇到。&#x3D;&#x3D;</p>
 <h1 id="自定义hooks"><a href="#自定义hooks" class="headerlink" title="自定义hooks"></a>自定义hooks</h1><p>​	我们可以自己定义对于不同数据的处理方法，并且把不同的属性和方法封装在一个文件中，形成一个useXXX的hook，我们只需要在需要使用的文件中进行调用即可。同时，这种方法也体现出了&#x3D;&#x3D;高内聚、低耦合&#x3D;&#x3D;的思想</p>
+<h1 id="vue3路由"><a href="#vue3路由" class="headerlink" title="vue3路由"></a>vue3路由</h1><h2 id="路由使用的步骤"><a href="#路由使用的步骤" class="headerlink" title="路由使用的步骤"></a>路由使用的步骤</h2><p>​	在vue3中，路由使用是非常简单的。一共有一下几个步骤</p>
+<blockquote>
+<ol>
+<li>我们划分好导航区、内容区</li>
+<li>引入路由的内容，如RouterLink、RouterView等</li>
+<li>编写路由的规则，确定好每个路由对应的组件</li>
+<li>合起来</li>
+</ol>
+</blockquote>
+<h2 id="两个注意点"><a href="#两个注意点" class="headerlink" title="两个注意点"></a>两个注意点</h2><blockquote>
+<ol>
+<li>注意区分路由组件和一般组件，路由组件一般放在pages和views里面，而一般组件通常存放在components里面。&#x3D;&#x3D;一般组件是直接书写名字来使用，而路由组件使用实时渲染来使用&#x3D;&#x3D;</li>
+<li>路由组件通常在不使用的时候会被卸载掉，在使用时进行挂载。</li>
+</ol>
+</blockquote>
+<h2 id="路由器的工作模式"><a href="#路由器的工作模式" class="headerlink" title="路由器的工作模式"></a>路由器的工作模式</h2><p>​	路由器的工作模式主要有两种，一种是history模式，一种是hash模式。</p>
+<img src="/2024/01/23/vue-ts%E5%AD%A6%E4%B9%A0/%E6%88%AA%E5%B1%8F2024-02-24%2022.58.56.png" class="">
+
+<p>&#x3D;&#x3D;SEO 是搜索引擎优化（Search Engine Optimization）的缩写，是一种通过优化网站内容、结构和其他相关因素，以提高网站在搜索引擎中排名和可见性的技术和策略。SEO 的目标是使网站在搜索引擎中获得更高的排名，从而增加网站的流量、提高用户的访问量和质量，进而达到增加销售、推广品牌或实现其他业务目标的目的。&#x3D;&#x3D;</p>
+<h2 id="to的两种写法"><a href="#to的两种写法" class="headerlink" title="to的两种写法"></a>to的两种写法</h2><ul>
+<li><p>第一种就是to后面添加一个字符串</p>
+<pre class="line-numbers language-vue" data-language="vue"><code class="language-vue">&lt;RouterLink to&#x3D;&quot;&#x2F;home&quot;&gt;主目录&lt;&#x2F;RouterLink&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>第二种写法如下</p>
+<pre class="line-numbers language-vue" data-language="vue"><code class="language-vue">&lt;RouterLink :to&#x3D;&#123;path:&#39;&#x2F;home&#39;&#125;&gt;主目录&lt;&#x2F;RouterLink&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
 
       
     </div>
@@ -1202,13 +1228,13 @@ withDefaults(defineProps&lt;&#123; ren?: Person &#125;&gt;(), &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">26k</span>
+    <span title="站点总字数">27k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">44 分钟</span>
+    <span title="站点阅读时长">45 分钟</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
