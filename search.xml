@@ -138,8 +138,8 @@
 <h1 id="Jenkins内容"><a href="#Jenkins内容" class="headerlink" title="Jenkins内容"></a>Jenkins内容</h1><p>​	注意docker pipeline是我们在Jenkinsfile中需要镜像时，直接使用docker的镜像时所需要的工具。</p>
 <h2 id="Jenkins流水线使用docker启动sidecar容器"><a href="#Jenkins流水线使用docker启动sidecar容器" class="headerlink" title="Jenkins流水线使用docker启动sidecar容器"></a>Jenkins流水线使用docker启动sidecar容器</h2><img src="/2024/01/31/k8s/%E6%88%AA%E5%B1%8F2024-02-22%2000.58.02.png" class="">
 
-<p>​	这个地方再去看看docker  pipeline之后再做结论，感觉是docker pipeline实现的这个功能。</p>
-]]></content>
+<p>​	<del>这个地方再去看看docker  pipeline之后再做结论，感觉是docker pipeline实现的这个功能。</del>应该是Jenkins在运行docker容器的时候，自动把Jenkins的家目录挂载到了容器上面，不过我没有找到具体是如何执行这个容器的。</p>
+<h1 id="K8S内容"><a href="#K8S内容" class="headerlink" title="K8S内容"></a>K8S内容</h1>]]></content>
       <tags>
         <tag>posts</tag>
       </tags>
@@ -1243,6 +1243,21 @@ return p;<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
 <li>面向对象开发的过程模型和结构化开发的过程模型，从产出产品的角度来说明？</li>
 <li>过程论和对象论的区别？</li>
 </ol>
+]]></content>
+      <tags>
+        <tag>posts</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>golang</title>
+    <url>/2024/02/26/golang/</url>
+    <content><![CDATA[<h1 id="学习过程中的一些小知识点"><a href="#学习过程中的一些小知识点" class="headerlink" title="学习过程中的一些小知识点"></a>学习过程中的一些小知识点</h1><ul>
+<li><p>Goroutine之间的通信并不是共享一段内存，在这段内存中来保存数据设置锁。而是通过在进程之间通信来实现共享</p>
+<blockquote>
+<p>Don’t communicate by sharing memory, share memory by communicating</p>
+</blockquote>
+</li>
+</ul>
 ]]></content>
       <tags>
         <tag>posts</tag>
