@@ -26,11 +26,13 @@
 <meta property="og:site_name" content="Eric&#39;s Blog">
 <meta property="og:description" content="Golang学习笔记心得">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://eric-edward.github.io/2024/02/26/golang/image-20240302210841089.png">
 <meta property="article:published_time" content="2024-02-26T15:44:13.000Z">
-<meta property="article:modified_time" content="2024-03-01T16:45:44.166Z">
+<meta property="article:modified_time" content="2024-03-02T16:42:37.544Z">
 <meta property="article:author" content="Eric">
 <meta property="article:tag" content="posts">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://eric-edward.github.io/2024/02/26/golang/image-20240302210841089.png">
 
 
 <link rel="canonical" href="http://eric-edward.github.io/2024/02/26/golang/">
@@ -245,7 +247,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-02 00:45:44" itemprop="dateModified" datetime="2024-03-02T00:45:44+08:00">2024-03-02</time>
+      <time title="修改时间：2024-03-03 00:42:37" itemprop="dateModified" datetime="2024-03-03T00:42:37+08:00">2024-03-03</time>
     </span>
 
   
@@ -269,7 +271,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>125</span>
+      <span>795</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -292,6 +294,31 @@
 <blockquote>
 <p>Don’t communicate by sharing memory, share memory by communicating</p>
 </blockquote>
+</li>
+<li><p>在Google中，搜索一个关键词时，会搜索所有相关的内容（图片、视频等）。而且对于每个类型都会进行多次的搜索，而对于相同类型的内容，我们只采取第一次的数据。<img src="/2024/02/26/golang/image-20240302210841089.png" class="" title="image-20240302210841089">从这里我们就可以看出来，我们在通道c收到了一次数据之后就直接返回了。</p>
+</li>
+<li><p>在每一个源文件中，全局变量会先被定义，然后是执行init（）函数最后是执行main（），所以我们可以在init函数中完成初始化的工作。&#x3D;&#x3D;注意，如果是别的文件使用我们当前文件中的变量时，在导入包的过程中就会执行当前包中的init()函数，来初始化需要引入的变量。然后如果导入的文件中也有变量的定义和初始化的话，时在需要导入的完成之后在进行处理。&#x3D;&#x3D;</p>
+</li>
+<li><p>&#x3D;&#x3D;匿名函数&#x3D;&#x3D;</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token string">"fmt"</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	ans <span class="token operator">:=</span> <span class="token keyword">func</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> x <span class="token operator">+</span> y
+	<span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+
+	sub <span class="token operator">:=</span> <span class="token keyword">func</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> x <span class="token operator">-</span> y
+	<span class="token punctuation">&#125;</span>
+	ans2 <span class="token operator">:=</span> <span class="token function">sub</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+	
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>ans<span class="token punctuation">,</span> ans2<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>从这里我们可以看到，我们可以直接定义一个没有具体名称的函数，并且在函数定义的后面加上小括号进行调用。或者我们可以讲一个匿名函数绑定一个名称，通过这个名称去进行调用。而全局匿名函数的使用就是在文件中直接定义函数，并将函数给到一个变量。&#x3D;&#x3D;不过用的最多的方法就是直接在函数中进行匿名函数的定义和使用&#x3D;&#x3D;</p>
 </li>
 </ul>
 
@@ -383,13 +410,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">27k</span>
+    <span title="站点总字数">28k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">45 分钟</span>
+    <span title="站点阅读时长">47 分钟</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
