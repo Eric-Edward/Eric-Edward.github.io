@@ -1287,6 +1287,50 @@ return p;<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
 <li><p>工厂模式就是，我在一个包中不直接暴露我的结构体，而是通过一个函数来返回一个结构体的指针。这样外部的文件就无法直接的操作我包中定义的结构体了</p>
 </li>
 <li><p>go中的封装、继承和多态</p>
+<blockquote>
+<p>在go中，&#x3D;&#x3D;因为go又一个大写字母会从当前文件进行暴露的特性，所以我们可以根据这个特性来进行设计（其实就是通过包来实现封装）&#x3D;&#x3D;。我们可以创建一个结构体，让我们的属性变量设置小写的字母，这样我们在暴露出结构体的时候，外部用的用户无法直接的操作我们的隐藏的变量。然后我们可以通过方法来获取一个结构体内部的相关属性。</p>
+</blockquote>
+</li>
+<li><p>Go 的继承是通过在一个结构体中使用另外一个结构体来进行实现的。</p>
+<blockquote>
+<p>不过需要注意的是，如果这两个结构体的定义是在一个包中的话，那么引用别人的结构体是能够直接访问到被引用的结构体的，但是如果两者不在一个包中，那么只能通过GET函数来进行获取</p>
+</blockquote>
+</li>
+<li><p>Defer 、panic和recover</p>
+<blockquote>
+<p>注意defer 有一下三个特点</p>
+<ol>
+<li><p>defer语句中的参数在运行到defer的语句所在行时进行计算</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    i <span class="token operator">:=</span> <span class="token number">0</span>
+    <span class="token keyword">defer</span> fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+    i<span class="token operator">++</span>
+    <span class="token keyword">return</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>例如上面这个案例，最终将会输出0</p>
+</li>
+<li><p>延迟函数是一个后进先出的执行过程，例子如下</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">b</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">defer</span> fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我感觉因为go的defer是使用stack来保存相关的函数的，所以最后压入栈的会先被执行</p>
+</li>
+<li><p>延迟函数可以修改返回值</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">c</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">defer</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> i<span class="token operator">++</span> <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token number">1</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们从这个例子中，可以看到c()函数会先返回一个1，然后延迟函数一执行就会把i修改为2。所以我感觉defer 语句如果是一个函数的话，那这个函数就是一个闭包，他会持续的引用原函数中的变量，直至闭包结束。</p>
+</li>
+</ol>
+<p>Panic：恐慌可以由程序员执行调用，也可以在程序发生运行时错误时出发。恐慌发生时，正常的空自流会中止，但是defer函数会正常的继续执行。然后等到所有的defer语句执行完毕后，如果恐慌没有被恢复，那么会继续向函数的调用者传递恐慌。</p>
+<p>Recover：会中止函数的恐慌，然后正常的执行控制流的内容。</p>
+</blockquote>
 </li>
 </ul>
 ]]></content>
