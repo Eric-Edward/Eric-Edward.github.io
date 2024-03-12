@@ -1,6 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>golang</title>
+    <url>/2024/02/26/golang/</url>
+    <content><![CDATA[<h1 id="学习过程中的一些小知识点"><a href="#学习过程中的一些小知识点" class="headerlink" title="学习过程中的一些小知识点"></a>学习过程中的一些小知识点</h1><ul>
+<li><p>Goroutine之间的通信并不是共享一段内存，在这段内存中来保存数据设置锁。而是通过在进程之间通信来实现共享</p>
+<blockquote>
+<p>Don’t communicate by sharing memory, share memory by communicating</p>
+</blockquote>
+</li>
+<li><p>在Google中，搜索一个关键词时，会搜索所有相关的内容（图片、视频等）。而且对于每个类型都会进行多次的搜索，而对于相同类型的内容，我们只采取第一次的数据。<img src="/2024/02/26/golang/image-20240302210841089.png" class="" title="image-20240302210841089">从这里我们就可以看出来，我们在通道c收到了一次数据之后就直接返回了。</p>
+</li>
+<li><p>在每一个源文件中，全局变量会先被定义，然后是执行init（）函数最后是执行main（），所以我们可以在init函数中完成初始化的工作。&#x3D;&#x3D;注意，如果是别的文件使用我们当前文件中的变量时，在导入包的过程中就会执行当前包中的init()函数，来初始化需要引入的变量。然后如果导入的文件中也有变量的定义和初始化的话，时在需要导入的完成之后在进行处理。&#x3D;&#x3D;</p>
+</li>
+<li><p>&#x3D;&#x3D;匿名函数&#x3D;&#x3D;</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token string">"fmt"</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	ans <span class="token operator">:=</span> <span class="token keyword">func</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> x <span class="token operator">+</span> y
+	<span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+
+	sub <span class="token operator">:=</span> <span class="token keyword">func</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> x <span class="token operator">-</span> y
+	<span class="token punctuation">&#125;</span>
+	ans2 <span class="token operator">:=</span> <span class="token function">sub</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+	
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>ans<span class="token punctuation">,</span> ans2<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>从这里我们可以看到，我们可以直接定义一个没有具体名称的函数，并且在函数定义的后面加上小括号进行调用。或者我们可以讲一个匿名函数绑定一个名称，通过这个名称去进行调用。而全局匿名函数的使用就是在文件中直接定义函数，并将函数给到一个变量。&#x3D;&#x3D;不过用的最多的方法就是直接在函数中进行匿名函数的定义和使用&#x3D;&#x3D;</p>
+</li>
+<li><p>闭包的相关内容：在我的理解中，闭包就是一个返回函数类型的函数，但是返回的这个函数可以引用返回她的函数中的变量。&#x3D;&#x3D;我的理解：我感觉就像是一个服务器在接受到请求之后，现在闭包中做一下响应前的一些操作，然后再去进行响应。&#x3D;&#x3D;</p>
+</li>
+<li><p>工厂模式就是，我在一个包中不直接暴露我的结构体，而是通过一个函数来返回一个结构体的指针。这样外部的文件就无法直接的操作我包中定义的结构体了</p>
+</li>
+<li><p>go中的封装、继承和多态</p>
+<blockquote>
+<p>在go中，&#x3D;&#x3D;因为go又一个大写字母会从当前文件进行暴露的特性，所以我们可以根据这个特性来进行设计（其实就是通过包来实现封装）&#x3D;&#x3D;。我们可以创建一个结构体，让我们的属性变量设置小写的字母，这样我们在暴露出结构体的时候，外部用的用户无法直接的操作我们的隐藏的变量。然后我们可以通过方法来获取一个结构体内部的相关属性。</p>
+</blockquote>
+</li>
+<li><p>Go 的继承是通过在一个结构体中使用另外一个结构体来进行实现的。</p>
+<blockquote>
+<p>不过需要注意的是，如果这两个结构体的定义是在一个包中的话，那么引用别人的结构体是能够直接访问到被引用的结构体的，但是如果两者不在一个包中，那么只能通过GET函数来进行获取</p>
+</blockquote>
+</li>
+<li><p>Defer 、panic和recover</p>
+<blockquote>
+<p>注意defer 有一下三个特点</p>
+<ol>
+<li><p>defer语句中的参数在运行到defer的语句所在行时进行计算</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    i <span class="token operator">:=</span> <span class="token number">0</span>
+    <span class="token keyword">defer</span> fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+    i<span class="token operator">++</span>
+    <span class="token keyword">return</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>例如上面这个案例，最终将会输出0</p>
+</li>
+<li><p>延迟函数是一个后进先出的执行过程，例子如下</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">b</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">defer</span> fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我感觉因为go的defer是使用stack来保存相关的函数的，所以最后压入栈的会先被执行</p>
+</li>
+<li><p>延迟函数可以修改返回值</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">c</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">defer</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> i<span class="token operator">++</span> <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token number">1</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们从这个例子中，可以看到c()函数会先返回一个1，然后延迟函数一执行就会把i修改为2。所以我感觉defer 语句如果是一个函数的话，那这个函数就是一个闭包，他会持续的引用原函数中的变量，直至闭包结束。</p>
+</li>
+</ol>
+<p>Panic：恐慌可以由程序员执行调用，也可以在程序发生运行时错误时出发。恐慌发生时，正常的空自流会中止，但是defer函数会正常的继续执行。然后等到所有的defer语句执行完毕后，如果恐慌没有被恢复，那么会继续向函数的调用者传递恐慌。</p>
+<p>Recover：会中止函数的恐慌，然后正常的执行控制流的内容。</p>
+</blockquote>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>posts</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2023/09/17/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -399,6 +489,276 @@ withDefaults(defineProps&lt;&#123; ren?: Person &#125;&gt;(), &#123;
     <title>基于VScode和CMake进行c/c++开发</title>
     <url>/2024/01/22/%E5%9F%BA%E4%BA%8EVScode%E5%92%8CCMake%E8%BF%9B%E8%A1%8Cc-c-%E5%BC%80%E5%8F%91/</url>
     <content><![CDATA[]]></content>
+      <tags>
+        <tag>posts</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>每日一句</title>
+    <url>/2024/03/12/%E6%AF%8F%E6%97%A5%E4%B8%80%E5%8F%A5/</url>
+    <content><![CDATA[<p><code>2024.3.12</code></p>
+<blockquote>
+<p>​	你跑的快，22岁有个家，身边全是赞叹。你跑的慢，30岁还在路上追求梦想。有的人为了车房拼了一辈子，有些人买辆摩托车走遍大好河山。</p>
+<p>​	你想成为怎样的人，过怎样的生活，只要你不后悔就行，并不是所有人都能在早上七点钟起床的，也别拿一碗饭来衡量一个人胃口的大小。</p>
+<p>​	有的人喜欢狼吞虎咽，有的人喜欢细嚼慢咽，允许别人做别人，也允许自己做自己，一岁有一岁的味道，跟着自己的心就好。</p>
+<p>​	不是所有选择都必须要做出正确选项的，只要你想，就可以选择你喜欢的选项。沿途的花会一直开，以后的路也是，祝你也祝我。</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>daily</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>科软高级软件工程课堂问答</title>
+    <url>/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/</url>
+    <content><![CDATA[<ol>
+<li>软件危机解决了吗？为什么？</li>
+</ol>
+<blockquote>
+<ol>
+<li>首先我们要理解软件危机产生的原因是由于”无法满足社会发展的需要”导致的</li>
+<li>软件危机包含了两方面的问题：一、如何开发软件，以满足不断增长，日趋复杂的需求。二、如何维护数量不断膨胀的软件产品。</li>
+<li>综合上面两点原因，我认为软件危机并没有解决。因为我们的社会时时刻刻在发生着变化，这就需要我们的软件要不断的就行更新迭代，同时还要不断的处理软件运行时出现的各种各样的BUG。所以软件危机并没有真正的解决。</li>
+</ol>
+</blockquote>
+<ol start="2">
+<li>工程化软件开发与编程之间可以直接画等号吗？不编程也可以实现软件开发？（例如我是项目经理）</li>
+</ol>
+<blockquote>
+<ol>
+<li>不可以直接画等号，因为工程化软件开发是开发出高质量的软件产品，满足用户需求，提高软件开发效率和可维护性。而编程仅仅指的是代码编写的阶段（即coding的过程）。</li>
+<li>不编程也可以实现软件的开发。在软件开发中，编程只是其中的一个环节。对于项目经理来说只需要带领团队做好需求分析、搭建好项目的整体框架等内容即可，不需要进行编程。</li>
+</ol>
+</blockquote>
+<ol start="3">
+<li>改变软件工程的七个关键因素，那七个？每个因素带来了哪些改变？以及新的因素有哪些？并带来了哪些影响</li>
+</ol>
+<blockquote>
+<p>Wasserman 于1996年提出了七个该改变软件工程的关键因素：</p>
+<ol>
+<li>交付时间的重要性（现在的软件交付时间是以小时来进行衡量的，而原来的软件交付时间是以月甚至年来进行衡量）</li>
+<li>计算行业经济的变化趋势（目前计算机行业是蓬勃发展的时代，有着大量的资金支持。相较于之前，计算机主要运用于军工领域，缺乏活力和资金支持 ）</li>
+<li>功能强大的桌面运算（目前的主流的系统为了方便大众的应用，都配备了优美且边界的图形界面。但是原来的计算机都是通过命令行来进行操作的，只有专业的计算机领域人员和数学相关人员来可以进行操作）</li>
+<li>互联网络（目前全世界的海量的PC都通过互联网连接在一起，每个人可以时时的分享自己的数据。但是之前的计算主要应用于军工，互联性不是很高）</li>
+<li>面向对象的技术（随着时间的推移，面向对象的技术出现，更加有利于目前的欢迎。但是原来的软件工程更加的注重过程）</li>
+<li>图形用户界面（我觉得这个和第三点很相似）</li>
+<li>瀑布模型的不可预知性（因为瀑布模型需要先进行分析，然后在根据分析出的需求。但是当中途用户需要更改需求时，瀑布模型就会不知道该如何做）</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>除了wasserman提出的因素外我还想到了一下两点因素：</p>
+<ol>
+<li>新技术和工具：不断涌现的新技术、开发工具和框架可以改变软件工程实践。例如，云计算、大数据、人工智能和区块链等技术的发展对软件开发产生了深远影响，鼓励开发人员采用新方法和工具。</li>
+<li>开发方法论：新的开发方法论和方法，如敏捷开发、DevOps、微服务架构等，已经改变了软件开发的方式。这些方法鼓励更快的迭代、更紧密的合作和更高效的交付。</li>
+</ol>
+</blockquote>
+<ol start="4">
+<li><p>超越的观点和用户的观点都是不可取的，要使用制造的观点和产品的观点。用户是在末端进行评价，这时已经不能够再改变产品。</p>
+<blockquote>
+<ol>
+<li>超越的观点：质量是可以背认识而不能被定义的。（如果质量只能够被认识那么就不会有好坏之分，又何谈软件是否是一个好软件呢？）</li>
+<li>用户的观点：因为用户是在开发完成之后才能进行质量检测，但是此时已经开发完毕，不能够对产品再次进行修改</li>
+<li>制造的观点：质量是与需求说明的一致</li>
+<li>产品的观点：质量是鱼产品的特性相联系的</li>
+<li>基于价值的观点：质量决定于顾客愿意支付的金额</li>
+</ol>
+</blockquote>
+</li>
+<li><p>系统的分析方法有哪些步骤？<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-24%2016.45.13-8164097.png" class=""></p>
+</li>
+<li><p>软工与计科的区别的是什么？</p>
+<blockquote>
+<p>计算机科学：研究计算机相关的理论</p>
+<p>软件工程：把计算机技术看成工具，用以解决问题</p>
+<p>就像老师上课讲的工程学位和工学学位的区别一样，一个是进行理论研究，产出新的idea、新的方法，而软工是去进行这些内容的实现和使用。一个偏理论，一个偏实践</p>
+</blockquote>
+</li>
+<li><p>软件开发的三个阶段：传统、敏捷开发、开发运维一体化（自己对应ppt去看）</p>
+<blockquote>
+<ol>
+<li>上世纪90年代，“软件过程也是软件”以及开发优秀软件过程的重要性的到广泛认同（卡耐基梅隆大学先后提出了软件开发能力成熟度模型CMM，用户评估和改进软件过程，后来发展为CMMI）</li>
+<li>进入本世纪00年代，敏捷开发的思想成为主流（人们更加关注快速的开发和交付书对，而传统的软件过程过度强调计划，很难适应目前的需求）</li>
+<li>进入本世纪10年代后，开发韵味一体化成为主流（大量软件开发需求朝着快速、易变的方向发展，敏捷的思想和实践进入运维领域。打破了开发和运维的界限，实现了从开发到运维的快速反应）</li>
+</ol>
+</blockquote>
+</li>
+<li><p>关键路径是不是活动的最优选择？</p>
+<blockquote>
+<p>首先我们要理解什么是关键路径：</p>
+<p>关键路径是指在关键路径上的活动是不可被忽视的活动，他们对于整个项目的工期有着直接的影响。但是关键路径上的活动并不一定就是最终要的活动，也不一定是最优的选择。</p>
+</blockquote>
+</li>
+<li><p>用自己的理解说一下软件生命周期和软件过程的理解（对软件过程可以从个体、整体和工程的视角的进行观察，例如：程序员、项目经理和架构师）</p>
+<blockquote>
+<ol>
+<li>软件生命周期：指软件从开始到结束的整个过程，包括规划、开发、测试、部署和维护等阶段，描述了软件的整体状态和变化。</li>
+<li>软件过程：软件过程是指软件开发中所执行的一系列活动、动作和任务的集合。</li>
+</ol>
+<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-25%2011.35.00-8205039.png" class="">
+
+<p>我们可以从上面这三个层次来理解软件过程</p>
+</blockquote>
+</li>
+<li><p>要知道传统开发模式的三个时期和八个阶段是什么？</p>
+<blockquote>
+<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-25%2011.39.14-8205177.png" class="">
+</blockquote>
+</li>
+<li><p>瀑布模型的优缺点？（最好看看课本和课件上各种模型的优缺点）</p>
+<blockquote>
+<p>优点：</p>
+<ol>
+<li>软件生命周期模型，使软件开发过程可以在分析、设计、编码、测试和维护的框架下进行。</li>
+<li>软件开发过程具有系统性、可控性，克服了软件开发的随意性。</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>项目开始阶段用户很难精确的提出产品需求，随着客户对系统的深入理解，修改需求会十分常见，但是瀑布模型对于需求的修改会推到之前的所有工资重新开始，会导致耗费大量的人力物力做无用功。</li>
+<li>项目开发晚期才能得到程序的运行版本，这个时候软件需求和开发中的错误会造成巨大的代价。</li>
+<li>采用线性模型组织项目开发经常发生开发小组人员“堵塞状态”，特别是项目的开始和结束的阶段。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>人的认知是螺旋上升的，所以就可以看出演化模型螺旋形状的合理性。</p>
+</li>
+<li><p>传统强调物性、现代强调人性</p>
+</li>
+<li><p>RUP的定义：用例驱动、以体系结构为核心、迭代及增量的软件工程框架，由UML方法和工具支持。</p>
+</li>
+<li><p>请描述一下RUP的可伸缩性，举个例子说明？（可伸缩就是在瀑布和敏捷之间的调节）</p>
+</li>
+<li><p>RUP是否是每个阶段都是全过程的，构建阶段是否是只需要写代码？如果不是，那请问还要做什么？如果也需要做需求，那需要做什么样的需求？</p>
+</li>
+<li><p>敏捷的核心思想：可执行的最大价值和人</p>
+</li>
+<li><p>敏捷开发的四个原则：</p>
+</li>
+</ol>
+<ul>
+<li>人大于物</li>
+<li>软件大于文档</li>
+<li>合作大于谈判</li>
+<li>人的认知时间在两周之内，所以相应变化也需要在两周之内（即敏捷的增量迭代需要短时间内的开发，这个就是相应变化胜过遵循计划）</li>
+</ul>
+<ol start="19">
+<li><p>敏捷的12条原则</p>
+<blockquote>
+<ol>
+<li>我们的最高优先级是持续不断地、及早地交付</li>
+</ol>
+<p>有价值的软件来使客户满意</p>
+<ol start="2">
+<li>拥抱变化，即使是在项目开发的后期，愿意为</li>
+</ol>
+<p>了客户的竞争优势而采取变化</p>
+<ol start="3">
+<li>经常地交付可工作的软件，相隔几星期或一两</li>
+</ol>
+<p>个月，倾向于采取较短的周期</p>
+<ol start="4">
+<li><p>业务人员和开发人员在整个过程中紧密合作</p>
+</li>
+<li><p>围绕着被激励的个体构建项目，为个体提供所</p>
+</li>
+</ol>
+<p>需的环境和支持，给予信任，从而达成目标</p>
+<ol start="6">
+<li>在团队内和团队间沟通信息的最有效和最高效</li>
+</ol>
+<p>的方式是面对面的交流</p>
+<ol start="7">
+<li><p>可工作的软件是衡量进度的首要标准</p>
+</li>
+<li><p>倡导可持续开发，项目发起者、开发人员和</p>
+</li>
+</ol>
+<p>用户应该维持一个可持续的步调</p>
+<ol start="9">
+<li>持续地追求技术卓越和良好设计，可以提高</li>
+</ol>
+<p>敏捷性</p>
+<ol start="10">
+<li><p>以简洁为本，它是减少不必要工作的艺术</p>
+</li>
+<li><p>最好的体系结构、需求和设计是从自组织的</p>
+</li>
+</ol>
+<p>团队中涌现出来的</p>
+<ol start="12">
+<li>团队定期地反思如何变得更加高效，并相应</li>
+</ol>
+<p>地调整自身的行为</p>
+</blockquote>
+</li>
+<li><p>测试驱动开发的优点：</p>
+</li>
+</ol>
+<ul>
+<li>操作正确性，按照用户story，符合story的需求</li>
+<li>不同的观察点</li>
+<li>解除软件的耦合性</li>
+<li>有利于改变软件的体系结构</li>
+</ul>
+<ol start="21">
+<li>怎么理解这个内容？（我们在进行极限编程时只需要使用其中的一点就是属于极限编程）<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-24%2017.07.12-8164113.png" class=""></li>
+<li>表面的需求和真实的需求？（挖掘真正的需求、细化需求）</li>
+<li>什么是需求和需求工程？（需求工程：课件上有）</li>
+<li>银弹问题（即没有解决问题一劳永逸的方法：No sliver Bullet）</li>
+<li>工程实践中会用到7中方法中的哪些方法？</li>
+<li>请结合自己的工程实践说明一下需求导出的过程？</li>
+<li>对三个文档的理解：（初步“产品要求”文档、产品需求说明文档、SRS）</li>
+<li>结合抽象层次谈一下多态（老师使用的神行走于人世间，可以编程男人和女人）</li>
+<li>面向对象开发的过程模型和结构化开发的过程模型，从产出产品的角度来说明？</li>
+<li>过程论和对象论的区别？</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>posts</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法</title>
+    <url>/2023/09/18/%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h1><p><a href="https://leetcode.cn/problems/linked-list-cycle-ii/">1.循环链表出口问题</a></p>
+<blockquote>
+<p>题目描述：给出一个链表的头节点head，返回链表开始入环的第一个节点，没有则返回nul。</p>
+</blockquote>
+<p>实例：</p>
+<img src="/2023/09/18/%E7%AE%97%E6%B3%95/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.png" class="" title="实例">
+
+<blockquote>
+<p>输入：head &#x3D; [3,2,0,-4], pos &#x3D; 1<br>输出：返回索引为 1 的链表节点<br>解释：链表中有一个环，其尾部连接到第二个节点。</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>​	我们可以定义两个指针，一个慢指针slow每次走一格，一个快指针fast每次走两格。如果链表存在环路则fast一定会追上slow。如果fast经过一定的循环变为NULL则该链表不存在环路。</p>
+<p>​	如果链表中存在环路，那么设从头节点到环路入口的长度为x，设从环路入口到快慢节点相遇的位置长度为y，环中剩下的长度为z。<br>$$<br>slow指针走的距离&#x3D;x+y<br>$$</p>
+<p>$$<br>fast指针走的距离&#x3D;x+y+n(y+z)<br>$$</p>
+<p>​	又因为fast移动的速度是slow的两倍<br>$$<br>(x+y)*2&#x3D;x+y+n(y+z)<br>$$</p>
+<p>$$<br>x&#x3D;n(y+z)-y<br>$$</p>
+<p>$$<br>x&#x3D;(n-1)(y+z)+z<br>$$</p>
+<p>​	所以可以看出来，在进入环之前的长度，是N-1倍的环长加上相遇点到入口点的距离之外的距离。而且n必定大于等于1。因为快慢节点相遇之前，快节点肯定要先在环中跑一圈才能遇到slow。</p>
+<p>​	如果此时我们设置两个指针分别从head和入口点每次跳动一格的距离，那么下次相遇的时候必定是在入口点。下面给出具体的代码。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">if(!head) return head; &#x2F;&#x2F;如果头节点为空，直接返回
+ListNode* fast &#x3D; head; &#x2F;&#x2F;让快慢节点从头开始
+ListNode* slow &#x3D; head;
+while(fast&amp;&amp;slow)&#123;
+  slow &#x3D; slow-&gt;next;
+  if(fast-&gt;next) fast &#x3D; fast-&gt;next-&gt;next;
+  if(fast&#x3D;&#x3D;slow) break;
+&#125;
+
+if(!fast) return null; &#x2F;&#x2F;如果快指针为空，则证明该链表没有环路
+
+ListNode*p &#x3D; head;
+ListNode*q &#x3D; fast;
+while(p!&#x3D;q)&#123;
+  p&#x3D;p-&gt;next;
+  q&#x3D;q-&gt;next;
+&#125;
+return p;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h1 id="字符串匹配"><a href="#字符串匹配" class="headerlink" title="字符串匹配"></a>字符串匹配</h1>]]></content>
       <tags>
         <tag>posts</tag>
       </tags>
@@ -988,351 +1348,6 @@ withDefaults(defineProps&lt;&#123; ren?: Person &#125;&gt;(), &#123;
 </ul>
 </li>
 </ol>
-]]></content>
-      <tags>
-        <tag>posts</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>算法</title>
-    <url>/2023/09/18/%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h1 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h1><p><a href="https://leetcode.cn/problems/linked-list-cycle-ii/">1.循环链表出口问题</a></p>
-<blockquote>
-<p>题目描述：给出一个链表的头节点head，返回链表开始入环的第一个节点，没有则返回nul。</p>
-</blockquote>
-<p>实例：</p>
-<img src="/2023/09/18/%E7%AE%97%E6%B3%95/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.png" class="" title="实例">
-
-<blockquote>
-<p>输入：head &#x3D; [3,2,0,-4], pos &#x3D; 1<br>输出：返回索引为 1 的链表节点<br>解释：链表中有一个环，其尾部连接到第二个节点。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>​	我们可以定义两个指针，一个慢指针slow每次走一格，一个快指针fast每次走两格。如果链表存在环路则fast一定会追上slow。如果fast经过一定的循环变为NULL则该链表不存在环路。</p>
-<p>​	如果链表中存在环路，那么设从头节点到环路入口的长度为x，设从环路入口到快慢节点相遇的位置长度为y，环中剩下的长度为z。<br>$$<br>slow指针走的距离&#x3D;x+y<br>$$</p>
-<p>$$<br>fast指针走的距离&#x3D;x+y+n(y+z)<br>$$</p>
-<p>​	又因为fast移动的速度是slow的两倍<br>$$<br>(x+y)*2&#x3D;x+y+n(y+z)<br>$$</p>
-<p>$$<br>x&#x3D;n(y+z)-y<br>$$</p>
-<p>$$<br>x&#x3D;(n-1)(y+z)+z<br>$$</p>
-<p>​	所以可以看出来，在进入环之前的长度，是N-1倍的环长加上相遇点到入口点的距离之外的距离。而且n必定大于等于1。因为快慢节点相遇之前，快节点肯定要先在环中跑一圈才能遇到slow。</p>
-<p>​	如果此时我们设置两个指针分别从head和入口点每次跳动一格的距离，那么下次相遇的时候必定是在入口点。下面给出具体的代码。</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">if(!head) return head; &#x2F;&#x2F;如果头节点为空，直接返回
-ListNode* fast &#x3D; head; &#x2F;&#x2F;让快慢节点从头开始
-ListNode* slow &#x3D; head;
-while(fast&amp;&amp;slow)&#123;
-  slow &#x3D; slow-&gt;next;
-  if(fast-&gt;next) fast &#x3D; fast-&gt;next-&gt;next;
-  if(fast&#x3D;&#x3D;slow) break;
-&#125;
-
-if(!fast) return null; &#x2F;&#x2F;如果快指针为空，则证明该链表没有环路
-
-ListNode*p &#x3D; head;
-ListNode*q &#x3D; fast;
-while(p!&#x3D;q)&#123;
-  p&#x3D;p-&gt;next;
-  q&#x3D;q-&gt;next;
-&#125;
-return p;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h1 id="字符串匹配"><a href="#字符串匹配" class="headerlink" title="字符串匹配"></a>字符串匹配</h1>]]></content>
-      <tags>
-        <tag>posts</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>科软高级软件工程课堂问答</title>
-    <url>/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/</url>
-    <content><![CDATA[<ol>
-<li>软件危机解决了吗？为什么？</li>
-</ol>
-<blockquote>
-<ol>
-<li>首先我们要理解软件危机产生的原因是由于”无法满足社会发展的需要”导致的</li>
-<li>软件危机包含了两方面的问题：一、如何开发软件，以满足不断增长，日趋复杂的需求。二、如何维护数量不断膨胀的软件产品。</li>
-<li>综合上面两点原因，我认为软件危机并没有解决。因为我们的社会时时刻刻在发生着变化，这就需要我们的软件要不断的就行更新迭代，同时还要不断的处理软件运行时出现的各种各样的BUG。所以软件危机并没有真正的解决。</li>
-</ol>
-</blockquote>
-<ol start="2">
-<li>工程化软件开发与编程之间可以直接画等号吗？不编程也可以实现软件开发？（例如我是项目经理）</li>
-</ol>
-<blockquote>
-<ol>
-<li>不可以直接画等号，因为工程化软件开发是开发出高质量的软件产品，满足用户需求，提高软件开发效率和可维护性。而编程仅仅指的是代码编写的阶段（即coding的过程）。</li>
-<li>不编程也可以实现软件的开发。在软件开发中，编程只是其中的一个环节。对于项目经理来说只需要带领团队做好需求分析、搭建好项目的整体框架等内容即可，不需要进行编程。</li>
-</ol>
-</blockquote>
-<ol start="3">
-<li>改变软件工程的七个关键因素，那七个？每个因素带来了哪些改变？以及新的因素有哪些？并带来了哪些影响</li>
-</ol>
-<blockquote>
-<p>Wasserman 于1996年提出了七个该改变软件工程的关键因素：</p>
-<ol>
-<li>交付时间的重要性（现在的软件交付时间是以小时来进行衡量的，而原来的软件交付时间是以月甚至年来进行衡量）</li>
-<li>计算行业经济的变化趋势（目前计算机行业是蓬勃发展的时代，有着大量的资金支持。相较于之前，计算机主要运用于军工领域，缺乏活力和资金支持 ）</li>
-<li>功能强大的桌面运算（目前的主流的系统为了方便大众的应用，都配备了优美且边界的图形界面。但是原来的计算机都是通过命令行来进行操作的，只有专业的计算机领域人员和数学相关人员来可以进行操作）</li>
-<li>互联网络（目前全世界的海量的PC都通过互联网连接在一起，每个人可以时时的分享自己的数据。但是之前的计算主要应用于军工，互联性不是很高）</li>
-<li>面向对象的技术（随着时间的推移，面向对象的技术出现，更加有利于目前的欢迎。但是原来的软件工程更加的注重过程）</li>
-<li>图形用户界面（我觉得这个和第三点很相似）</li>
-<li>瀑布模型的不可预知性（因为瀑布模型需要先进行分析，然后在根据分析出的需求。但是当中途用户需要更改需求时，瀑布模型就会不知道该如何做）</li>
-</ol>
-</blockquote>
-<blockquote>
-<p>除了wasserman提出的因素外我还想到了一下两点因素：</p>
-<ol>
-<li>新技术和工具：不断涌现的新技术、开发工具和框架可以改变软件工程实践。例如，云计算、大数据、人工智能和区块链等技术的发展对软件开发产生了深远影响，鼓励开发人员采用新方法和工具。</li>
-<li>开发方法论：新的开发方法论和方法，如敏捷开发、DevOps、微服务架构等，已经改变了软件开发的方式。这些方法鼓励更快的迭代、更紧密的合作和更高效的交付。</li>
-</ol>
-</blockquote>
-<ol start="4">
-<li><p>超越的观点和用户的观点都是不可取的，要使用制造的观点和产品的观点。用户是在末端进行评价，这时已经不能够再改变产品。</p>
-<blockquote>
-<ol>
-<li>超越的观点：质量是可以背认识而不能被定义的。（如果质量只能够被认识那么就不会有好坏之分，又何谈软件是否是一个好软件呢？）</li>
-<li>用户的观点：因为用户是在开发完成之后才能进行质量检测，但是此时已经开发完毕，不能够对产品再次进行修改</li>
-<li>制造的观点：质量是与需求说明的一致</li>
-<li>产品的观点：质量是鱼产品的特性相联系的</li>
-<li>基于价值的观点：质量决定于顾客愿意支付的金额</li>
-</ol>
-</blockquote>
-</li>
-<li><p>系统的分析方法有哪些步骤？<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-24%2016.45.13-8164097.png" class=""></p>
-</li>
-<li><p>软工与计科的区别的是什么？</p>
-<blockquote>
-<p>计算机科学：研究计算机相关的理论</p>
-<p>软件工程：把计算机技术看成工具，用以解决问题</p>
-<p>就像老师上课讲的工程学位和工学学位的区别一样，一个是进行理论研究，产出新的idea、新的方法，而软工是去进行这些内容的实现和使用。一个偏理论，一个偏实践</p>
-</blockquote>
-</li>
-<li><p>软件开发的三个阶段：传统、敏捷开发、开发运维一体化（自己对应ppt去看）</p>
-<blockquote>
-<ol>
-<li>上世纪90年代，“软件过程也是软件”以及开发优秀软件过程的重要性的到广泛认同（卡耐基梅隆大学先后提出了软件开发能力成熟度模型CMM，用户评估和改进软件过程，后来发展为CMMI）</li>
-<li>进入本世纪00年代，敏捷开发的思想成为主流（人们更加关注快速的开发和交付书对，而传统的软件过程过度强调计划，很难适应目前的需求）</li>
-<li>进入本世纪10年代后，开发韵味一体化成为主流（大量软件开发需求朝着快速、易变的方向发展，敏捷的思想和实践进入运维领域。打破了开发和运维的界限，实现了从开发到运维的快速反应）</li>
-</ol>
-</blockquote>
-</li>
-<li><p>关键路径是不是活动的最优选择？</p>
-<blockquote>
-<p>首先我们要理解什么是关键路径：</p>
-<p>关键路径是指在关键路径上的活动是不可被忽视的活动，他们对于整个项目的工期有着直接的影响。但是关键路径上的活动并不一定就是最终要的活动，也不一定是最优的选择。</p>
-</blockquote>
-</li>
-<li><p>用自己的理解说一下软件生命周期和软件过程的理解（对软件过程可以从个体、整体和工程的视角的进行观察，例如：程序员、项目经理和架构师）</p>
-<blockquote>
-<ol>
-<li>软件生命周期：指软件从开始到结束的整个过程，包括规划、开发、测试、部署和维护等阶段，描述了软件的整体状态和变化。</li>
-<li>软件过程：软件过程是指软件开发中所执行的一系列活动、动作和任务的集合。</li>
-</ol>
-<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-25%2011.35.00-8205039.png" class="">
-
-<p>我们可以从上面这三个层次来理解软件过程</p>
-</blockquote>
-</li>
-<li><p>要知道传统开发模式的三个时期和八个阶段是什么？</p>
-<blockquote>
-<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-25%2011.39.14-8205177.png" class="">
-</blockquote>
-</li>
-<li><p>瀑布模型的优缺点？（最好看看课本和课件上各种模型的优缺点）</p>
-<blockquote>
-<p>优点：</p>
-<ol>
-<li>软件生命周期模型，使软件开发过程可以在分析、设计、编码、测试和维护的框架下进行。</li>
-<li>软件开发过程具有系统性、可控性，克服了软件开发的随意性。</li>
-</ol>
-<p>缺点：</p>
-<ol>
-<li>项目开始阶段用户很难精确的提出产品需求，随着客户对系统的深入理解，修改需求会十分常见，但是瀑布模型对于需求的修改会推到之前的所有工资重新开始，会导致耗费大量的人力物力做无用功。</li>
-<li>项目开发晚期才能得到程序的运行版本，这个时候软件需求和开发中的错误会造成巨大的代价。</li>
-<li>采用线性模型组织项目开发经常发生开发小组人员“堵塞状态”，特别是项目的开始和结束的阶段。</li>
-</ol>
-</blockquote>
-</li>
-<li><p>人的认知是螺旋上升的，所以就可以看出演化模型螺旋形状的合理性。</p>
-</li>
-<li><p>传统强调物性、现代强调人性</p>
-</li>
-<li><p>RUP的定义：用例驱动、以体系结构为核心、迭代及增量的软件工程框架，由UML方法和工具支持。</p>
-</li>
-<li><p>请描述一下RUP的可伸缩性，举个例子说明？（可伸缩就是在瀑布和敏捷之间的调节）</p>
-</li>
-<li><p>RUP是否是每个阶段都是全过程的，构建阶段是否是只需要写代码？如果不是，那请问还要做什么？如果也需要做需求，那需要做什么样的需求？</p>
-</li>
-<li><p>敏捷的核心思想：可执行的最大价值和人</p>
-</li>
-<li><p>敏捷开发的四个原则：</p>
-</li>
-</ol>
-<ul>
-<li>人大于物</li>
-<li>软件大于文档</li>
-<li>合作大于谈判</li>
-<li>人的认知时间在两周之内，所以相应变化也需要在两周之内（即敏捷的增量迭代需要短时间内的开发，这个就是相应变化胜过遵循计划）</li>
-</ul>
-<ol start="19">
-<li><p>敏捷的12条原则</p>
-<blockquote>
-<ol>
-<li>我们的最高优先级是持续不断地、及早地交付</li>
-</ol>
-<p>有价值的软件来使客户满意</p>
-<ol start="2">
-<li>拥抱变化，即使是在项目开发的后期，愿意为</li>
-</ol>
-<p>了客户的竞争优势而采取变化</p>
-<ol start="3">
-<li>经常地交付可工作的软件，相隔几星期或一两</li>
-</ol>
-<p>个月，倾向于采取较短的周期</p>
-<ol start="4">
-<li><p>业务人员和开发人员在整个过程中紧密合作</p>
-</li>
-<li><p>围绕着被激励的个体构建项目，为个体提供所</p>
-</li>
-</ol>
-<p>需的环境和支持，给予信任，从而达成目标</p>
-<ol start="6">
-<li>在团队内和团队间沟通信息的最有效和最高效</li>
-</ol>
-<p>的方式是面对面的交流</p>
-<ol start="7">
-<li><p>可工作的软件是衡量进度的首要标准</p>
-</li>
-<li><p>倡导可持续开发，项目发起者、开发人员和</p>
-</li>
-</ol>
-<p>用户应该维持一个可持续的步调</p>
-<ol start="9">
-<li>持续地追求技术卓越和良好设计，可以提高</li>
-</ol>
-<p>敏捷性</p>
-<ol start="10">
-<li><p>以简洁为本，它是减少不必要工作的艺术</p>
-</li>
-<li><p>最好的体系结构、需求和设计是从自组织的</p>
-</li>
-</ol>
-<p>团队中涌现出来的</p>
-<ol start="12">
-<li>团队定期地反思如何变得更加高效，并相应</li>
-</ol>
-<p>地调整自身的行为</p>
-</blockquote>
-</li>
-<li><p>测试驱动开发的优点：</p>
-</li>
-</ol>
-<ul>
-<li>操作正确性，按照用户story，符合story的需求</li>
-<li>不同的观察点</li>
-<li>解除软件的耦合性</li>
-<li>有利于改变软件的体系结构</li>
-</ul>
-<ol start="21">
-<li>怎么理解这个内容？（我们在进行极限编程时只需要使用其中的一点就是属于极限编程）<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-24%2017.07.12-8164113.png" class=""></li>
-<li>表面的需求和真实的需求？（挖掘真正的需求、细化需求）</li>
-<li>什么是需求和需求工程？（需求工程：课件上有）</li>
-<li>银弹问题（即没有解决问题一劳永逸的方法：No sliver Bullet）</li>
-<li>工程实践中会用到7中方法中的哪些方法？</li>
-<li>请结合自己的工程实践说明一下需求导出的过程？</li>
-<li>对三个文档的理解：（初步“产品要求”文档、产品需求说明文档、SRS）</li>
-<li>结合抽象层次谈一下多态（老师使用的神行走于人世间，可以编程男人和女人）</li>
-<li>面向对象开发的过程模型和结构化开发的过程模型，从产出产品的角度来说明？</li>
-<li>过程论和对象论的区别？</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>posts</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>golang</title>
-    <url>/2024/02/26/golang/</url>
-    <content><![CDATA[<h1 id="学习过程中的一些小知识点"><a href="#学习过程中的一些小知识点" class="headerlink" title="学习过程中的一些小知识点"></a>学习过程中的一些小知识点</h1><ul>
-<li><p>Goroutine之间的通信并不是共享一段内存，在这段内存中来保存数据设置锁。而是通过在进程之间通信来实现共享</p>
-<blockquote>
-<p>Don’t communicate by sharing memory, share memory by communicating</p>
-</blockquote>
-</li>
-<li><p>在Google中，搜索一个关键词时，会搜索所有相关的内容（图片、视频等）。而且对于每个类型都会进行多次的搜索，而对于相同类型的内容，我们只采取第一次的数据。<img src="/2024/02/26/golang/image-20240302210841089.png" class="" title="image-20240302210841089">从这里我们就可以看出来，我们在通道c收到了一次数据之后就直接返回了。</p>
-</li>
-<li><p>在每一个源文件中，全局变量会先被定义，然后是执行init（）函数最后是执行main（），所以我们可以在init函数中完成初始化的工作。&#x3D;&#x3D;注意，如果是别的文件使用我们当前文件中的变量时，在导入包的过程中就会执行当前包中的init()函数，来初始化需要引入的变量。然后如果导入的文件中也有变量的定义和初始化的话，时在需要导入的完成之后在进行处理。&#x3D;&#x3D;</p>
-</li>
-<li><p>&#x3D;&#x3D;匿名函数&#x3D;&#x3D;</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
-
-<span class="token keyword">import</span> <span class="token string">"fmt"</span>
-
-<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-	ans <span class="token operator">:=</span> <span class="token keyword">func</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span>
-		<span class="token keyword">return</span> x <span class="token operator">+</span> y
-	<span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
-
-	sub <span class="token operator">:=</span> <span class="token keyword">func</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span>
-		<span class="token keyword">return</span> x <span class="token operator">-</span> y
-	<span class="token punctuation">&#125;</span>
-	ans2 <span class="token operator">:=</span> <span class="token function">sub</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
-	
-	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>ans<span class="token punctuation">,</span> ans2<span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>从这里我们可以看到，我们可以直接定义一个没有具体名称的函数，并且在函数定义的后面加上小括号进行调用。或者我们可以讲一个匿名函数绑定一个名称，通过这个名称去进行调用。而全局匿名函数的使用就是在文件中直接定义函数，并将函数给到一个变量。&#x3D;&#x3D;不过用的最多的方法就是直接在函数中进行匿名函数的定义和使用&#x3D;&#x3D;</p>
-</li>
-<li><p>闭包的相关内容：在我的理解中，闭包就是一个返回函数类型的函数，但是返回的这个函数可以引用返回她的函数中的变量。&#x3D;&#x3D;我的理解：我感觉就像是一个服务器在接受到请求之后，现在闭包中做一下响应前的一些操作，然后再去进行响应。&#x3D;&#x3D;</p>
-</li>
-<li><p>工厂模式就是，我在一个包中不直接暴露我的结构体，而是通过一个函数来返回一个结构体的指针。这样外部的文件就无法直接的操作我包中定义的结构体了</p>
-</li>
-<li><p>go中的封装、继承和多态</p>
-<blockquote>
-<p>在go中，&#x3D;&#x3D;因为go又一个大写字母会从当前文件进行暴露的特性，所以我们可以根据这个特性来进行设计（其实就是通过包来实现封装）&#x3D;&#x3D;。我们可以创建一个结构体，让我们的属性变量设置小写的字母，这样我们在暴露出结构体的时候，外部用的用户无法直接的操作我们的隐藏的变量。然后我们可以通过方法来获取一个结构体内部的相关属性。</p>
-</blockquote>
-</li>
-<li><p>Go 的继承是通过在一个结构体中使用另外一个结构体来进行实现的。</p>
-<blockquote>
-<p>不过需要注意的是，如果这两个结构体的定义是在一个包中的话，那么引用别人的结构体是能够直接访问到被引用的结构体的，但是如果两者不在一个包中，那么只能通过GET函数来进行获取</p>
-</blockquote>
-</li>
-<li><p>Defer 、panic和recover</p>
-<blockquote>
-<p>注意defer 有一下三个特点</p>
-<ol>
-<li><p>defer语句中的参数在运行到defer的语句所在行时进行计算</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    i <span class="token operator">:=</span> <span class="token number">0</span>
-    <span class="token keyword">defer</span> fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
-    i<span class="token operator">++</span>
-    <span class="token keyword">return</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>例如上面这个案例，最终将会输出0</p>
-</li>
-<li><p>延迟函数是一个后进先出的执行过程，例子如下</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">b</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">defer</span> fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>我感觉因为go的defer是使用stack来保存相关的函数的，所以最后压入栈的会先被执行</p>
-</li>
-<li><p>延迟函数可以修改返回值</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">c</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">defer</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> i<span class="token operator">++</span> <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> <span class="token number">1</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>我们从这个例子中，可以看到c()函数会先返回一个1，然后延迟函数一执行就会把i修改为2。所以我感觉defer 语句如果是一个函数的话，那这个函数就是一个闭包，他会持续的引用原函数中的变量，直至闭包结束。</p>
-</li>
-</ol>
-<p>Panic：恐慌可以由程序员执行调用，也可以在程序发生运行时错误时出发。恐慌发生时，正常的空自流会中止，但是defer函数会正常的继续执行。然后等到所有的defer语句执行完毕后，如果恐慌没有被恢复，那么会继续向函数的调用者传递恐慌。</p>
-<p>Recover：会中止函数的恐慌，然后正常的执行控制流的内容。</p>
-</blockquote>
-</li>
-</ul>
 ]]></content>
       <tags>
         <tag>posts</tag>
