@@ -1419,8 +1419,13 @@ return p;<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
       </tags>
   </entry>
   <entry>
-    <title>test</title>
-    <url>/2024/04/01/test/</url>
-    <content><![CDATA[]]></content>
+    <title></title>
+    <url>/2024/04/20/%E8%83%8C%E5%85%AB%E8%82%A1%E6%97%B6%E4%B8%8D%E6%87%82%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>![image-20240420015215733](&#x2F;Users&#x2F;eric&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20240420015215733.png)</p>
+<p>唯一二级索引冲突了，为啥给事务B加了一个X记录锁？</p>
+<p>自己对于唯一二级索引冲突没搞清楚</p>
+<p>IPV6做了那些升级，尤其是头部的部分。以及为什么相较于ipv4提高了</p>
+<p>如果获取客户端真实IP这个没看懂</p>
+]]></content>
   </entry>
 </search>
