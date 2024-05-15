@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eric-edward.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.18.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="网络 RSA握手的过程：    首先，客户端想服务端发送一个ClientHello的报文，其中包括客户端的TLS的版本、一个随机数和客户端支持的加密算法列表。 服务端在受到这个报文之后，会向服务端发送3个报文，第一个为ServerHello，其中包括服务端TLS的版本、一个服务端生成的随机数和服务端选择的加密算法。第二个报文是发送服务端的数字证书。第三个报文发送一个HelloDone。 客户端受到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实习内容">
+<meta property="og:url" content="http://eric-edward.github.io/2024/05/13/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/index.html">
+<meta property="og:site_name" content="Eric&#39;s Blog">
+<meta property="og:description" content="网络 RSA握手的过程：    首先，客户端想服务端发送一个ClientHello的报文，其中包括客户端的TLS的版本、一个随机数和客户端支持的加密算法列表。 服务端在受到这个报文之后，会向服务端发送3个报文，第一个为ServerHello，其中包括服务端TLS的版本、一个服务端生成的随机数和服务端选择的加密算法。第二个报文是发送服务端的数字证书。第三个报文发送一个HelloDone。 客户端受到">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E7%9A%84%E6%A0%A1%E9%AA%8C.png">
+<meta property="article:published_time" content="2024-05-13T09:22:20.000Z">
+<meta property="article:modified_time" content="2024-05-14T15:48:12.517Z">
+<meta property="article:author" content="Eric">
+<meta property="article:tag" content="posts">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E7%9A%84%E6%A0%A1%E9%AA%8C.png">
+
+
+<link rel="canonical" href="http://eric-edward.github.io/2024/05/13/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://eric-edward.github.io/2024/05/13/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/","path":"2024/05/13/实习内容/","title":"实习内容"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>实习内容 | Eric's Blog</title>
+  
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="https://my-hexo-ijnwgpewe-eric-edward.vercel.app/"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css"><style>
+#needsharebutton-postbottom {
+  cursor: pointer;
+  height: 26px;
+  margin-top: 10px;
+  position: relative;
+}
+#needsharebutton-postbottom .btn {
+  border: 1px solid $btn-default-border-color;
+  border-radius: 3px;
+  display: initial;
+  padding: 1px 4px;
+}
+</style>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eric's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一生清贫怎敢入繁华<br>两袖清风岂敢误佳人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C"><span class="nav-number">1.</span> <span class="nav-text">网络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.</span> <span class="nav-text">操作系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Golang%E5%9F%BA%E7%A1%80"><span class="nav-number">3.</span> <span class="nav-text">Golang基础</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Eric"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Eric</p>
+  <div class="site-description" itemprop="description">小菜鸡Eric的博客网站</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Eric-Edward" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Eric-Edward" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:EricEdward.pro@gmail.com" title="E-Mail → mailto:EricEdward.pro@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://eric-edward.github.io/2024/05/13/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Eric">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eric's Blog">
+      <meta itemprop="description" content="小菜鸡Eric的博客网站">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="实习内容 | Eric's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          实习内容
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-05-13 17:22:20" itemprop="dateCreated datePublished" datetime="2024-05-13T17:22:20+08:00">2024-05-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-05-14 23:48:12" itemprop="dateModified" datetime="2024-05-14T23:48:12+08:00">2024-05-14</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">评论数：</span>
+  
+    <a title="waline" href="/2024/05/13/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2024/05/13/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><ol>
+<li>RSA握手的过程：</li>
+</ol>
+<blockquote>
+<ul>
+<li>首先，客户端想服务端发送一个ClientHello的报文，其中包括客户端的TLS的版本、一个随机数和客户端支持的加密算法列表。</li>
+<li>服务端在受到这个报文之后，会向服务端发送3个报文，第一个为ServerHello，其中包括服务端TLS的版本、一个服务端生成的随机数和服务端选择的加密算法。第二个报文是发送服务端的数字证书。第三个报文发送一个HelloDone。</li>
+<li>客户端受到信息后，会拿着服务端的数字证书，去CA查询是否正规。客户端的查询有一下几个步骤：通过CA的hash算法生成一个hash值（该数字证书的hash），服务端也会使用公钥对该数字证书进行解密生成一个hash。如果这两个hash相同，那么说明这个数字证书是有效的。<img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E7%9A%84%E6%A0%A1%E9%AA%8C.png" alt="img"></li>
+<li>完成认证之后，客户端会向服务端发送一个随意数（pre-master）用于生成会话的密钥（&#x3D;&#x3D;这个地方的密钥是通过之前选定的算法来的&#x3D;&#x3D;）</li>
+<li>最后就是客户端和服务端之间进行通信，双方改成对称加密的方式进行通信</li>
+</ul>
+</blockquote>
+<ol start="2">
+<li>RSA的缺陷：</li>
+</ol>
+<blockquote>
+<p>如果服务端的密钥被抄家了，那么就会出现信息的泄漏</p>
+</blockquote>
+<ol start="3">
+<li><p>HTTPS可以如何优化</p>
+<blockquote>
+<p><code>缺点 </code> ：首先，在谈如何优化之前，我们应该知道他的缺点在哪里。我认为https有3处缺点：1.https的TSL握手时，会有随机数或者椭圆区县公私钥的生成；服务端数字证书的认证；和双方计算的pre-master随机数</p>
+<p>方案：</p>
+<ul>
+<li>硬件优化，有钱的话，可以去买更好地cpu。因为在这个过程中，客户端和服务端会进行大量的运算，所以这是一个计算密集型的任务，压力给到cpu。尤其是可以购买AESni</li>
+<li>软件优化，可以升级系统的内核和SSL之类的相关软件</li>
+<li>协议优化：其实就是对密钥交换的过程进行优化就是从RSA密钥交换升级为ECDHE算法，该算法有两个优势，一个是可以实现数据发送的抢跑，即在第三次握手的时候就可以发送加密的应用数据；二是该算法具备前向安全性。</li>
+<li>证书优化：1.可以使用ECDHE的证书，这个更短。2、可以使用ocsp+stapling作为验证证书是否失效的方法，常规的验证为CRL，客户端会去下载大量的列表，然后查询。而ocsp则是向CA服务器直接查询某个证书，而stapling是服务器的一种优化方式，服务器定时去查询ocsp，并且给自己的证书加上时间戳。这样客户端就不需要每次都去访问CA这个证书是否有效。</li>
+<li>会话复用：有两种方式，一种是session id，就是把上次使用过得TSL握手保存下来，然后下次创建连接的时候，直接查，然后在内存中找到这个session id对应密钥。然后直接进行通信即可。另外一种就是类似于JWT的验证方式，让客户端来保存身份信息，每次进行链接的时候带上。如果在有效期内的话，就直接通过这个密钥进行通信即可。但是session ticket对于集群式的服务器不太有好，因为上次服务的不一定是这台机器，就可能导致重新连接。</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><ol>
+<li>epoll底层原理</li>
+</ol>
+<blockquote>
+<p>epoll底层实现是使用了一个红黑树来维护当前的socket事件，并且这个红黑树是直接放在内核中的。所以每次添加或者删除一个监听对象时，不需要从用户空间复制到内核空间，这样就可以节省不少的时间。而且，当一个socket事件发生的时候，epoll会把这些时间组织成一个链表，当有socket事件发生时将链表返还给用户处理。</p>
+<p>这种方式是通过一个通知的形式来进行调用的</p>
+</blockquote>
+<ol start="2">
+<li>select和poll</li>
+</ol>
+<blockquote>
+<p>这两个实现的方法差不多，都是在用户内存中进行维护，当需要检查那些socket事件发生时，就copy到内核中进行检查。内核会对这个数组或者bitmaps进行标记，然后再copy回用户空间，应用程序再扫一遍进行处理。</p>
+<p>其中select是通过一个bitmap来对应socket文件描述符的，而poll是使用链表的形式来进行维护的。</p>
+<p>就是再有时间发生的时候去进行调用呀</p>
+</blockquote>
+<ol start="3">
+<li><p>常见的io模式</p>
+<blockquote>
+<ul>
+<li>BIO（blocking io），当一个进程在请求某个资源的时候，如果该资源没有立即的返回，那么这个进程就会将自己阻塞并且等待资源的返回。直到当资源准备好并且被从内核拷贝到用户内存之后才会被唤醒。&#x3D;&#x3D;突出一个阻塞&#x3D;&#x3D; 就导致当前的内核级现成无法进行工作了，如果是单核cpu的话，只能等待资源的返回，cpu才可以做其他的事情。</li>
+<li>NIO（Non-blocking io ），当一个进程在请求某个资源的时候，如果该资源没有立即返回。那个这个进程并不会将自己阻塞，而是会不断的询问资源好了没有。期间cpu也可以做一些别的事情。直到资源准备好之后，进程会阻塞以完成资源从内核到用户内存的拷贝。&#x3D;&#x3D;虽然表面上是不阻塞，但是在资源进行复制的时候还是会阻塞的&#x3D;&#x3D;</li>
+<li>io多路复用，这个线程可以监听多个socket请求，然后在调用select把当前的进程给阻塞。这个时候内核会监听select中所有的socket请求，当有一个请求的资源准备好后，select会返回，然后再从内核中进行数据的拷贝。</li>
+<li>AIO（异步io），当一个进程请求了某个数据之后，就会立即返回。直到这个请求的数据准备完成并且从内核复制回用户空间之后就发送信号通知进程该请求已经完成。&#x3D;&#x3D;真正的实现了异步非阻塞&#x3D;&#x3D;</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<h1 id="Golang基础"><a href="#Golang基础" class="headerlink" title="Golang基础"></a>Golang基础</h1><ol>
+<li>channel使用的场景</li>
+</ol>
+<blockquote>
+<ul>
+<li>数据传递和分享</li>
+<li>信号通知（我们可以使用一个传递空结构体的channel作为一个信号传递）</li>
+<li>实现同步、锁的功能（只有在无缓冲区的模式下）</li>
+</ul>
+</blockquote>
+<ol start="2">
+<li>SingleFlight是什么？</li>
+</ol>
+<blockquote>
+<p>SingleFlight是Go提供的一个扩展并发原语。</p>
+<p>作用：在处理 多个goroutine同时调用同一个函数的时候，只让一个goroutine区调用这个函数，等这个goroutine返回结果时，再把这个结果返回给这个几个goroutines，这样可以减少并发调用的数量。</p>
+<p>与sync.Once的区别：</p>
+<ul>
+<li>Sync.Onec是会保证永远只执行一次，而SingleFlight是每次调用的时候都会执行，并且在多个请求间执行一次</li>
+<li>sync.Once主要是用于单词初始化场景中，而SingleFlight主要用在合并请求的场景中。</li>
+</ul>
+</blockquote>
+<ol start="3">
+<li>go语言的特点有哪些？</li>
+</ol>
+<blockquote>
+<ul>
+<li>channel，go中的channel是非常强大的，他可以实现进程间通信。这个方式和共享内存的方式是不同的。共享内存是能够直接改变数据的内容的，当一个进程修改之后，别的进程也是能够看到的，而channel不可以，除非传递的这个值是指针，并且修改了指针中的值。</li>
+<li>goroutine ：go的goroutine是一种用户层的线程。当goroutine配合上我们的channel就可以实现不同携程之间同步的问题，因为channel会在通讯双方准备就绪之前进行阻塞，直到双方都准备就绪。</li>
+<li></li>
+</ul>
+</blockquote>
+<ol start="4">
+<li>go channel的各种情况</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">关闭</th>
+<th align="center">未初始化</th>
+<th align="center">正常</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">发送</td>
+<td align="center">panic</td>
+<td align="center">死锁</td>
+<td align="center">正常</td>
+</tr>
+<tr>
+<td align="center">接受</td>
+<td align="center">如果有数据接受数据，没数据会接受到0值</td>
+<td align="center">死锁</td>
+<td align="center">正常</td>
+</tr>
+<tr>
+<td align="center">关闭</td>
+<td align="center">Panic</td>
+<td align="center">Panic</td>
+<td align="center">正常</td>
+</tr>
+</tbody></table>
+<ol start="5">
+<li><p>init函数相关问题</p>
+<blockquote>
+<ul>
+<li>每个文件中可以包含多个init函数，会按照init函数的顺序执行</li>
+<li>不同包中的init按照包导入的依赖关系决定该如何初始化函数的执行顺序</li>
+<li>同一个package下是根据文件名字符串大小比较来决定init（）的执行顺序</li>
+<li>不同包就看谁先import</li>
+</ul>
+</blockquote>
+</li>
+<li><p>内存对齐的问题</p>
+<blockquote>
+<p>因为cpu访问内存时，是按照cpu的字长来进行访问的，所以当我们对数据进行内存对齐时，有利于cpu更好的提取数据，例如：如果一个数据横跨两个cpu字长的话，那么他需要2个cpu时刻才可以读取到完整的数据。所以我们需要对齐。在对一个结构体对齐时，我们可以通过unsafe保重的alignof（）函数查看当前结构体应该每个字段设置为多长。</p>
+<p>&#x3D;&#x3D;对于空struct{}&#x3D;&#x3D;，一般是不需要考虑内存对齐的，因为他的大小为0。但是如果struct{}作为一个结构体的最后一个字段的话，那么就需要考虑了，需要补充一个额外的空间，来保证指针的安全</p>
+</blockquote>
+</li>
+<li><p>字符串拼接各种方法的性能</p>
+<blockquote>
+<p><code>+</code>  ：当我们使用&#x3D;&#x3D;+&#x3D;&#x3D;进行字符串拼接的时候，因为字符串的值是不可以更改，因为string底层是一个指针和长度。所以，这个时候就会创建一个新的字符串用于保存当前的拼接的内容。当操作的次数提升之后，会严重影响性能。</p>
+<p><code>Sprintf</code> :这个函数主要是用与格式化字符串，在源码中，他不仅复制了一次，而且逻辑非常的复杂。</p>
+<p><code>strings.builder</code> ：这个方法是目前效率最高的方法。首先是他的内存分配比直接使用切片数组好一点，超过了2048之后就会变得缓慢（但是现在1.18之后切片的扩容发生发生了变化，不知道现在的效率是怎么样的）</p>
+<p><code>byte.builder</code> ：这个相对于strings.builder多了一个[]byte-&gt;string 转换的过程，所以会慢一些</p>
+</blockquote>
+</li>
+<li><p>for和range的性能差别</p>
+<blockquote>
+<p>首先我们要知道for和range都是如何来实现的，range其实是返回一个当前数据的副本，如果我们在切片中存的数据不是特别大的情况下，for和range的性能是差不多的。但是当这个元素的大小变大时，就会导致range拷贝消耗大量时间，从而降低性能。</p>
+</blockquote>
+</li>
+<li><p>空结构体的作用</p>
+<blockquote>
+<ul>
+<li>用作集合的实现</li>
+<li>用作通道间的信号量</li>
+<li>仅包含方法的结构体</li>
+</ul>
+</blockquote>
+</li>
+<li></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer"><div class="post-widgets">
+      <div id="needsharebutton-postbottom">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    </div><script src="//sdk.jinrishici.com/v2/browser/jinrishici.js"></script>
+<script>
+  jinrishici.load((result) => {
+    let jrsc = document.getElementById('jrsc');
+    const data = result.data;
+    let author = data.origin.author;
+    let title = '《' + data.origin.title + '》';
+    let content = data.content.substr(0, data.content.length - 1);
+    let dynasty = data.origin.dynasty.substr(0, data.origin.dynasty.length - 1);
+    jrsc.innerText = content + ' -- ' + dynasty + '·' + author + title;
+  });
+</script>
+<div style="text-align: center"><span id="jrsc" >正在加载今日诗词....</span></div>
+
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Eric
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://eric-edward.github.io/2024/05/13/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/" title="实习内容">http://eric-edward.github.io/2024/05/13/实习内容/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/posts/" rel="tag"># posts</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/26/2024%E7%89%A9%E7%90%86%E8%80%83%E7%A0%94%E8%B0%83%E5%89%82/" rel="prev" title="2024物理考研调剂">
+                  <i class="fa fa-angle-left"></i> 2024物理考研调剂
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Eric</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">34k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"https://my-hexo-ijnwgpewe-eric-edward.vercel.app/","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"libUrl":"https://unpkg.com/@waline/client@v2/dist/waline.js","el":"#waline","comment":true,"path":"/2024/05/13/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js"></script>
+  <script>
+      pbOptions = {};
+        pbOptions.iconStyle = "default";
+        pbOptions.boxForm = "horizontal";
+        pbOptions.position = "bottomLeft";
+        pbOptions.networks = "Wechat,Douban,QQZone,Weibo,Twitter,Facebook";
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

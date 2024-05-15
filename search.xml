@@ -1419,13 +1419,175 @@ return p;<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2024/04/20/%E8%83%8C%E5%85%AB%E8%82%A1%E6%97%B6%E4%B8%8D%E6%87%82%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>![image-20240420015215733](&#x2F;Users&#x2F;eric&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20240420015215733.png)</p>
-<p>唯一二级索引冲突了，为啥给事务B加了一个X记录锁？</p>
-<p>自己对于唯一二级索引冲突没搞清楚</p>
-<p>IPV6做了那些升级，尤其是头部的部分。以及为什么相较于ipv4提高了</p>
-<p>如果获取客户端真实IP这个没看懂</p>
+    <title>实习内容</title>
+    <url>/2024/05/13/%E5%AE%9E%E4%B9%A0%E5%86%85%E5%AE%B9/</url>
+    <content><![CDATA[<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><ol>
+<li>RSA握手的过程：</li>
+</ol>
+<blockquote>
+<ul>
+<li>首先，客户端想服务端发送一个ClientHello的报文，其中包括客户端的TLS的版本、一个随机数和客户端支持的加密算法列表。</li>
+<li>服务端在受到这个报文之后，会向服务端发送3个报文，第一个为ServerHello，其中包括服务端TLS的版本、一个服务端生成的随机数和服务端选择的加密算法。第二个报文是发送服务端的数字证书。第三个报文发送一个HelloDone。</li>
+<li>客户端受到信息后，会拿着服务端的数字证书，去CA查询是否正规。客户端的查询有一下几个步骤：通过CA的hash算法生成一个hash值（该数字证书的hash），服务端也会使用公钥对该数字证书进行解密生成一个hash。如果这两个hash相同，那么说明这个数字证书是有效的。<img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E7%9A%84%E6%A0%A1%E9%AA%8C.png" alt="img"></li>
+<li>完成认证之后，客户端会向服务端发送一个随意数（pre-master）用于生成会话的密钥（&#x3D;&#x3D;这个地方的密钥是通过之前选定的算法来的&#x3D;&#x3D;）</li>
+<li>最后就是客户端和服务端之间进行通信，双方改成对称加密的方式进行通信</li>
+</ul>
+</blockquote>
+<ol start="2">
+<li>RSA的缺陷：</li>
+</ol>
+<blockquote>
+<p>如果服务端的密钥被抄家了，那么就会出现信息的泄漏</p>
+</blockquote>
+<ol start="3">
+<li><p>HTTPS可以如何优化</p>
+<blockquote>
+<p><code>缺点 </code> ：首先，在谈如何优化之前，我们应该知道他的缺点在哪里。我认为https有3处缺点：1.https的TSL握手时，会有随机数或者椭圆区县公私钥的生成；服务端数字证书的认证；和双方计算的pre-master随机数</p>
+<p>方案：</p>
+<ul>
+<li>硬件优化，有钱的话，可以去买更好地cpu。因为在这个过程中，客户端和服务端会进行大量的运算，所以这是一个计算密集型的任务，压力给到cpu。尤其是可以购买AESni</li>
+<li>软件优化，可以升级系统的内核和SSL之类的相关软件</li>
+<li>协议优化：其实就是对密钥交换的过程进行优化就是从RSA密钥交换升级为ECDHE算法，该算法有两个优势，一个是可以实现数据发送的抢跑，即在第三次握手的时候就可以发送加密的应用数据；二是该算法具备前向安全性。</li>
+<li>证书优化：1.可以使用ECDHE的证书，这个更短。2、可以使用ocsp+stapling作为验证证书是否失效的方法，常规的验证为CRL，客户端会去下载大量的列表，然后查询。而ocsp则是向CA服务器直接查询某个证书，而stapling是服务器的一种优化方式，服务器定时去查询ocsp，并且给自己的证书加上时间戳。这样客户端就不需要每次都去访问CA这个证书是否有效。</li>
+<li>会话复用：有两种方式，一种是session id，就是把上次使用过得TSL握手保存下来，然后下次创建连接的时候，直接查，然后在内存中找到这个session id对应密钥。然后直接进行通信即可。另外一种就是类似于JWT的验证方式，让客户端来保存身份信息，每次进行链接的时候带上。如果在有效期内的话，就直接通过这个密钥进行通信即可。但是session ticket对于集群式的服务器不太有好，因为上次服务的不一定是这台机器，就可能导致重新连接。</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><ol>
+<li>epoll底层原理</li>
+</ol>
+<blockquote>
+<p>epoll底层实现是使用了一个红黑树来维护当前的socket事件，并且这个红黑树是直接放在内核中的。所以每次添加或者删除一个监听对象时，不需要从用户空间复制到内核空间，这样就可以节省不少的时间。而且，当一个socket事件发生的时候，epoll会把这些时间组织成一个链表，当有socket事件发生时将链表返还给用户处理。</p>
+<p>这种方式是通过一个通知的形式来进行调用的</p>
+</blockquote>
+<ol start="2">
+<li>select和poll</li>
+</ol>
+<blockquote>
+<p>这两个实现的方法差不多，都是在用户内存中进行维护，当需要检查那些socket事件发生时，就copy到内核中进行检查。内核会对这个数组或者bitmaps进行标记，然后再copy回用户空间，应用程序再扫一遍进行处理。</p>
+<p>其中select是通过一个bitmap来对应socket文件描述符的，而poll是使用链表的形式来进行维护的。</p>
+<p>就是再有时间发生的时候去进行调用呀</p>
+</blockquote>
+<ol start="3">
+<li><p>常见的io模式</p>
+<blockquote>
+<ul>
+<li>BIO（blocking io），当一个进程在请求某个资源的时候，如果该资源没有立即的返回，那么这个进程就会将自己阻塞并且等待资源的返回。直到当资源准备好并且被从内核拷贝到用户内存之后才会被唤醒。&#x3D;&#x3D;突出一个阻塞&#x3D;&#x3D; 就导致当前的内核级现成无法进行工作了，如果是单核cpu的话，只能等待资源的返回，cpu才可以做其他的事情。</li>
+<li>NIO（Non-blocking io ），当一个进程在请求某个资源的时候，如果该资源没有立即返回。那个这个进程并不会将自己阻塞，而是会不断的询问资源好了没有。期间cpu也可以做一些别的事情。直到资源准备好之后，进程会阻塞以完成资源从内核到用户内存的拷贝。&#x3D;&#x3D;虽然表面上是不阻塞，但是在资源进行复制的时候还是会阻塞的&#x3D;&#x3D;</li>
+<li>io多路复用，这个线程可以监听多个socket请求，然后在调用select把当前的进程给阻塞。这个时候内核会监听select中所有的socket请求，当有一个请求的资源准备好后，select会返回，然后再从内核中进行数据的拷贝。</li>
+<li>AIO（异步io），当一个进程请求了某个数据之后，就会立即返回。直到这个请求的数据准备完成并且从内核复制回用户空间之后就发送信号通知进程该请求已经完成。&#x3D;&#x3D;真正的实现了异步非阻塞&#x3D;&#x3D;</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<h1 id="Golang基础"><a href="#Golang基础" class="headerlink" title="Golang基础"></a>Golang基础</h1><ol>
+<li>channel使用的场景</li>
+</ol>
+<blockquote>
+<ul>
+<li>数据传递和分享</li>
+<li>信号通知（我们可以使用一个传递空结构体的channel作为一个信号传递）</li>
+<li>实现同步、锁的功能（只有在无缓冲区的模式下）</li>
+</ul>
+</blockquote>
+<ol start="2">
+<li>SingleFlight是什么？</li>
+</ol>
+<blockquote>
+<p>SingleFlight是Go提供的一个扩展并发原语。</p>
+<p>作用：在处理 多个goroutine同时调用同一个函数的时候，只让一个goroutine区调用这个函数，等这个goroutine返回结果时，再把这个结果返回给这个几个goroutines，这样可以减少并发调用的数量。</p>
+<p>与sync.Once的区别：</p>
+<ul>
+<li>Sync.Onec是会保证永远只执行一次，而SingleFlight是每次调用的时候都会执行，并且在多个请求间执行一次</li>
+<li>sync.Once主要是用于单词初始化场景中，而SingleFlight主要用在合并请求的场景中。</li>
+</ul>
+</blockquote>
+<ol start="3">
+<li>go语言的特点有哪些？</li>
+</ol>
+<blockquote>
+<ul>
+<li>channel，go中的channel是非常强大的，他可以实现进程间通信。这个方式和共享内存的方式是不同的。共享内存是能够直接改变数据的内容的，当一个进程修改之后，别的进程也是能够看到的，而channel不可以，除非传递的这个值是指针，并且修改了指针中的值。</li>
+<li>goroutine ：go的goroutine是一种用户层的线程。当goroutine配合上我们的channel就可以实现不同携程之间同步的问题，因为channel会在通讯双方准备就绪之前进行阻塞，直到双方都准备就绪。</li>
+<li></li>
+</ul>
+</blockquote>
+<ol start="4">
+<li>go channel的各种情况</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">关闭</th>
+<th align="center">未初始化</th>
+<th align="center">正常</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">发送</td>
+<td align="center">panic</td>
+<td align="center">死锁</td>
+<td align="center">正常</td>
+</tr>
+<tr>
+<td align="center">接受</td>
+<td align="center">如果有数据接受数据，没数据会接受到0值</td>
+<td align="center">死锁</td>
+<td align="center">正常</td>
+</tr>
+<tr>
+<td align="center">关闭</td>
+<td align="center">Panic</td>
+<td align="center">Panic</td>
+<td align="center">正常</td>
+</tr>
+</tbody></table>
+<ol start="5">
+<li><p>init函数相关问题</p>
+<blockquote>
+<ul>
+<li>每个文件中可以包含多个init函数，会按照init函数的顺序执行</li>
+<li>不同包中的init按照包导入的依赖关系决定该如何初始化函数的执行顺序</li>
+<li>同一个package下是根据文件名字符串大小比较来决定init（）的执行顺序</li>
+<li>不同包就看谁先import</li>
+</ul>
+</blockquote>
+</li>
+<li><p>内存对齐的问题</p>
+<blockquote>
+<p>因为cpu访问内存时，是按照cpu的字长来进行访问的，所以当我们对数据进行内存对齐时，有利于cpu更好的提取数据，例如：如果一个数据横跨两个cpu字长的话，那么他需要2个cpu时刻才可以读取到完整的数据。所以我们需要对齐。在对一个结构体对齐时，我们可以通过unsafe保重的alignof（）函数查看当前结构体应该每个字段设置为多长。</p>
+<p>&#x3D;&#x3D;对于空struct{}&#x3D;&#x3D;，一般是不需要考虑内存对齐的，因为他的大小为0。但是如果struct{}作为一个结构体的最后一个字段的话，那么就需要考虑了，需要补充一个额外的空间，来保证指针的安全</p>
+</blockquote>
+</li>
+<li><p>字符串拼接各种方法的性能</p>
+<blockquote>
+<p><code>+</code>  ：当我们使用&#x3D;&#x3D;+&#x3D;&#x3D;进行字符串拼接的时候，因为字符串的值是不可以更改，因为string底层是一个指针和长度。所以，这个时候就会创建一个新的字符串用于保存当前的拼接的内容。当操作的次数提升之后，会严重影响性能。</p>
+<p><code>Sprintf</code> :这个函数主要是用与格式化字符串，在源码中，他不仅复制了一次，而且逻辑非常的复杂。</p>
+<p><code>strings.builder</code> ：这个方法是目前效率最高的方法。首先是他的内存分配比直接使用切片数组好一点，超过了2048之后就会变得缓慢（但是现在1.18之后切片的扩容发生发生了变化，不知道现在的效率是怎么样的）</p>
+<p><code>byte.builder</code> ：这个相对于strings.builder多了一个[]byte-&gt;string 转换的过程，所以会慢一些</p>
+</blockquote>
+</li>
+<li><p>for和range的性能差别</p>
+<blockquote>
+<p>首先我们要知道for和range都是如何来实现的，range其实是返回一个当前数据的副本，如果我们在切片中存的数据不是特别大的情况下，for和range的性能是差不多的。但是当这个元素的大小变大时，就会导致range拷贝消耗大量时间，从而降低性能。</p>
+</blockquote>
+</li>
+<li><p>空结构体的作用</p>
+<blockquote>
+<ul>
+<li>用作集合的实现</li>
+<li>用作通道间的信号量</li>
+<li>仅包含方法的结构体</li>
+</ul>
+</blockquote>
+</li>
+<li></li>
+</ol>
 ]]></content>
+      <tags>
+        <tag>posts</tag>
+      </tags>
   </entry>
 </search>
