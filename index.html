@@ -240,7 +240,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-18 22:18:16" itemprop="dateModified" datetime="2024-05-18T22:18:16+08:00">2024-05-18</time>
+      <time title="修改时间：2024-05-26 17:58:46" itemprop="dateModified" datetime="2024-05-26T17:58:46+08:00">2024-05-26</time>
     </span>
 
   
@@ -264,14 +264,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>9.1k</span>
+      <span>13k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>15 分钟</span>
+      <span>21 分钟</span>
     </span>
 </div>
 
@@ -282,307 +282,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><ol>
-<li>RSA握手的过程：</li>
-</ol>
-<blockquote>
-<ul>
-<li>首先，客户端想服务端发送一个ClientHello的报文，其中包括客户端的TLS的版本、一个随机数和客户端支持的加密算法列表。</li>
-<li>服务端在受到这个报文之后，会向服务端发送3个报文，第一个为ServerHello，其中包括服务端TLS的版本、一个服务端生成的随机数和服务端选择的加密算法。第二个报文是发送服务端的数字证书。第三个报文发送一个HelloDone。</li>
-<li>客户端受到信息后，会拿着服务端的数字证书，去CA查询是否正规。客户端的查询有一下几个步骤：通过CA的hash算法生成一个hash值（该数字证书的hash），服务端也会使用公钥对该数字证书进行解密生成一个hash。如果这两个hash相同，那么说明这个数字证书是有效的。<img src="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/%E7%BD%91%E7%BB%9C/https/%E8%AF%81%E4%B9%A6%E7%9A%84%E6%A0%A1%E9%AA%8C.png" alt="img"></li>
-<li>完成认证之后，客户端会向服务端发送一个随意数（pre-master）用于生成会话的密钥（&#x3D;&#x3D;这个地方的密钥是通过之前选定的算法来的&#x3D;&#x3D;）</li>
-<li>最后就是客户端和服务端之间进行通信，双方改成对称加密的方式进行通信</li>
-</ul>
-</blockquote>
-<ol start="2">
-<li>RSA的缺陷：</li>
-</ol>
-<blockquote>
-<p>如果服务端的密钥被抄家了，那么就会出现信息的泄漏</p>
-</blockquote>
-<ol start="3">
-<li><p>HTTPS可以如何优化</p>
-<blockquote>
-<p><code>缺点 </code> ：首先，在谈如何优化之前，我们应该知道他的缺点在哪里。我认为https有3处缺点：1.https的TSL握手时，会有随机数或者椭圆区县公私钥的生成；服务端数字证书的认证；和双方计算的pre-master随机数</p>
-<p>方案：</p>
-<ul>
-<li>硬件优化，有钱的话，可以去买更好地cpu。因为在这个过程中，客户端和服务端会进行大量的运算，所以这是一个计算密集型的任务，压力给到cpu。尤其是可以购买AESni</li>
-<li>软件优化，可以升级系统的内核和SSL之类的相关软件</li>
-<li>协议优化：其实就是对密钥交换的过程进行优化就是从RSA密钥交换升级为ECDHE算法，该算法有两个优势，一个是可以实现数据发送的抢跑，即在第三次握手的时候就可以发送加密的应用数据；二是该算法具备前向安全性。</li>
-<li>证书优化：1.可以使用ECDHE的证书，这个更短。2、可以使用ocsp+stapling作为验证证书是否失效的方法，常规的验证为CRL，客户端会去下载大量的列表，然后查询。而ocsp则是向CA服务器直接查询某个证书，而stapling是服务器的一种优化方式，服务器定时去查询ocsp，并且给自己的证书加上时间戳。这样客户端就不需要每次都去访问CA这个证书是否有效。</li>
-<li>会话复用：有两种方式，一种是session id，就是把上次使用过得TSL握手保存下来，然后下次创建连接的时候，直接查，然后在内存中找到这个session id对应密钥。然后直接进行通信即可。另外一种就是类似于JWT的验证方式，让客户端来保存身份信息，每次进行链接的时候带上。如果在有效期内的话，就直接通过这个密钥进行通信即可。但是session ticket对于集群式的服务器不太有好，因为上次服务的不一定是这台机器，就可能导致重新连接。但是会话复用会有问题，如果有人劫持了这个</li>
-</ul>
-</blockquote>
-</li>
-<li><p>Http1.1的优化</p>
-<blockquote>
-<p>Http1.1相对于http1.0，只添加了一个长链接而已</p>
-</blockquote>
-</li>
-<li><p>HTTP2.0的优化</p>
-<blockquote>
-<ol>
-<li>头部压缩：http2添加了两种压缩的编码： &#x3D;&#x3D;静态表编码&#x3D;&#x3D;和&#x3D;&#x3D;动态表编码&#x3D;&#x3D;。其中静态表编码是将header中常用的一些字符通过huffman编码的方式进行压缩。我们在发送数据的时候配合着http2发送二进制的方式。可以大大减少http报文头部的长度。其中动态表编码是指将一个http报文的头部的某个字段进行编码，当下次再受到这个字段的时候就不需要额外的进行发送了。但是这种方式只适合于发送大量的头部相同的http报文。因为如果某个字段发生变化的话，这个编码的字段就不能用在当前的报文中。导致内存中存放的动态编码会越来越多。所以我们可以设置一个动态表编码的上限。</li>
-<li>二进制帧： 二进制是从http2开始使用的，一个帧中需要有标志位用于记录当前的帧是否结束、以及当前帧所在流的优先级。同时一个帧中还有流标识符，用于标志当前链接中的流，而且客户端的流只能是奇数，服务端的流的id应该是偶数。&#x3D;&#x3D;每个帧中存放的数据应为一个http报文的header或者data（即payload）&#x3D;&#x3D;</li>
-<li>并发传输：得益于帧和流的技术，http2能够实现一个tcp链接下并发的发送n个请求，并且我们可以根据自己的需求来给不同的流添加相应的优先级</li>
-<li>服务端主动推送数据：因为有http2帧的存在，所以我们可以设置流的不同，将服务器给客户发送的消息加到不同的流里面。比如，我们可以让客户在请求html的时候，服务器自动的返回css的内容。这是就可以在客户端起的流里面返回一个服务器想启动的流的id，告诉客户端，接下来的服务器想给客户端的信息将通过这个流来进行发送。</li>
-</ol>
-</blockquote>
-</li>
-<li><p>http3的优点</p>
-<blockquote>
-<p>先说一下http2的问题：1. 对头阻塞，这里指的是TCP队头阻塞了，因为http2使用的是tcp，当发生丢包的时候，会进行重传，这个时候一些已经准备好的资源也会跟着进行等待。</p>
-<pre><code>                2. 还是具有TCP的握手和TSL的握手延时
-                2. 网络迁移需要重新进行连接：因为一个TCP链接是由四元组（源ip、目的ip\源端口、目的端口）组成的，所以当网络变化时，ip就会产生变化，导致TCP需要进行重新链接
-</code></pre>
-<p>http3所做的就是解决了http2中的这些问题。队头阻塞就使用了quic（quickly udp internet connection）协议。对于这个Tcp的握手和TSL的握手就是用链接ID来进行代替。</p>
-</blockquote>
-</li>
-<li><p>对于http2和http3动态表编码的一些问题</p>
-<blockquote>
-<p>HTTP&#x2F;2 和 HTTP&#x2F;3 的 Huffman 编码并没有多大不同，但是动态表编解码方式不同。</p>
-<p>所谓的动态表，在首次请求-响应后，双方会将未包含在静态表中的 Header 项更新各自的动态表，接着后续传输时仅用 1 个数字表示，然后对方可以根据这 1 个数字从动态表查到对应的数据，就不必每次都传输长长的数据，大大提升了编码效率。</p>
-<p>可以看到，<strong>动态表是具有时序性的，如果首次出现的请求发生了丢包，后续的收到请求，对方就无法解码出 HPACK 头部，因为对方还没建立好动态表，因此后续的请求解码会阻塞到首次请求中丢失的数据包重传过来</strong>。</p>
-<p>HTTP&#x2F;3 的 QPACK 解决了这一问题，那它是如何解决的呢？</p>
-<p>QUIC 会有两个特殊的单向流，所谓的单向流只有一端可以发送消息，双向则指两端都可以发送消息，传输 HTTP 消息时用的是双向流，这两个单向流的用法：</p>
-<ul>
-<li>一个叫 QPACK Encoder Stream，用于将一个字典（Key-Value）传递给对方，比如面对不属于静态表的 HTTP 请求头部，客户端可以通过这个 Stream 发送字典；</li>
-<li>一个叫 QPACK Decoder Stream，用于响应对方，告诉它刚发的字典已经更新到自己的本地动态表了，后续就可以使用这个字典来编码了。</li>
-</ul>
-<p>这两个特殊的单向流是用来<strong>同步双方的动态表</strong>，编码方收到解码方更新确认的通知后，才使用动态表编码 HTTP 头部。</p>
-</blockquote>
-</li>
-<li><p>WebSocket和HTTP有什么联系</p>
-<blockquote>
-<p>这两个协议都是应用层的协议，底层都是使用的TCP来进行链接的。但是，HTTP只是用了TCP一半的功能，即客户向服务器发送请求。而websocket却是实实在在的实现了双向通信的功能。websocket的创建是通过HTTP来进行建立的。在HTTP连接的接触上，通过发送<code>Update:WebSocket</code>的字段，来实现协议的转换。</p>
-<p>WebSocket之间的握手是这样的，客户端向服务器发送的这个升级的报文中有一个base64 编码的字符串，服务器在拿到这个字符串之后，用一个公开的算法对这个字符串进行计算得到一个新的字符串，然后返还给客户端。客户端受到这个字符串之后自己也运行一变这个公开的算法。看看二者得到的是不是相同的字符串，如果相同的话，那么二者之间就建立起了WebSocket链接。可以通过mask位来设置payload是否需要做掩码处理</p>
-</blockquote>
-</li>
-<li><p>RPC和HTTP的关系</p>
-<blockquote>
-<p>RPC其实和HTTP的功能是比较类似的一类协议，比如有gRPC。其实设计RPC的初衷是为了让我们调用远程的某个服务能够像调用本地的某些资源一样方便。RPC主要是用于CS之间的通信。而HTTP主要是BS之间的。随着发展，所有端的基本上都采用了BS架构，所以现在一般RPC都是公司内部使用，访问某个固定的服务器的时候使用，RPC也有一些优势，比如说RPC有TCP的一个连接池。当我们需要向服务器请求什么的时候，可以从连接池中拿一个出来，使用完之后再将这个TCP链接放回去。而且RPC的可定制性非常高，不需要像HTTP那样传输很多的字段，我们可以根据自己的需要来选择传输什么字段的。</p>
-</blockquote>
-</li>
-<li><p>TCP和UDP可以绑定到同一个端口吗？</p>
-<blockquote>
-<p>其实是可以的，因为TCP和UDP是传输层的两个协议，每个协议都有自己的端口号。每种协议都在内核中维护着。虽然当我们用了TCP和UDP相同的端口号，但是当一个数据包来到之后通过端口查找那个程序的时候，会在不同的协议之间进行查找，所以二者之间不会影响。</p>
-</blockquote>
-</li>
-<li><p>TCP为什么是3次握手而不是2次或者4次</p>
-<blockquote>
-<p>TCP的3次握手有以下几个作用：1.验证客户端和服务端双方都能够进行接受和发送消息，比如，发送的第一个TCP可以验证客户端能发送，第二次握手可以验证服务器可以接受和发送，第三次握手可以验证客户端接受。2.实现客户端和服务端之间的序号初始化</p>
-<p>那么三次握手为什么不是4次呢？原本是可以服务端给客户端发送的信息分成两条来发送，但是这两条信息的内容并不冲突（使用不同的标志位）所以可以一次性发送过来。所以只需要3次即可。</p>
-<p>为什么不是2次握手呢？2次握手会有以下问题，就是客户端发送了一个syn包之后，网络阻塞或者客户端重启之后再次执行业务会发送相应的syn包。这时如果只有两次握手的话，那么很有可能就会建立很多了无效的连接，占用服务器的资源</p>
-</blockquote>
-</li>
-<li><p>TCP报文中时间戳的作用</p>
-<blockquote>
-<ol>
-<li><p>便于计算RTT</p>
-</li>
-<li><p>用于防止循环报文的问题（序列号回绕的问题）</p>
-</li>
-</ol>
-</blockquote>
-</li>
-<li><p>IP层会分片，为什么还需要MSS</p>
-<blockquote>
-<p>我的理解是这样的，如果一个TCP报文直接交给ip层来进行分片的话，如果长度超过了MTU的话，那么就需要IP分片。这时TCP的首部就只有一个ip分片中有，当其中一部分丢失以后。TCP就无法获取整个完成的报文。所以需要重传整个报文。而如果TCP自己就进行分片的话，每个ip分片都一个TCP报文的头部。这样某个报文丢失时，只需要重传这一个报文就可以了。</p>
-</blockquote>
-</li>
-<li><p>注意分析TCP握手时丢包后的问题</p>
-<blockquote>
-<p>每个握手时的丢包都会导致上一个的重传和自己的重传（如果上一个包有的话）。而且都是等待RTO的时间，每多一次重传，等待的时间就是上一次RTO的2倍。我们可以通过调节tcp_syn_retries和tcp_sycack_retries来控制重传报文的次数</p>
-</blockquote>
-</li>
-<li><p>TCP 的四次回收可以优化为3次挥手吗？</p>
-<blockquote>
-<p>可以的，当服务器没有数据需要发送给客户端时。就可以实现优化。优化的原理是：<code>ACK延迟确认</code>：就是说，TCP为了减少网络压力，尽力将ACK放在有应用数据传递的报文中进行发送。所以，ACK会稍微等待一段时间来看看有没有数据需要返回，如果有的话就跟着回去。如果没有就自己返回。但是，如果客户端的第二条信息发送过来了，那么这个ACK必须立即返回。</p>
-</blockquote>
-</li>
-<li><p>TCP连接中出现进程崩溃或者主机宕机时会发生什么？</p>
-<blockquote>
-<ol>
-<li>我们需要分情况来进行讨论了。首先如果是进程崩溃的话，会正常的关闭TCP链接。因为TCP是由内核中来维护的，当进程崩溃时，内核会回收该进程的TCP链接资源，发送FIN报文，从而关闭链接。</li>
-<li>如果是主机宕机了，这个时候，我们就要看二者之间有没有发送数据，如果二者之间发送了数据。那么就可以通过超时重传的机制来判断当前的链接是否是正常的（linux内核中有一个参数是用来控制超时重传的次数的tcp_retires2，如果重传的次数超过了这个值，那么就会判断当前的TCP链接出现了问题，从而中断TCP）</li>
-<li>但是如果二者之间并没有数据交换的话，就要看TCP链接的keepalive又没有打开，如果这个选项打开了，二者在长时间没有进行通信之后，就会发送检测报文来判断当前的TCP链接是否失效，这个检测报文也有一个发送次数的上限和发送时间之间的间隔。</li>
-<li>最后，如果keepalive没有开的话，那么就真的不行了。这个established的TCP连接会一致在内核中维护，知道服务端进行重启。</li>
-</ol>
-</blockquote>
-</li>
-<li><p>鹅厂TCP面试题，拔掉网线后，这个TCP链接还存在吗?</p>
-<blockquote>
-<p>其实这个问题和上面的那个进行崩溃和主机宕机很像。其实，&#x3D;&#x3D;拔掉网线就是一种宕机，就看这个期间又没有消息的传递和keepalive机制又没有开启&#x3D;&#x3D;</p>
-</blockquote>
-</li>
-<li><p>全连接队列和半连接队列相关知识点</p>
-<blockquote>
-<ol>
-<li><p>服务端在执行listen函数的时候，会创建一个<code>半连接队列</code>和<code>全连接队列</code>。这两个队列分别使用hash表和链表来进行存储。因为半连接队列是还没有完全建立的队列，他需要第三次握手之后才可以建立，所以使用hash可以在O（1）的时间内找到它。</p>
-</li>
-<li><p>我们可以使用ss -lnt来查看当前一些socket的连接信息，其中recv-q代表着使用了多少个连接，而send-q是最大有多少个全连接</p>
-</li>
-<li><p>全连接队列满了之后，再受到第三次握手的ACK时会直接丢弃。其中还有一个<code>tcp_abort_on_overflow</code>的参数可以控制需不需要重传等待全连接可以放下当前的连接请求。如果该字段设置为0，在丢弃ACK包之后，会重传SYN+ACK的第二次握手。如果重传超过限制的话，就会删除半连接队列中的连接。如果该参数设置为1，会直接给客户端发送一个RST报文。</p>
-</li>
-<li><p>半连接队列满了之后。一般情况下半连接队列是不会满的。除非受到SYN洪泛攻击时，会产生大量的半连接状态的TCP链接。这个时候如果满了一般情况下会直接丢弃。但是也可以通过开启<code>tcp——syncookies</code>字段来绕过半连接队列。具体的绕过方式理解如下：</p>
-<p><code>服务端会根据发过来的请求的ip、时间戳等信息生成一个hash，然后将这个hash放到SYN+ACK的保重返还给客户端。只要客户端第三次返还会这个cookie的话，就确认建立连接。</code>从而通过这种方式来避免SYN的攻击。但是这样也产生了另外一个问题，因为服务器验证这个cookie是需要时间和算力的。如果当攻击者伪造了大量的ACK报文和随意的cookie时，会给服务器的CPU带来极大的压力。也可以达到攻击的目的。</p>
-</li>
-</ol>
-</blockquote>
-</li>
-<li><p>TCP的流量控制和拥塞控制</p>
-<blockquote>
-<p>这两个作用的对象是不同的，流量控制主要是在发送端和接受端之间进行的。主要是用来防止双方在发送数据时，速度差异太大。而拥塞控制主要是用来限制发送短向网络发送的速度的，用来限制发送端突然向网络中塞入大量的数据造成网络的拥塞。</p>
-<p>流量控制窗口关闭的问题：</p>
-<p>​	在这个问题中，当接受端告诉发送短的窗口大小为0时，这时发送短会停止发送。知道接受端的接受窗口不再为0时会向发送端进行通知。但是如果这个时候通知的报文丢失了的话，就会造成发送端和接受端的死锁（都在等双方的消息）。所以，这个时候，我们可以让发送端在接受到窗口为0的报文时，就开启一个计时器，每过一段时间就去主动询问一次接受端是否可以接受了。（有的TCP实现在查询多次仍然为0时，就主动断开TCP链接）</p>
-<p>流量控制糊涂窗口综合症：</p>
-<p>​	这个问题就是，如果接受端很忙，每次刚接受了一小部分数据后，发送短就迫不及待的将一点点数据+很大的报文header发送给接受端。这样就会造成网络数据传输的效率很低。这个时候我们就可以通过限制双方来控制小报文的发送。</p>
-<ul>
-<li><p>接受端：当可以接受的窗口大小小于（MSS,缓存空间&#x2F;2）时，就通知发送短当前的发送窗口为0.</p>
-</li>
-<li><p>发送端：Nagle算法</p>
-<blockquote>
-<p>条件一：需要窗口大小&gt;&#x3D;MSS，并且数据大小&gt;&#x3D;MSS</p>
-<p>条件儿：受到之前发送数据的ACK包</p>
-</blockquote>
-<p>只要这两个条件满足其中的一个，就可以直接发送。</p>
-</li>
-</ul>
-</blockquote>
-</li>
-</ol>
-<h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><ol>
-<li>epoll底层原理</li>
-</ol>
-<blockquote>
-<p>epoll底层实现是使用了一个红黑树来维护当前的socket事件，并且这个红黑树是直接放在内核中的。所以每次添加或者删除一个监听对象时，不需要从用户空间复制到内核空间，这样就可以节省不少的时间。而且，当一个socket事件发生的时候，epoll会把这些时间组织成一个链表，当有socket事件发生时将链表返还给用户处理。</p>
-<p>这种方式是通过一个通知的形式来进行调用的</p>
-</blockquote>
-<ol start="2">
-<li>select和poll</li>
-</ol>
-<blockquote>
-<p>这两个实现的方法差不多，都是在用户内存中进行维护，当需要检查那些socket事件发生时，就copy到内核中进行检查。内核会对这个数组或者bitmaps进行标记，然后再copy回用户空间，应用程序再扫一遍进行处理。</p>
-<p>其中select是通过一个bitmap来对应socket文件描述符的，而poll是使用链表的形式来进行维护的。</p>
-<p>就是再有时间发生的时候去进行调用呀</p>
-</blockquote>
-<ol start="3">
-<li><p>常见的io模式</p>
-<blockquote>
-<ul>
-<li>BIO（blocking io），当一个进程在请求某个资源的时候，如果该资源没有立即的返回，那么这个进程就会将自己阻塞并且等待资源的返回。直到当资源准备好并且被从内核拷贝到用户内存之后才会被唤醒。&#x3D;&#x3D;突出一个阻塞&#x3D;&#x3D; 就导致当前的内核级现成无法进行工作了，如果是单核cpu的话，只能等待资源的返回，cpu才可以做其他的事情。</li>
-<li>NIO（Non-blocking io ），当一个进程在请求某个资源的时候，如果该资源没有立即返回。那个这个进程并不会将自己阻塞，而是会不断的询问资源好了没有。期间cpu也可以做一些别的事情。直到资源准备好之后，进程会阻塞以完成资源从内核到用户内存的拷贝。&#x3D;&#x3D;虽然表面上是不阻塞，但是在资源进行复制的时候还是会阻塞的&#x3D;&#x3D;</li>
-<li>io多路复用，这个线程可以监听多个socket请求，然后在调用select把当前的进程给阻塞。这个时候内核会监听select中所有的socket请求，当有一个请求的资源准备好后，select会返回，然后再从内核中进行数据的拷贝。</li>
-<li>AIO（异步io），当一个进程请求了某个数据之后，就会立即返回。直到这个请求的数据准备完成并且从内核复制回用户空间之后就发送信号通知进程该请求已经完成。&#x3D;&#x3D;真正的实现了异步非阻塞&#x3D;&#x3D;</li>
-</ul>
-</blockquote>
-</li>
-</ol>
-<h1 id="Golang基础"><a href="#Golang基础" class="headerlink" title="Golang基础"></a>Golang基础</h1><ol>
-<li>channel使用的场景</li>
-</ol>
-<blockquote>
-<ul>
-<li>数据传递和分享</li>
-<li>信号通知（我们可以使用一个传递空结构体的channel作为一个信号传递）</li>
-<li>实现同步、锁的功能（只有在无缓冲区的模式下）</li>
-</ul>
-</blockquote>
-<ol start="2">
-<li>SingleFlight是什么？</li>
-</ol>
-<blockquote>
-<p>SingleFlight是Go提供的一个扩展并发原语。</p>
-<p>作用：在处理 多个goroutine同时调用同一个函数的时候，只让一个goroutine区调用这个函数，等这个goroutine返回结果时，再把这个结果返回给这个几个goroutines，这样可以减少并发调用的数量。</p>
-<p>与sync.Once的区别：</p>
-<ul>
-<li>Sync.Onec是会保证永远只执行一次，而SingleFlight是每次调用的时候都会执行，并且在多个请求间执行一次</li>
-<li>sync.Once主要是用于单词初始化场景中，而SingleFlight主要用在合并请求的场景中。</li>
-</ul>
-</blockquote>
-<ol start="3">
-<li>go语言的特点有哪些？</li>
-</ol>
-<blockquote>
-<ul>
-<li>channel，go中的channel是非常强大的，他可以实现进程间通信。这个方式和共享内存的方式是不同的。共享内存是能够直接改变数据的内容的，当一个进程修改之后，别的进程也是能够看到的，而channel不可以，除非传递的这个值是指针，并且修改了指针中的值。</li>
-<li>goroutine ：go的goroutine是一种用户层的线程。当goroutine配合上我们的channel就可以实现不同携程之间同步的问题，因为channel会在通讯双方准备就绪之前进行阻塞，直到双方都准备就绪。</li>
-<li></li>
-</ul>
-</blockquote>
-<ol start="4">
-<li>go channel的各种情况</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">关闭</th>
-<th align="center">未初始化</th>
-<th align="center">正常</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">发送</td>
-<td align="center">panic</td>
-<td align="center">死锁</td>
-<td align="center">正常</td>
-</tr>
-<tr>
-<td align="center">接受</td>
-<td align="center">如果有数据接受数据，没数据会接受到0值</td>
-<td align="center">死锁</td>
-<td align="center">正常</td>
-</tr>
-<tr>
-<td align="center">关闭</td>
-<td align="center">Panic</td>
-<td align="center">Panic</td>
-<td align="center">正常</td>
-</tr>
-</tbody></table>
-<ol start="5">
-<li><p>init函数相关问题</p>
-<blockquote>
-<ul>
-<li>每个文件中可以包含多个init函数，会按照init函数的顺序执行</li>
-<li>不同包中的init按照包导入的依赖关系决定该如何初始化函数的执行顺序</li>
-<li>同一个package下是根据文件名字符串大小比较来决定init（）的执行顺序</li>
-<li>不同包就看谁先import</li>
-</ul>
-</blockquote>
-</li>
-<li><p>内存对齐的问题</p>
-<blockquote>
-<p>因为cpu访问内存时，是按照cpu的字长来进行访问的，所以当我们对数据进行内存对齐时，有利于cpu更好的提取数据，例如：如果一个数据横跨两个cpu字长的话，那么他需要2个cpu时刻才可以读取到完整的数据。所以我们需要对齐。在对一个结构体对齐时，我们可以通过unsafe保重的alignof（）函数查看当前结构体应该每个字段设置为多长。</p>
-<p>&#x3D;&#x3D;对于空struct{}&#x3D;&#x3D;，一般是不需要考虑内存对齐的，因为他的大小为0。但是如果struct{}作为一个结构体的最后一个字段的话，那么就需要考虑了，需要补充一个额外的空间，来保证指针的安全</p>
-</blockquote>
-</li>
-<li><p>字符串拼接各种方法的性能</p>
-<blockquote>
-<p><code>+</code>  ：当我们使用&#x3D;&#x3D;+&#x3D;&#x3D;进行字符串拼接的时候，因为字符串的值是不可以更改，因为string底层是一个指针和长度。所以，这个时候就会创建一个新的字符串用于保存当前的拼接的内容。当操作的次数提升之后，会严重影响性能。</p>
-<p><code>Sprintf</code> :这个函数主要是用与格式化字符串，在源码中，他不仅复制了一次，而且逻辑非常的复杂。</p>
-<p><code>strings.builder</code> ：这个方法是目前效率最高的方法。首先是他的内存分配比直接使用切片数组好一点，超过了2048之后就会变得缓慢（但是现在1.18之后切片的扩容发生发生了变化，不知道现在的效率是怎么样的）</p>
-<p><code>byte.builder</code> ：这个相对于strings.builder多了一个[]byte-&gt;string 转换的过程，所以会慢一些</p>
-</blockquote>
-</li>
-<li><p>for和range的性能差别</p>
-<blockquote>
-<p>首先我们要知道for和range都是如何来实现的，range其实是返回一个当前数据的副本，如果我们在切片中存的数据不是特别大的情况下，for和range的性能是差不多的。但是当这个元素的大小变大时，就会导致range拷贝消耗大量时间，从而降低性能。</p>
-</blockquote>
-</li>
-<li><p>空结构体的作用</p>
-<blockquote>
-<ul>
-<li>用作集合的实现</li>
-<li>用作通道间的信号量</li>
-<li>仅包含方法的结构体</li>
-</ul>
-</blockquote>
-</li>
-<li></li>
-</ol>
-
+          <p>找实习时背诵的内容和整理的一些问题</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/05/13/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1625,13 +1333,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">39k</span>
+    <span title="站点总字数">43k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:05</span>
+    <span title="站点阅读时长">1:11</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动

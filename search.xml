@@ -66,6 +66,26 @@
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2023/09/17/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<span id="more"></span>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>golang</title>
     <url>/2024/02/26/golang/</url>
     <content><![CDATA[<h1 id="学习过程中的一些小知识点"><a href="#学习过程中的一些小知识点" class="headerlink" title="学习过程中的一些小知识点"></a>学习过程中的一些小知识点</h1><ul>
@@ -154,26 +174,6 @@
       <tags>
         <tag>posts</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2023/09/17/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<span id="more"></span>
-
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>k8s</title>
@@ -729,6 +729,103 @@ withDefaults(defineProps&lt;&#123; ren?: Person &#125;&gt;(), &#123;
 </ul>
 </blockquote>
 </li>
+<li><p>TCP可以如何优化</p>
+<blockquote>
+<ul>
+<li>客户端：<ul>
+<li>因为客户端在报文超时会进行重传。所以，我们可以修改报文重传的次数（tcp_syn_retries）来修改和调整客户端的重传次数。从而调整客户端三次握手的上限。</li>
+</ul>
+</li>
+<li>服务端：<ul>
+<li>我们知道服务端是由两个队列来维护的，一个半连接队列一个全连接队列。当半连接队列满了之后，我们有以下处理得方法。<ul>
+<li>调节半连接队列的大小。通过修改参数somaxconn和backlog、tcp_max_syn_backlog来调整accept 队列，进而增大半连接的队列。因为单纯的修改backlog是不起作用的。</li>
+<li>或者我们可以使用syncookies来应对半连接队列满了的情况。当使用了syncookies时，收到的syn会直接返回并且加上一个根据TCP相关的信息计算出的cookies信息。然后发送给客户端。如果客户端发挥了，那么就直接直接建立链接。</li>
+<li>对于全连接队列的问题。一般情况下我们会丢弃掉这个第三次握手的ACK包。这个时候syn+ack的第二次握手就会重新发送，知道超过syn+ack的超时重传的次数。&#x3D;&#x3D;这个是linux的默认操作&#x3D;&#x3D;</li>
+<li>或者我们可以打开一个叫做tcp_abort_on_overflow的参数。当这个参数打开之后，如果全链接队列满了就会给客户端发送一个RST报文。告诉客户端断开链接。accept队列的长度&#x3D;min（somaxconn，backlog）。但是这样操作不太好。</li>
+<li>或者我们可以使用seesion Tickets在TCP里面就叫做Fast open。我们第一次发送请求的时候，携带这个字段并且设置为0。第一次请iqude时候，服务端会返回。下次请求时只需要客户端携带这个字段，并消耗1RTT时间就可以完成链接。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>TCP是如何处理粘包的问题的？</p>
+<blockquote>
+<p>先来说一说为什么会产生TCP粘包：因为Nagle算法的存在，小的报文会积累在一起，等到发送给接受端的时候，接受端就无法判断每个消息之间的边界了。这样就可能出现粘包的问题。或者服务器每次从缓冲区拿的太少，下次拿的时候也不知道在哪里断开。</p>
+<ul>
+<li>使用特殊的字符作为边界。这个其实已经在http中实际使用了。比如，http使用回车换行作为边界。但是当我们需要发送的消息里面包含了这个边界的时候，就会出现错误。</li>
+<li>所以我们可以先定义一个结构体。这个结构体的长度我们先定义好比如说4个字节。我们下次读取的时候，可以先读取4个字节，让我们来获取这个结构体。然后我们在这个结构体中可以自己定义一个数据的长度和数据的集合。我们之后再根据这个长度来接受需要大小的数据即可。&#x3D;&#x3D;其实就是在应用程序的角度来帮助TCP连接进行处理了。&#x3D;&#x3D;</li>
+</ul>
+</blockquote>
+</li>
+<li><p>SYN报文丢弃的情况</p>
+<blockquote>
+<ol>
+<li><p>如果我们开启了tcp_tw_recycle和timestamps。因为当开启了timestamps后，默认会开启一个叫做per-host<code>PAWS机制</code>：这个机制就是对对端IP进行PAWS检查，而不是对IP+端口检查。所以这个时候，如果发送端是一个NAT网络的话，这是就会发生大量的丢包行为。因为NAT 网络中的主机都有自己的始终，会产生不同的timestamps。所以，不同机器发送给服务端的报文会有不同的timestamps，而在一定的时间内，服务端只会接受唯一一个标记timestamps的报文。</p>
+</li>
+<li><p>如果半连接队列满了，这个时候不会接受SYN报文了。</p>
+<p>我们该如何应对SYN洪泛攻击呢？</p>
+<ol>
+<li>增大半连接队列，三个参数tcp_max_syn_backlog,somaxconn,backlog</li>
+<li>开启tcp_syncookies</li>
+<li>减少SYN-ACK的重传次数</li>
+</ol>
+</li>
+<li><p>如果全链接队列满了，也会导致半连接队列不接受SYN报文，导致丢失SYN包</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>如果已经建立的TCP受到SYN会发生什么</p>
+<blockquote>
+<p>如果一个建立的TCP再次收到SYN是，他会返回一个chanllge ACK（此时服务端想要接受的报文的序列号）。然后我们可以根据这个序列号来做一些不好的事情。如发送一个RST报文，断开链接等。</p>
+<p>所以如果是客户端宕机了，再次启动的时候还使用这个端口于原来的服务建立连接的话。发送SYN之后就会受到challenge ACK。这个时候客户端发现回复的序列号不是自己想要的，于是就会返回一个RST断开这个链接。</p>
+</blockquote>
+</li>
+<li><p>在TIME_WAIT状态的TCP链接，受到SYN后会发生什么？</p>
+<blockquote>
+<p>如果收到的是合法的就接着复用，建立连接。如果是不合法的就会发送服务端可以接受到的下一条数据。</p>
+<p>如果是合法的就会跳过2*MSL的等待时间。如果是非法的，客户端受到之后就会会RST给服务器。但是当服务器受到这个RST之后有两种操作，一种是丢弃该RST报文，另外一种是直接断开链接。不过比较好的做法是丢弃RST报文。因为挥手的wait——time时间是一种比较友好的操作。</p>
+</blockquote>
+</li>
+<li><p>tcptwreuse默认关闭的原因</p>
+<blockquote>
+<p>第一种情况：虽然reuse+timestamps能够阻拦很多过期报文，但是不会阻拦RST报文。所以上次链接中如果有被网络阻塞的RST来到了下一次快速重用的TCP链接中时，可能会导致重用的TCP被断开。</p>
+<p>第二种情况：如果第四次回收丢失了，且这时客户端发送了快速重用，这个时候客户端发送SYN，而服务端会的是challenge ACK，这个是否客户端就会会一个RST断开。也会导致重用的失败。</p>
+</blockquote>
+</li>
+<li><p>TCP的一些缺陷</p>
+<blockquote>
+<ol>
+<li>升级比较困难</li>
+<li>TCP存在对头阻塞</li>
+<li>网络迁移时靴靿重新链接</li>
+</ol>
+</blockquote>
+</li>
+<li><p>QUIC</p>
+<blockquote>
+<p>下面我们来详细的扒一下QUIC</p>
+<p>首先，QUIC的报文是什么样的？一个QUIC报文有三层，分别是Packet 、Frame和http3frame</p>
+<p>其中，Packet 中的header有两种，一种是Long Packet Header ，另外一种是Short Packet Header 。其中long的是用于首次建立连接。而Short是用于日常传输数据的。其中QUIC也许要进行三次握手用于协商出链接的ID。</p>
+<p>而Short Packet Header中使用Packet Number是一个独一无二的编号，而且是严格递增的。所以就算是N号报文丢失了，重传的报文的编号也不会是N，而是一个比N大的值。&#x3D;&#x3D;这样做的好处，我们可以精确的计算出原始报文和重传报文的RTT，以此来计算的RTO会比较精确，从而降低重传的概率。&#x3D;&#x3D;</p>
+<p>而一个Packet下面可以存放多个QUIC frame。每一个frame都有一个类型，例如当前的frame是stream类型的。<img src="/2024/05/13/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/image-20240520161839248.png" class="" title="image-20240520161839248"></p>
+<img src="/2024/05/13/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/image-20240520161856960.png" class="">
+
+
+
+<p>这里的stream id和http2 中的stream id作用是相同的。可以看成是一个TCP链接中的不同的http请求在公用一条TCP链接。offset就类似于TCP链接中的seq序号，用于保证数据的顺序行和可靠性。而length之名了frame数据的长度。</p>
+<p>这里说一下，我们是如何保证数据的超时重传的。我们是根据一个Packet保中某个frame的stream id和offset来判读当前数据是否是前面丢失的某个数据。&#x3D;&#x3D;从而可以实现QUIC的Packet Number+Stream ID和offset的组合实现乱序的作用。&#x3D;&#x3D;</p>
+<p>这里再说一下，QUIC是如何解决对头的问题的。是因为QUIC为每一个stream都单独分配了一个滑动窗口，使得一个链接上的多个stream之间没有依赖关系，相互独立。</p>
+<p>QUIC 的流量控制</p>
+<p>quic一共有两种流量控制的方法：</p>
+<p>第一种是针对每一个stream进行限制：他的接受窗口的是由最大的偏移来决定的。如果受到了新的字段之后，就可以可以将接受窗口的左边界向右移动。而右边界的移动需要看已经被接受的数据有没有达到最大接受窗口的一半。如果已经达到了一半，那么就移动有窗口扩大我们的可用接受窗口。（移动的距离就是已经接受了的距离）</p>
+<p>第二种方法就是把所有的stream可以使用的空间作为标准。整体的可以使用的就是这些。不过，我感觉这样做可能会导致饥饿的出现。</p>
+</blockquote>
+</li>
+<li><p>如果服务端只绑定了端口和IP没有listen，这个时候服务端进行访问的话。服务端会返回一个RST报文，要求客户端关闭这个链接。</p>
+</li>
 </ol>
 <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><ol>
 <li>epoll底层原理</li>
@@ -861,6 +958,27 @@ withDefaults(defineProps&lt;&#123; ren?: Person &#125;&gt;(), &#123;
 </li>
 <li></li>
 </ol>
+<h1 id="数据库的内容"><a href="#数据库的内容" class="headerlink" title="数据库的内容"></a>数据库的内容</h1><h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><ol>
+<li><p>MySQL锁</p>
+<blockquote>
+<p>Mysql的元数据锁，是在执行sql语句时，自动添加的。而是读读不互斥，读写和写写是互斥的。而且&#x3D;&#x3D;写锁的优先级是比读锁的优先级高。&#x3D;&#x3D;所以如果一个想拿到写锁的事务一直没有被执行的话，也会被block住</p>
+</blockquote>
+</li>
+<li><p>InnoDB和MyISAM的区别</p>
+<blockquote>
+<ol>
+<li>InnoDB是可以加行级锁的，而MyISAM不可以加行级锁。这就是InnoDB支持事务而MyISAM不支持事务的原因之一。</li>
+<li></li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<h1 id="简历上提到的问题"><a href="#简历上提到的问题" class="headerlink" title="简历上提到的问题"></a>简历上提到的问题</h1><ol>
+<li><p>有状态和无状态的区别？</p>
+<blockquote>
+</blockquote>
+</li>
+</ol>
 ]]></content>
       <tags>
         <tag>posts</tag>
@@ -879,261 +997,6 @@ withDefaults(defineProps&lt;&#123; ren?: Person &#125;&gt;(), &#123;
 ]]></content>
       <tags>
         <tag>daily</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>科软高级软件工程课堂问答</title>
-    <url>/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/</url>
-    <content><![CDATA[<ol>
-<li>软件危机解决了吗？为什么？</li>
-</ol>
-<blockquote>
-<ol>
-<li>首先我们要理解软件危机产生的原因是由于”无法满足社会发展的需要”导致的</li>
-<li>软件危机包含了两方面的问题：一、如何开发软件，以满足不断增长，日趋复杂的需求。二、如何维护数量不断膨胀的软件产品。</li>
-<li>综合上面两点原因，我认为软件危机并没有解决。因为我们的社会时时刻刻在发生着变化，这就需要我们的软件要不断的就行更新迭代，同时还要不断的处理软件运行时出现的各种各样的BUG。所以软件危机并没有真正的解决。</li>
-</ol>
-</blockquote>
-<ol start="2">
-<li>工程化软件开发与编程之间可以直接画等号吗？不编程也可以实现软件开发？（例如我是项目经理）</li>
-</ol>
-<blockquote>
-<ol>
-<li>不可以直接画等号，因为工程化软件开发是开发出高质量的软件产品，满足用户需求，提高软件开发效率和可维护性。而编程仅仅指的是代码编写的阶段（即coding的过程）。</li>
-<li>不编程也可以实现软件的开发。在软件开发中，编程只是其中的一个环节。对于项目经理来说只需要带领团队做好需求分析、搭建好项目的整体框架等内容即可，不需要进行编程。</li>
-</ol>
-</blockquote>
-<ol start="3">
-<li>改变软件工程的七个关键因素，那七个？每个因素带来了哪些改变？以及新的因素有哪些？并带来了哪些影响</li>
-</ol>
-<blockquote>
-<p>Wasserman 于1996年提出了七个该改变软件工程的关键因素：</p>
-<ol>
-<li>交付时间的重要性（现在的软件交付时间是以小时来进行衡量的，而原来的软件交付时间是以月甚至年来进行衡量）</li>
-<li>计算行业经济的变化趋势（目前计算机行业是蓬勃发展的时代，有着大量的资金支持。相较于之前，计算机主要运用于军工领域，缺乏活力和资金支持 ）</li>
-<li>功能强大的桌面运算（目前的主流的系统为了方便大众的应用，都配备了优美且边界的图形界面。但是原来的计算机都是通过命令行来进行操作的，只有专业的计算机领域人员和数学相关人员来可以进行操作）</li>
-<li>互联网络（目前全世界的海量的PC都通过互联网连接在一起，每个人可以时时的分享自己的数据。但是之前的计算主要应用于军工，互联性不是很高）</li>
-<li>面向对象的技术（随着时间的推移，面向对象的技术出现，更加有利于目前的欢迎。但是原来的软件工程更加的注重过程）</li>
-<li>图形用户界面（我觉得这个和第三点很相似）</li>
-<li>瀑布模型的不可预知性（因为瀑布模型需要先进行分析，然后在根据分析出的需求。但是当中途用户需要更改需求时，瀑布模型就会不知道该如何做）</li>
-</ol>
-</blockquote>
-<blockquote>
-<p>除了wasserman提出的因素外我还想到了一下两点因素：</p>
-<ol>
-<li>新技术和工具：不断涌现的新技术、开发工具和框架可以改变软件工程实践。例如，云计算、大数据、人工智能和区块链等技术的发展对软件开发产生了深远影响，鼓励开发人员采用新方法和工具。</li>
-<li>开发方法论：新的开发方法论和方法，如敏捷开发、DevOps、微服务架构等，已经改变了软件开发的方式。这些方法鼓励更快的迭代、更紧密的合作和更高效的交付。</li>
-</ol>
-</blockquote>
-<ol start="4">
-<li><p>超越的观点和用户的观点都是不可取的，要使用制造的观点和产品的观点。用户是在末端进行评价，这时已经不能够再改变产品。</p>
-<blockquote>
-<ol>
-<li>超越的观点：质量是可以背认识而不能被定义的。（如果质量只能够被认识那么就不会有好坏之分，又何谈软件是否是一个好软件呢？）</li>
-<li>用户的观点：因为用户是在开发完成之后才能进行质量检测，但是此时已经开发完毕，不能够对产品再次进行修改</li>
-<li>制造的观点：质量是与需求说明的一致</li>
-<li>产品的观点：质量是鱼产品的特性相联系的</li>
-<li>基于价值的观点：质量决定于顾客愿意支付的金额</li>
-</ol>
-</blockquote>
-</li>
-<li><p>系统的分析方法有哪些步骤？<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-24%2016.45.13-8164097.png" class=""></p>
-</li>
-<li><p>软工与计科的区别的是什么？</p>
-<blockquote>
-<p>计算机科学：研究计算机相关的理论</p>
-<p>软件工程：把计算机技术看成工具，用以解决问题</p>
-<p>就像老师上课讲的工程学位和工学学位的区别一样，一个是进行理论研究，产出新的idea、新的方法，而软工是去进行这些内容的实现和使用。一个偏理论，一个偏实践</p>
-</blockquote>
-</li>
-<li><p>软件开发的三个阶段：传统、敏捷开发、开发运维一体化（自己对应ppt去看）</p>
-<blockquote>
-<ol>
-<li>上世纪90年代，“软件过程也是软件”以及开发优秀软件过程的重要性的到广泛认同（卡耐基梅隆大学先后提出了软件开发能力成熟度模型CMM，用户评估和改进软件过程，后来发展为CMMI）</li>
-<li>进入本世纪00年代，敏捷开发的思想成为主流（人们更加关注快速的开发和交付书对，而传统的软件过程过度强调计划，很难适应目前的需求）</li>
-<li>进入本世纪10年代后，开发韵味一体化成为主流（大量软件开发需求朝着快速、易变的方向发展，敏捷的思想和实践进入运维领域。打破了开发和运维的界限，实现了从开发到运维的快速反应）</li>
-</ol>
-</blockquote>
-</li>
-<li><p>关键路径是不是活动的最优选择？</p>
-<blockquote>
-<p>首先我们要理解什么是关键路径：</p>
-<p>关键路径是指在关键路径上的活动是不可被忽视的活动，他们对于整个项目的工期有着直接的影响。但是关键路径上的活动并不一定就是最终要的活动，也不一定是最优的选择。</p>
-</blockquote>
-</li>
-<li><p>用自己的理解说一下软件生命周期和软件过程的理解（对软件过程可以从个体、整体和工程的视角的进行观察，例如：程序员、项目经理和架构师）</p>
-<blockquote>
-<ol>
-<li>软件生命周期：指软件从开始到结束的整个过程，包括规划、开发、测试、部署和维护等阶段，描述了软件的整体状态和变化。</li>
-<li>软件过程：软件过程是指软件开发中所执行的一系列活动、动作和任务的集合。</li>
-</ol>
-<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-25%2011.35.00-8205039.png" class="">
-
-<p>我们可以从上面这三个层次来理解软件过程</p>
-</blockquote>
-</li>
-<li><p>要知道传统开发模式的三个时期和八个阶段是什么？</p>
-<blockquote>
-<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-25%2011.39.14-8205177.png" class="">
-</blockquote>
-</li>
-<li><p>瀑布模型的优缺点？（最好看看课本和课件上各种模型的优缺点）</p>
-<blockquote>
-<p>优点：</p>
-<ol>
-<li>软件生命周期模型，使软件开发过程可以在分析、设计、编码、测试和维护的框架下进行。</li>
-<li>软件开发过程具有系统性、可控性，克服了软件开发的随意性。</li>
-</ol>
-<p>缺点：</p>
-<ol>
-<li>项目开始阶段用户很难精确的提出产品需求，随着客户对系统的深入理解，修改需求会十分常见，但是瀑布模型对于需求的修改会推到之前的所有工资重新开始，会导致耗费大量的人力物力做无用功。</li>
-<li>项目开发晚期才能得到程序的运行版本，这个时候软件需求和开发中的错误会造成巨大的代价。</li>
-<li>采用线性模型组织项目开发经常发生开发小组人员“堵塞状态”，特别是项目的开始和结束的阶段。</li>
-</ol>
-</blockquote>
-</li>
-<li><p>人的认知是螺旋上升的，所以就可以看出演化模型螺旋形状的合理性。</p>
-</li>
-<li><p>传统强调物性、现代强调人性</p>
-</li>
-<li><p>RUP的定义：用例驱动、以体系结构为核心、迭代及增量的软件工程框架，由UML方法和工具支持。</p>
-</li>
-<li><p>请描述一下RUP的可伸缩性，举个例子说明？（可伸缩就是在瀑布和敏捷之间的调节）</p>
-</li>
-<li><p>RUP是否是每个阶段都是全过程的，构建阶段是否是只需要写代码？如果不是，那请问还要做什么？如果也需要做需求，那需要做什么样的需求？</p>
-</li>
-<li><p>敏捷的核心思想：可执行的最大价值和人</p>
-</li>
-<li><p>敏捷开发的四个原则：</p>
-</li>
-</ol>
-<ul>
-<li>人大于物</li>
-<li>软件大于文档</li>
-<li>合作大于谈判</li>
-<li>人的认知时间在两周之内，所以相应变化也需要在两周之内（即敏捷的增量迭代需要短时间内的开发，这个就是相应变化胜过遵循计划）</li>
-</ul>
-<ol start="19">
-<li><p>敏捷的12条原则</p>
-<blockquote>
-<ol>
-<li>我们的最高优先级是持续不断地、及早地交付</li>
-</ol>
-<p>有价值的软件来使客户满意</p>
-<ol start="2">
-<li>拥抱变化，即使是在项目开发的后期，愿意为</li>
-</ol>
-<p>了客户的竞争优势而采取变化</p>
-<ol start="3">
-<li>经常地交付可工作的软件，相隔几星期或一两</li>
-</ol>
-<p>个月，倾向于采取较短的周期</p>
-<ol start="4">
-<li><p>业务人员和开发人员在整个过程中紧密合作</p>
-</li>
-<li><p>围绕着被激励的个体构建项目，为个体提供所</p>
-</li>
-</ol>
-<p>需的环境和支持，给予信任，从而达成目标</p>
-<ol start="6">
-<li>在团队内和团队间沟通信息的最有效和最高效</li>
-</ol>
-<p>的方式是面对面的交流</p>
-<ol start="7">
-<li><p>可工作的软件是衡量进度的首要标准</p>
-</li>
-<li><p>倡导可持续开发，项目发起者、开发人员和</p>
-</li>
-</ol>
-<p>用户应该维持一个可持续的步调</p>
-<ol start="9">
-<li>持续地追求技术卓越和良好设计，可以提高</li>
-</ol>
-<p>敏捷性</p>
-<ol start="10">
-<li><p>以简洁为本，它是减少不必要工作的艺术</p>
-</li>
-<li><p>最好的体系结构、需求和设计是从自组织的</p>
-</li>
-</ol>
-<p>团队中涌现出来的</p>
-<ol start="12">
-<li>团队定期地反思如何变得更加高效，并相应</li>
-</ol>
-<p>地调整自身的行为</p>
-</blockquote>
-</li>
-<li><p>测试驱动开发的优点：</p>
-</li>
-</ol>
-<ul>
-<li>操作正确性，按照用户story，符合story的需求</li>
-<li>不同的观察点</li>
-<li>解除软件的耦合性</li>
-<li>有利于改变软件的体系结构</li>
-</ul>
-<ol start="21">
-<li>怎么理解这个内容？（我们在进行极限编程时只需要使用其中的一点就是属于极限编程）<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-24%2017.07.12-8164113.png" class=""></li>
-<li>表面的需求和真实的需求？（挖掘真正的需求、细化需求）</li>
-<li>什么是需求和需求工程？（需求工程：课件上有）</li>
-<li>银弹问题（即没有解决问题一劳永逸的方法：No sliver Bullet）</li>
-<li>工程实践中会用到7中方法中的哪些方法？</li>
-<li>请结合自己的工程实践说明一下需求导出的过程？</li>
-<li>对三个文档的理解：（初步“产品要求”文档、产品需求说明文档、SRS）</li>
-<li>结合抽象层次谈一下多态（老师使用的神行走于人世间，可以编程男人和女人）</li>
-<li>面向对象开发的过程模型和结构化开发的过程模型，从产出产品的角度来说明？</li>
-<li>过程论和对象论的区别？</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>posts</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>算法</title>
-    <url>/2023/09/18/%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h1 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h1><p><a href="https://leetcode.cn/problems/linked-list-cycle-ii/">1.循环链表出口问题</a></p>
-<blockquote>
-<p>题目描述：给出一个链表的头节点head，返回链表开始入环的第一个节点，没有则返回nul。</p>
-</blockquote>
-<p>实例：</p>
-<img src="/2023/09/18/%E7%AE%97%E6%B3%95/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.png" class="" title="实例">
-
-<blockquote>
-<p>输入：head &#x3D; [3,2,0,-4], pos &#x3D; 1<br>输出：返回索引为 1 的链表节点<br>解释：链表中有一个环，其尾部连接到第二个节点。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>​	我们可以定义两个指针，一个慢指针slow每次走一格，一个快指针fast每次走两格。如果链表存在环路则fast一定会追上slow。如果fast经过一定的循环变为NULL则该链表不存在环路。</p>
-<p>​	如果链表中存在环路，那么设从头节点到环路入口的长度为x，设从环路入口到快慢节点相遇的位置长度为y，环中剩下的长度为z。<br>$$<br>slow指针走的距离&#x3D;x+y<br>$$</p>
-<p>$$<br>fast指针走的距离&#x3D;x+y+n(y+z)<br>$$</p>
-<p>​	又因为fast移动的速度是slow的两倍<br>$$<br>(x+y)*2&#x3D;x+y+n(y+z)<br>$$</p>
-<p>$$<br>x&#x3D;n(y+z)-y<br>$$</p>
-<p>$$<br>x&#x3D;(n-1)(y+z)+z<br>$$</p>
-<p>​	所以可以看出来，在进入环之前的长度，是N-1倍的环长加上相遇点到入口点的距离之外的距离。而且n必定大于等于1。因为快慢节点相遇之前，快节点肯定要先在环中跑一圈才能遇到slow。</p>
-<p>​	如果此时我们设置两个指针分别从head和入口点每次跳动一格的距离，那么下次相遇的时候必定是在入口点。下面给出具体的代码。</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">if(!head) return head; &#x2F;&#x2F;如果头节点为空，直接返回
-ListNode* fast &#x3D; head; &#x2F;&#x2F;让快慢节点从头开始
-ListNode* slow &#x3D; head;
-while(fast&amp;&amp;slow)&#123;
-  slow &#x3D; slow-&gt;next;
-  if(fast-&gt;next) fast &#x3D; fast-&gt;next-&gt;next;
-  if(fast&#x3D;&#x3D;slow) break;
-&#125;
-
-if(!fast) return null; &#x2F;&#x2F;如果快指针为空，则证明该链表没有环路
-
-ListNode*p &#x3D; head;
-ListNode*q &#x3D; fast;
-while(p!&#x3D;q)&#123;
-  p&#x3D;p-&gt;next;
-  q&#x3D;q-&gt;next;
-&#125;
-return p;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h1 id="字符串匹配"><a href="#字符串匹配" class="headerlink" title="字符串匹配"></a>字符串匹配</h1>]]></content>
-      <tags>
-        <tag>posts</tag>
       </tags>
   </entry>
   <entry>
@@ -1720,6 +1583,261 @@ return p;<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
 </li>
 </ul>
 </li>
+</ol>
+]]></content>
+      <tags>
+        <tag>posts</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法</title>
+    <url>/2023/09/18/%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h1><p><a href="https://leetcode.cn/problems/linked-list-cycle-ii/">1.循环链表出口问题</a></p>
+<blockquote>
+<p>题目描述：给出一个链表的头节点head，返回链表开始入环的第一个节点，没有则返回nul。</p>
+</blockquote>
+<p>实例：</p>
+<img src="/2023/09/18/%E7%AE%97%E6%B3%95/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.png" class="" title="实例">
+
+<blockquote>
+<p>输入：head &#x3D; [3,2,0,-4], pos &#x3D; 1<br>输出：返回索引为 1 的链表节点<br>解释：链表中有一个环，其尾部连接到第二个节点。</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>​	我们可以定义两个指针，一个慢指针slow每次走一格，一个快指针fast每次走两格。如果链表存在环路则fast一定会追上slow。如果fast经过一定的循环变为NULL则该链表不存在环路。</p>
+<p>​	如果链表中存在环路，那么设从头节点到环路入口的长度为x，设从环路入口到快慢节点相遇的位置长度为y，环中剩下的长度为z。<br>$$<br>slow指针走的距离&#x3D;x+y<br>$$</p>
+<p>$$<br>fast指针走的距离&#x3D;x+y+n(y+z)<br>$$</p>
+<p>​	又因为fast移动的速度是slow的两倍<br>$$<br>(x+y)*2&#x3D;x+y+n(y+z)<br>$$</p>
+<p>$$<br>x&#x3D;n(y+z)-y<br>$$</p>
+<p>$$<br>x&#x3D;(n-1)(y+z)+z<br>$$</p>
+<p>​	所以可以看出来，在进入环之前的长度，是N-1倍的环长加上相遇点到入口点的距离之外的距离。而且n必定大于等于1。因为快慢节点相遇之前，快节点肯定要先在环中跑一圈才能遇到slow。</p>
+<p>​	如果此时我们设置两个指针分别从head和入口点每次跳动一格的距离，那么下次相遇的时候必定是在入口点。下面给出具体的代码。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">if(!head) return head; &#x2F;&#x2F;如果头节点为空，直接返回
+ListNode* fast &#x3D; head; &#x2F;&#x2F;让快慢节点从头开始
+ListNode* slow &#x3D; head;
+while(fast&amp;&amp;slow)&#123;
+  slow &#x3D; slow-&gt;next;
+  if(fast-&gt;next) fast &#x3D; fast-&gt;next-&gt;next;
+  if(fast&#x3D;&#x3D;slow) break;
+&#125;
+
+if(!fast) return null; &#x2F;&#x2F;如果快指针为空，则证明该链表没有环路
+
+ListNode*p &#x3D; head;
+ListNode*q &#x3D; fast;
+while(p!&#x3D;q)&#123;
+  p&#x3D;p-&gt;next;
+  q&#x3D;q-&gt;next;
+&#125;
+return p;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h1 id="字符串匹配"><a href="#字符串匹配" class="headerlink" title="字符串匹配"></a>字符串匹配</h1>]]></content>
+      <tags>
+        <tag>posts</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>科软高级软件工程课堂问答</title>
+    <url>/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/</url>
+    <content><![CDATA[<ol>
+<li>软件危机解决了吗？为什么？</li>
+</ol>
+<blockquote>
+<ol>
+<li>首先我们要理解软件危机产生的原因是由于”无法满足社会发展的需要”导致的</li>
+<li>软件危机包含了两方面的问题：一、如何开发软件，以满足不断增长，日趋复杂的需求。二、如何维护数量不断膨胀的软件产品。</li>
+<li>综合上面两点原因，我认为软件危机并没有解决。因为我们的社会时时刻刻在发生着变化，这就需要我们的软件要不断的就行更新迭代，同时还要不断的处理软件运行时出现的各种各样的BUG。所以软件危机并没有真正的解决。</li>
+</ol>
+</blockquote>
+<ol start="2">
+<li>工程化软件开发与编程之间可以直接画等号吗？不编程也可以实现软件开发？（例如我是项目经理）</li>
+</ol>
+<blockquote>
+<ol>
+<li>不可以直接画等号，因为工程化软件开发是开发出高质量的软件产品，满足用户需求，提高软件开发效率和可维护性。而编程仅仅指的是代码编写的阶段（即coding的过程）。</li>
+<li>不编程也可以实现软件的开发。在软件开发中，编程只是其中的一个环节。对于项目经理来说只需要带领团队做好需求分析、搭建好项目的整体框架等内容即可，不需要进行编程。</li>
+</ol>
+</blockquote>
+<ol start="3">
+<li>改变软件工程的七个关键因素，那七个？每个因素带来了哪些改变？以及新的因素有哪些？并带来了哪些影响</li>
+</ol>
+<blockquote>
+<p>Wasserman 于1996年提出了七个该改变软件工程的关键因素：</p>
+<ol>
+<li>交付时间的重要性（现在的软件交付时间是以小时来进行衡量的，而原来的软件交付时间是以月甚至年来进行衡量）</li>
+<li>计算行业经济的变化趋势（目前计算机行业是蓬勃发展的时代，有着大量的资金支持。相较于之前，计算机主要运用于军工领域，缺乏活力和资金支持 ）</li>
+<li>功能强大的桌面运算（目前的主流的系统为了方便大众的应用，都配备了优美且边界的图形界面。但是原来的计算机都是通过命令行来进行操作的，只有专业的计算机领域人员和数学相关人员来可以进行操作）</li>
+<li>互联网络（目前全世界的海量的PC都通过互联网连接在一起，每个人可以时时的分享自己的数据。但是之前的计算主要应用于军工，互联性不是很高）</li>
+<li>面向对象的技术（随着时间的推移，面向对象的技术出现，更加有利于目前的欢迎。但是原来的软件工程更加的注重过程）</li>
+<li>图形用户界面（我觉得这个和第三点很相似）</li>
+<li>瀑布模型的不可预知性（因为瀑布模型需要先进行分析，然后在根据分析出的需求。但是当中途用户需要更改需求时，瀑布模型就会不知道该如何做）</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>除了wasserman提出的因素外我还想到了一下两点因素：</p>
+<ol>
+<li>新技术和工具：不断涌现的新技术、开发工具和框架可以改变软件工程实践。例如，云计算、大数据、人工智能和区块链等技术的发展对软件开发产生了深远影响，鼓励开发人员采用新方法和工具。</li>
+<li>开发方法论：新的开发方法论和方法，如敏捷开发、DevOps、微服务架构等，已经改变了软件开发的方式。这些方法鼓励更快的迭代、更紧密的合作和更高效的交付。</li>
+</ol>
+</blockquote>
+<ol start="4">
+<li><p>超越的观点和用户的观点都是不可取的，要使用制造的观点和产品的观点。用户是在末端进行评价，这时已经不能够再改变产品。</p>
+<blockquote>
+<ol>
+<li>超越的观点：质量是可以背认识而不能被定义的。（如果质量只能够被认识那么就不会有好坏之分，又何谈软件是否是一个好软件呢？）</li>
+<li>用户的观点：因为用户是在开发完成之后才能进行质量检测，但是此时已经开发完毕，不能够对产品再次进行修改</li>
+<li>制造的观点：质量是与需求说明的一致</li>
+<li>产品的观点：质量是鱼产品的特性相联系的</li>
+<li>基于价值的观点：质量决定于顾客愿意支付的金额</li>
+</ol>
+</blockquote>
+</li>
+<li><p>系统的分析方法有哪些步骤？<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-24%2016.45.13-8164097.png" class=""></p>
+</li>
+<li><p>软工与计科的区别的是什么？</p>
+<blockquote>
+<p>计算机科学：研究计算机相关的理论</p>
+<p>软件工程：把计算机技术看成工具，用以解决问题</p>
+<p>就像老师上课讲的工程学位和工学学位的区别一样，一个是进行理论研究，产出新的idea、新的方法，而软工是去进行这些内容的实现和使用。一个偏理论，一个偏实践</p>
+</blockquote>
+</li>
+<li><p>软件开发的三个阶段：传统、敏捷开发、开发运维一体化（自己对应ppt去看）</p>
+<blockquote>
+<ol>
+<li>上世纪90年代，“软件过程也是软件”以及开发优秀软件过程的重要性的到广泛认同（卡耐基梅隆大学先后提出了软件开发能力成熟度模型CMM，用户评估和改进软件过程，后来发展为CMMI）</li>
+<li>进入本世纪00年代，敏捷开发的思想成为主流（人们更加关注快速的开发和交付书对，而传统的软件过程过度强调计划，很难适应目前的需求）</li>
+<li>进入本世纪10年代后，开发韵味一体化成为主流（大量软件开发需求朝着快速、易变的方向发展，敏捷的思想和实践进入运维领域。打破了开发和运维的界限，实现了从开发到运维的快速反应）</li>
+</ol>
+</blockquote>
+</li>
+<li><p>关键路径是不是活动的最优选择？</p>
+<blockquote>
+<p>首先我们要理解什么是关键路径：</p>
+<p>关键路径是指在关键路径上的活动是不可被忽视的活动，他们对于整个项目的工期有着直接的影响。但是关键路径上的活动并不一定就是最终要的活动，也不一定是最优的选择。</p>
+</blockquote>
+</li>
+<li><p>用自己的理解说一下软件生命周期和软件过程的理解（对软件过程可以从个体、整体和工程的视角的进行观察，例如：程序员、项目经理和架构师）</p>
+<blockquote>
+<ol>
+<li>软件生命周期：指软件从开始到结束的整个过程，包括规划、开发、测试、部署和维护等阶段，描述了软件的整体状态和变化。</li>
+<li>软件过程：软件过程是指软件开发中所执行的一系列活动、动作和任务的集合。</li>
+</ol>
+<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-25%2011.35.00-8205039.png" class="">
+
+<p>我们可以从上面这三个层次来理解软件过程</p>
+</blockquote>
+</li>
+<li><p>要知道传统开发模式的三个时期和八个阶段是什么？</p>
+<blockquote>
+<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-25%2011.39.14-8205177.png" class="">
+</blockquote>
+</li>
+<li><p>瀑布模型的优缺点？（最好看看课本和课件上各种模型的优缺点）</p>
+<blockquote>
+<p>优点：</p>
+<ol>
+<li>软件生命周期模型，使软件开发过程可以在分析、设计、编码、测试和维护的框架下进行。</li>
+<li>软件开发过程具有系统性、可控性，克服了软件开发的随意性。</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>项目开始阶段用户很难精确的提出产品需求，随着客户对系统的深入理解，修改需求会十分常见，但是瀑布模型对于需求的修改会推到之前的所有工资重新开始，会导致耗费大量的人力物力做无用功。</li>
+<li>项目开发晚期才能得到程序的运行版本，这个时候软件需求和开发中的错误会造成巨大的代价。</li>
+<li>采用线性模型组织项目开发经常发生开发小组人员“堵塞状态”，特别是项目的开始和结束的阶段。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>人的认知是螺旋上升的，所以就可以看出演化模型螺旋形状的合理性。</p>
+</li>
+<li><p>传统强调物性、现代强调人性</p>
+</li>
+<li><p>RUP的定义：用例驱动、以体系结构为核心、迭代及增量的软件工程框架，由UML方法和工具支持。</p>
+</li>
+<li><p>请描述一下RUP的可伸缩性，举个例子说明？（可伸缩就是在瀑布和敏捷之间的调节）</p>
+</li>
+<li><p>RUP是否是每个阶段都是全过程的，构建阶段是否是只需要写代码？如果不是，那请问还要做什么？如果也需要做需求，那需要做什么样的需求？</p>
+</li>
+<li><p>敏捷的核心思想：可执行的最大价值和人</p>
+</li>
+<li><p>敏捷开发的四个原则：</p>
+</li>
+</ol>
+<ul>
+<li>人大于物</li>
+<li>软件大于文档</li>
+<li>合作大于谈判</li>
+<li>人的认知时间在两周之内，所以相应变化也需要在两周之内（即敏捷的增量迭代需要短时间内的开发，这个就是相应变化胜过遵循计划）</li>
+</ul>
+<ol start="19">
+<li><p>敏捷的12条原则</p>
+<blockquote>
+<ol>
+<li>我们的最高优先级是持续不断地、及早地交付</li>
+</ol>
+<p>有价值的软件来使客户满意</p>
+<ol start="2">
+<li>拥抱变化，即使是在项目开发的后期，愿意为</li>
+</ol>
+<p>了客户的竞争优势而采取变化</p>
+<ol start="3">
+<li>经常地交付可工作的软件，相隔几星期或一两</li>
+</ol>
+<p>个月，倾向于采取较短的周期</p>
+<ol start="4">
+<li><p>业务人员和开发人员在整个过程中紧密合作</p>
+</li>
+<li><p>围绕着被激励的个体构建项目，为个体提供所</p>
+</li>
+</ol>
+<p>需的环境和支持，给予信任，从而达成目标</p>
+<ol start="6">
+<li>在团队内和团队间沟通信息的最有效和最高效</li>
+</ol>
+<p>的方式是面对面的交流</p>
+<ol start="7">
+<li><p>可工作的软件是衡量进度的首要标准</p>
+</li>
+<li><p>倡导可持续开发，项目发起者、开发人员和</p>
+</li>
+</ol>
+<p>用户应该维持一个可持续的步调</p>
+<ol start="9">
+<li>持续地追求技术卓越和良好设计，可以提高</li>
+</ol>
+<p>敏捷性</p>
+<ol start="10">
+<li><p>以简洁为本，它是减少不必要工作的艺术</p>
+</li>
+<li><p>最好的体系结构、需求和设计是从自组织的</p>
+</li>
+</ol>
+<p>团队中涌现出来的</p>
+<ol start="12">
+<li>团队定期地反思如何变得更加高效，并相应</li>
+</ol>
+<p>地调整自身的行为</p>
+</blockquote>
+</li>
+<li><p>测试驱动开发的优点：</p>
+</li>
+</ol>
+<ul>
+<li>操作正确性，按照用户story，符合story的需求</li>
+<li>不同的观察点</li>
+<li>解除软件的耦合性</li>
+<li>有利于改变软件的体系结构</li>
+</ul>
+<ol start="21">
+<li>怎么理解这个内容？（我们在进行极限编程时只需要使用其中的一点就是属于极限编程）<img src="/2023/10/24/%E7%A7%91%E8%BD%AF%E9%AB%98%E7%BA%A7%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E5%A0%82%E9%97%AE%E7%AD%94/%E6%88%AA%E5%B1%8F2023-10-24%2017.07.12-8164113.png" class=""></li>
+<li>表面的需求和真实的需求？（挖掘真正的需求、细化需求）</li>
+<li>什么是需求和需求工程？（需求工程：课件上有）</li>
+<li>银弹问题（即没有解决问题一劳永逸的方法：No sliver Bullet）</li>
+<li>工程实践中会用到7中方法中的哪些方法？</li>
+<li>请结合自己的工程实践说明一下需求导出的过程？</li>
+<li>对三个文档的理解：（初步“产品要求”文档、产品需求说明文档、SRS）</li>
+<li>结合抽象层次谈一下多态（老师使用的神行走于人世间，可以编程男人和女人）</li>
+<li>面向对象开发的过程模型和结构化开发的过程模型，从产出产品的角度来说明？</li>
+<li>过程论和对象论的区别？</li>
 </ol>
 ]]></content>
       <tags>
