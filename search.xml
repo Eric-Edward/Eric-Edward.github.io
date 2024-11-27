@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/2024/11/27/hello-world/"/>
+      <url>/2024/11/27/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></tbody></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></tbody></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></tbody></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></tbody></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>每日计划</title>
+      <link href="/2024/11/21/mei-ri-ji-hua/"/>
+      <url>/2024/11/21/mei-ri-ji-hua/</url>
+      
+        <content type="html"><![CDATA[<h3 id="2024-11-21"><a href="#2024-11-21" class="headerlink" title="2024.11.21"></a>2024.11.21</h3><blockquote><ul><li>完成告警源任务分派、入库和监听执行（还剩监听未做完）</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容(未做完)</li></ul></blockquote><h3 id="2024-11-22"><a href="#2024-11-22" class="headerlink" title="2024.11.22"></a>2024.11.22</h3><blockquote><ul><li>完成告警源任务监听功能</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容（只完成了RAG部分）</li></ul></blockquote><h3 id="2024-11-22-1"><a href="#2024-11-22-1" class="headerlink" title="2024.11.22"></a>2024.11.22</h3><blockquote><ul><li>完成告警源任务监听功能</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容（要开始系统任务和系统概要设计了，参考文献和概要也要完成了）</li></ul></blockquote><h3 id="2024-11-25"><a href="#2024-11-25" class="headerlink" title="2024.11.25"></a>2024.11.25</h3><blockquote><ul><li>告警源任务监听功能</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容（要开始系统任务和系统概要设计了，参考文献和概要也要完成了）</li></ul></blockquote><h3 id="2024-11-26"><a href="#2024-11-26" class="headerlink" title="2024.11.26"></a>2024.11.26</h3><blockquote><ul><li>告警源任务监听功能（没完成，卡bug）</li><li>算法3题</li><li>论文今天完成了系统需求分析</li></ul></blockquote><h3 id="2024-11-27"><a href="#2024-11-27" class="headerlink" title="2024.11.27"></a>2024.11.27</h3><blockquote><ul><li>告警源任务监听功能（仅剩下模型信息保存的内容量了）</li><li>算法3题</li><li>论文要完成系统概要设计的部分（如何只是单纯的写字感觉还是挺快的）</li></ul></blockquote>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 计划 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>hexo搭建流程</title>
+      <link href="/2024/11/15/hexo-da-jian-liu-cheng/"/>
+      <url>/2024/11/15/hexo-da-jian-liu-cheng/</url>
+      
+        <content type="html"><![CDATA[<h1 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h1><h2 id="Hexo下载"><a href="#Hexo下载" class="headerlink" title="Hexo下载"></a><strong>Hexo下载</strong></h2><blockquote><p>npm install hexo</p></blockquote><h2 id="Github创建仓库"><a href="#Github创建仓库" class="headerlink" title="Github创建仓库"></a><strong>Github创建仓库</strong></h2><p>仓库名称应为<code>username.github.io</code><br>例如: <code>Eric-Edward.github.io</code></p><h2 id="Github-Pages部署"><a href="#Github-Pages部署" class="headerlink" title="Github Pages部署"></a><strong>Github Pages部署</strong></h2><p>因为作者想要在多台电脑上编写和发布文章，所以这里写下一种实现的方法。</p><ul><li>创建两个仓库<code>username.github.io</code>(public)和<code>source</code>(private),分别用于github pages构建部署和存储整个项目的源码和资源。</li><li>使用hexo-deploy-git进行一键部署，在hexo的<code>_config.yml</code>中进行如下配置<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">'git'</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">username.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">extend_dirs:</span> <span class="string">.github</span>  <span class="comment">#这里是告诉git上传Github Action构建时使用的工作流文件workflows/jekyll-gp-pages.yml(也可以使用其它的github pages的构建)</span></span><br></pre></td></tr></tbody></table></figure></li><li>在源码项目中进行如下配置<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里的配置是将源码推送到<span class="built_in">source</span>的私人库，这样就可以保护我们的代码是安全的</span></span><br><span class="line">git remote add origin 你的source仓库</span><br><span class="line">git add .</span><br><span class="line">git commit -m ''</span><br><span class="line">git push origin master</span><br></pre></td></tr></tbody></table></figure></li></ul><h2 id="多PC使用"><a href="#多PC使用" class="headerlink" title="多PC使用"></a><strong>多PC使用</strong></h2><ol><li>拉取<code>source</code>仓库的内容<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone xxx  # git pull origin xxx(项目已经存在)</span><br></pre></td></tr></tbody></table></figure></li><li>编写</li><li>hexo部署<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></tbody></table></figure></li><li>推送source源码<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add . &amp;&amp; git commit -m '' &amp;&amp; git push origin master </span><br></pre></td></tr></tbody></table></figure></li></ol><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>通过，将代码和需要部署的静态资源分成两个库来存储就可以实现在多台PC间编辑的目的。<br>同时也避免了将代码和静态资源放在同一个仓库中，秘钥等私密信息泄露的风险。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Algorithm</title>
+      <link href="/2024/11/15/algorithm/"/>
+      <url>/2024/11/15/algorithm/</url>
+      
+        <content type="html"><![CDATA[<h1 id="算法之旅"><a href="#算法之旅" class="headerlink" title="算法之旅"></a>算法之旅</h1>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+            <tag> leetcode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
