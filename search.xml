@@ -4,13 +4,19 @@
   
     
     <entry>
-      <title>Hello World</title>
-      <link href="/2024/11/27/hello-world/"/>
-      <url>/2024/11/27/hello-world/</url>
+      <title>喜欢的诗词</title>
+      <link href="/2024/12/04/poetry/"/>
+      <url>/2024/12/04/poetry/</url>
       
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></tbody></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></tbody></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></tbody></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></tbody></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+        <content type="html"><![CDATA[<pre><code>金车欲上怯东风排云见月醉酒空独自仙姿羞半吐冰瓷露白借微红</code></pre><p>这首诗是《知否》中顾廷烨求取明兰时所作的催妆诗。表达了在追求想要的事物时的犹犹豫豫。</p>]]></content>
       
       
+      
+        <tags>
+            
+            <tag> 诗词 </tag>
+            
+        </tags>
       
     </entry>
     
@@ -21,7 +27,7 @@
       <link href="/2024/11/21/mei-ri-ji-hua/"/>
       <url>/2024/11/21/mei-ri-ji-hua/</url>
       
-        <content type="html"><![CDATA[<h3 id="2024-11-21"><a href="#2024-11-21" class="headerlink" title="2024.11.21"></a>2024.11.21</h3><blockquote><ul><li>完成告警源任务分派、入库和监听执行（还剩监听未做完）</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容(未做完)</li></ul></blockquote><h3 id="2024-11-22"><a href="#2024-11-22" class="headerlink" title="2024.11.22"></a>2024.11.22</h3><blockquote><ul><li>完成告警源任务监听功能</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容（只完成了RAG部分）</li></ul></blockquote><h3 id="2024-11-22-1"><a href="#2024-11-22-1" class="headerlink" title="2024.11.22"></a>2024.11.22</h3><blockquote><ul><li>完成告警源任务监听功能</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容（要开始系统任务和系统概要设计了，参考文献和概要也要完成了）</li></ul></blockquote><h3 id="2024-11-25"><a href="#2024-11-25" class="headerlink" title="2024.11.25"></a>2024.11.25</h3><blockquote><ul><li>告警源任务监听功能</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容（要开始系统任务和系统概要设计了，参考文献和概要也要完成了）</li></ul></blockquote><h3 id="2024-11-26"><a href="#2024-11-26" class="headerlink" title="2024.11.26"></a>2024.11.26</h3><blockquote><ul><li>告警源任务监听功能（没完成，卡bug）</li><li>算法3题</li><li>论文今天完成了系统需求分析</li></ul></blockquote><h3 id="2024-11-27"><a href="#2024-11-27" class="headerlink" title="2024.11.27"></a>2024.11.27</h3><blockquote><ul><li>告警源任务监听功能（仅剩下模型信息保存的内容量了）</li><li>算法3题<br>-论文要完成系统概要设计的部分（如何只是单纯的写字感觉还是挺快的）</li></ul></blockquote><h3 id="2024-12-2"><a href="#2024-12-2" class="headerlink" title="2024.12.2"></a>2024.12.2</h3><blockquote><ul><li>告警源任务监听功能（今天尽力完成soc交互的部分，包含创建、更新、停止等动作）</li><li>算法3题</li><li>估计要去医院看病了</li></ul></blockquote>]]></content>
+        <content type="html"><![CDATA[<h3 id="2024-11-21"><a href="#2024-11-21" class="headerlink" title="2024.11.21"></a>2024.11.21</h3><blockquote><ul><li>完成告警源任务分派、入库和监听执行（还剩监听未做完）</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容(未做完)</li></ul></blockquote><h3 id="2024-11-22"><a href="#2024-11-22" class="headerlink" title="2024.11.22"></a>2024.11.22</h3><blockquote><ul><li>完成告警源任务监听功能</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容（只完成了RAG部分）</li></ul></blockquote><h3 id="2024-11-22-1"><a href="#2024-11-22-1" class="headerlink" title="2024.11.22"></a>2024.11.22</h3><blockquote><ul><li>完成告警源任务监听功能</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容（要开始系统任务和系统概要设计了，参考文献和概要也要完成了）</li></ul></blockquote><h3 id="2024-11-25"><a href="#2024-11-25" class="headerlink" title="2024.11.25"></a>2024.11.25</h3><blockquote><ul><li>告警源任务监听功能</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容（要开始系统任务和系统概要设计了，参考文献和概要也要完成了）</li></ul></blockquote><h3 id="2024-11-26"><a href="#2024-11-26" class="headerlink" title="2024.11.26"></a>2024.11.26</h3><blockquote><ul><li>告警源任务监听功能（没完成，卡bug）</li><li>算法3题</li><li>论文今天完成了系统需求分析</li></ul></blockquote><h3 id="2024-11-27"><a href="#2024-11-27" class="headerlink" title="2024.11.27"></a>2024.11.27</h3><blockquote><ul><li>告警源任务监听功能（仅剩下模型信息保存的内容量了）</li><li>算法3题<br>-论文要完成系统概要设计的部分（如何只是单纯的写字感觉还是挺快的）</li></ul></blockquote><h3 id="2024-12-2"><a href="#2024-12-2" class="headerlink" title="2024.12.2"></a>2024.12.2</h3><blockquote><ul><li>告警源任务监听功能（今天尽力完成soc交互的部分，包含创建、更新、停止等动作）</li><li>算法3题</li><li>今天完成任务，明天就可以请假了</li></ul></blockquote><h3 id="2024-12-3"><a href="#2024-12-3" class="headerlink" title="2024.12.3"></a>2024.12.3</h3><blockquote><ul><li>告警任务完成昨天的测试内容，并且将plugins区分为2块（ucloud和office）并且完成本地测试</li><li>算法3题</li><li>今天完成任务，明天就可以请假了</li></ul></blockquote><h3 id="2024-12-4"><a href="#2024-12-4" class="headerlink" title="2024.12.4"></a>2024.12.4</h3><blockquote><ul><li>告警任务完成测试环境的测试、debug</li><li>算法3题</li><li>java学习完异常处理</li><li>erpc开始搞server的内容（至少这部分内容要了解，不然面试时被问就GG）</li></ul></blockquote>]]></content>
       
       
       
