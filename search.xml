@@ -8,7 +8,7 @@
       <link href="/2024/12/24/chang-jian-ji-zhu-zhan-pei-zhi/"/>
       <url>/2024/12/24/chang-jian-ji-zhu-zhan-pei-zhi/</url>
       
-        <content type="html"><![CDATA[<h3 id="Gradle配置代理"><a href="#Gradle配置代理" class="headerlink" title="Gradle配置代理"></a>Gradle配置代理</h3><p>这里分别配置http、https和socks。让Gradle的流量通过clash达到下载响应包的目的</p><blockquote><p>systemProp.http.proxyHost=127.0.0.1<br>systemProp.http.proxyPort=7890<br>systemProp.https.proxyHost=127.0.0.1<br>systemProp.https.proxyPort=7890<br>systemProp.socks.proxyHost=127.0.0.1<br>systemProp.socks.proxyPort=7890</p></blockquote>]]></content>
+        <content type="html"><![CDATA[<h3 id="Gradle配置代理"><a href="#Gradle配置代理" class="headerlink" title="Gradle配置代理"></a>Gradle配置代理</h3><p>这里分别配置http、https和socks。让Gradle的流量通过clash达到下载响应包的目的。<br><br>以下内容在项目的gradle.properties文件中添加即可。</p><blockquote><p>systemProp.http.proxyHost=127.0.0.1<br>systemProp.http.proxyPort=7890<br>systemProp.https.proxyHost=127.0.0.1<br>systemProp.https.proxyPort=7890<br>systemProp.socks.proxyHost=127.0.0.1<br>systemProp.socks.proxyPort=7890</p></blockquote>]]></content>
       
       
       
