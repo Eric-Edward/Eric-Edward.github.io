@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>问题</title>
+      <link href="/2025/02/02/wen-ti/"/>
+      <url>/2025/02/02/wen-ti/</url>
+      
+        <content type="html"><![CDATA[<h3 id="Golang"><a href="#Golang" class="headerlink" title="Golang"></a>Golang</h3><h2 id="内置类型"><a href="#内置类型" class="headerlink" title="内置类型"></a>内置类型</h2><ul><li>内置类型比较<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"fmt"</span></span><br><span class="line"><span class="string">"math"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> {</span><br><span class="line">a := <span class="string">"a"</span></span><br><span class="line">b := <span class="string">"b"</span></span><br><span class="line">c := a[<span class="number">0</span>] - b[<span class="number">0</span>]</span><br><span class="line">fmt.Println(a[<span class="number">0</span>], b[<span class="number">0</span>])</span><br><span class="line">abs := math.Abs(<span class="type">float64</span>(a[<span class="number">0</span>] - b[<span class="number">0</span>]))</span><br><span class="line">fmt.Println(abs, c)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line"><span class="comment">// 97 98</span></span><br><span class="line"><span class="comment">// 255 255</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure> 出现上述问题的原因是因为，在Go中，字符类型的底层是uint8类型的，而uint8类型的范围是0-255，所以当a[0] - b[0]时，会出现溢出的情况，导致结果为255。<br> 解决方法是使用int类型的变量来存储a[0]和b[0]的结果，然后再使用math.Abs()函数来获取绝对值。</li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> problem </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>每日计划2025</title>
       <link href="/2025/01/02/mei-ri-ji-hua-2025/"/>
       <url>/2025/01/02/mei-ri-ji-hua-2025/</url>
