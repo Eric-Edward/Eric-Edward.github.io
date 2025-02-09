@@ -393,7 +393,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    119
+                    147
                 </div>
                 
 
@@ -420,7 +420,7 @@
             <div id="articleContent">
                 <h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h3 id="1-interface-类型强转"><a href="#1-interface-类型强转" class="headerlink" title="1. interface{}类型强转"></a>1. interface{}类型强转</h3><figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">convert</span><span class="params">(i <span class="keyword">interface</span>{})</span></span> {</span><br><span class="line">    <span class="keyword">switch</span> m := i.(<span class="keyword">type</span>) {</span><br><span class="line">        <span class="keyword">case</span> <span class="type">string</span>:</span><br><span class="line">            fmt.Println(<span class="string">"string"</span>) <span class="comment">// 此时m的类型是string</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">int</span>:</span><br><span class="line">            fmt.Println(<span class="string">"int"</span>) <span class="comment">// 此时m的类型是int</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">float64</span>, <span class="type">bool</span>:</span><br><span class="line">            fmt.Println(<span class="string">"float64 or bool"</span>) <span class="comment">// 此时m的类型是interface{}</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>所以，在进行类型强转后，并且根据类型进行不同操作时。<br><br>如果case中有多个类型，那么此时的类型是interface{}。<br><br>如果是具体的类型，那么此时的类型是具体的类型。</p>
-
+<h3 id="2-语法糖"><a href="#2-语法糖" class="headerlink" title="2. 语法糖"></a>2. 语法糖</h3><figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[...]<span class="type">int</span>[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>] <span class="comment">// 代表长度为4的数组，其中...会自动推断长度</span></span><br></pre></td></tr></tbody></table></figure>
                 
             </div>
             <hr/>
