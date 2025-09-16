@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>每日一句</title>
+      <link href="/2025/07/15/mei-ri-yi-ju/"/>
+      <url>/2025/07/15/mei-ri-yi-ju/</url>
+      
+        <content type="html"><![CDATA[<p>2025/7/16<br><br><br><strong>《挪威的森林》书评</strong></p><blockquote><p>我之所以告诉你我喜欢你<br><br>并不是一定要和你在一起<br><br>只是希望今后的你<br><br>在经历人生低谷的时候<br><br>不要灰心<br><br>至少，曾经有人被你的魅力所吸引<br><br>曾经是，今后也会是<br><br><br><br>我从不觉得不计回报的爱<br><br>是一种卑微<br><br>其实这是世间难得的勇敢<br><br>我因你而雀跃着的心<br><br>是你赠予我最宝贵的礼物<br><br><br><br>真正的喜欢<br><br>就像是会爬到山巅<br><br>去靠近月亮<br><br>我并不是为了占有月亮<br><br>而是为了让今夜的月光<br><br>映在我身上</p></blockquote><p><br><br><br><br></p><p>2025/07/15<br><br><br><strong>有一种花叫向日葵，她的花语是：</strong></p><blockquote><p>入目无别人,私下皆是你<br><br>有你时，你是太阳，我目不斜视<br><br>无你时，我低头，谁也不见</p></blockquote><p><br><br><br><br></p><p>2025/07/14<br><br></p><blockquote><p>过度思考未来<br><br>无异于杀死现在的自己<br><br>言未出结局已演千百遍<br><br>身未动心中已过万重山<br><br>行未果假象苦难愁不展<br><br>事已毕过往仍在脑中演<br><br>生而悦己<br><br>而非困于他人<br><br>我与我周旋久宁作我<br></p></blockquote>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 文学 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Go面试八股</title>
+      <link href="/2025/02/09/go-mian-shi-ba-gu/"/>
+      <url>/2025/02/09/go-mian-shi-ba-gu/</url>
+      
+        <content type="html"><![CDATA[<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h3 id="1-interface-类型强转"><a href="#1-interface-类型强转" class="headerlink" title="1. interface{}类型强转"></a>1. interface{}类型强转</h3><figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">convert</span><span class="params">(i <span class="keyword">interface</span>{})</span></span> {</span><br><span class="line">    <span class="keyword">switch</span> m := i.(<span class="keyword">type</span>) {</span><br><span class="line">        <span class="keyword">case</span> <span class="type">string</span>:</span><br><span class="line">            fmt.Println(<span class="string">"string"</span>) <span class="comment">// 此时m的类型是string</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">int</span>:</span><br><span class="line">            fmt.Println(<span class="string">"int"</span>) <span class="comment">// 此时m的类型是int</span></span><br><span class="line">        <span class="keyword">case</span> <span class="type">float64</span>, <span class="type">bool</span>:</span><br><span class="line">            fmt.Println(<span class="string">"float64 or bool"</span>) <span class="comment">// 此时m的类型是interface{}</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>所以，在进行类型强转后，并且根据类型进行不同操作时。<br><br>如果case中有多个类型，那么此时的类型是interface{}。<br><br>如果是具体的类型，那么此时的类型是具体的类型。</p><h3 id="2-语法糖"><a href="#2-语法糖" class="headerlink" title="2. 语法糖"></a>2. 语法糖</h3><figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[...]<span class="type">int</span>[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>] <span class="comment">// 代表长度为4的数组，其中...会自动推断长度</span></span><br></pre></td></tr></tbody></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 八股 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>问题</title>
+      <link href="/2025/02/02/wen-ti/"/>
+      <url>/2025/02/02/wen-ti/</url>
+      
+        <content type="html"><![CDATA[<h3 id="Golang"><a href="#Golang" class="headerlink" title="Golang"></a>Golang</h3><h2 id="内置类型"><a href="#内置类型" class="headerlink" title="内置类型"></a>内置类型</h2><ul><li>内置类型比较<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"fmt"</span></span><br><span class="line"><span class="string">"math"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> {</span><br><span class="line">a := <span class="string">"a"</span></span><br><span class="line">b := <span class="string">"b"</span></span><br><span class="line">c := a[<span class="number">0</span>] - b[<span class="number">0</span>]</span><br><span class="line">fmt.Println(a[<span class="number">0</span>], b[<span class="number">0</span>])</span><br><span class="line">abs := math.Abs(<span class="type">float64</span>(a[<span class="number">0</span>] - b[<span class="number">0</span>]))</span><br><span class="line">fmt.Println(abs, c)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line"><span class="comment">// 97 98</span></span><br><span class="line"><span class="comment">// 255 255</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure> 出现上述问题的原因是因为，在Go中，字符类型的底层是uint8类型的，而uint8类型的范围是0-255，所以当a[0] - b[0]时，会出现溢出的情况，导致结果为255。<br> 解决方法是使用int类型的变量来存储a[0]和b[0]的结果，然后再使用math.Abs()函数来获取绝对值。</li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> problem </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>每日计划2025</title>
+      <link href="/2025/01/02/mei-ri-ji-hua-2025/"/>
+      <url>/2025/01/02/mei-ri-ji-hua-2025/</url>
+      
+        <content type="html"><![CDATA[<p>###2025.2.18</p><blockquote><ul><li><input disabled="" type="checkbox"> 小林coding看完MySQL的内容，Redis开始看前两章的内容</li><li><input disabled="" type="checkbox"> hot100完成贪心+动态规划的部分</li><li><input disabled="" type="checkbox"> 今天把Redis和多线程的优化程度搞出来就可以写到简历上了。晚上回去开始投递简历</li></ul></blockquote><p>###2025.2.13</p><blockquote><ul><li><input disabled="" type="checkbox"> 搞清楚为什么加入了Redis之后，效率并没有很大的提升</li><li><input disabled="" type="checkbox"> hot100完成二叉树的部分</li><li><input disabled="" type="checkbox"> 面试内容</li></ul></blockquote><p>###2025.2.12</p><blockquote><ul><li><input disabled="" type="checkbox"> 完成Redis部分的代码逻辑</li><li><input disabled="" type="checkbox"> 力扣刷题</li><li><input disabled="" type="checkbox"> 准备面试内容</li></ul></blockquote><p>###2025.2.11星期二</p><blockquote><ul><li><input disabled="" type="checkbox"> Golang面试题目看一半（<a href="https://golangguide.top/golang/%E9%9D%A2%E8%AF%95%E9%A2%98/2.Go%E8%BF%9B%E9%98%B6.html%EF%BC%89">https://golangguide.top/golang/%E9%9D%A2%E8%AF%95%E9%A2%98/2.Go%E8%BF%9B%E9%98%B6.html）</a></li><li><input disabled="" type="checkbox"> 搜索如何确定Channel和Goroutine数量之间关系才能保证系统的性能最高</li><li><input disabled="" type="checkbox"> Hot100今天要进行到一半</li></ul></blockquote><p>###2025.1.27星期一</p><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 回家</li></ul></blockquote><p>###2025.1.26星期日</p><blockquote><ul><li><input checked="" disabled="" type="checkbox"> ip port test将多个文件合并到一起</li><li><input disabled="" type="checkbox"> 力扣题目10道</li></ul></blockquote><p>###2025.1.23星期四</p><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 完成风险分析接口的调整（product_line）</li><li><input disabled="" type="checkbox"> ip port test(遇到一个问题，两个excel文件无法合并到一起)</li><li><input disabled="" type="checkbox"> 蜜罐</li><li><input disabled="" type="checkbox"> 大文件上传处理</li></ul></blockquote><p>###2025.1.22星期三</p><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 先完成AIGC的bug修复</li><li><input disabled="" type="checkbox"> ip port连通性测试</li><li><input disabled="" type="checkbox"> 蜜罐点位离线问题</li><li><input disabled="" type="checkbox"> soc大文件上传时，上下文超时情况的处理</li></ul></blockquote><h3 id="2025-1-21星期二"><a href="#2025-1-21星期二" class="headerlink" title="2025.1.21星期二"></a>2025.1.21星期二</h3><blockquote><ul><li><input disabled="" type="checkbox"> 完成安全那边的ip port connectivity test</li><li><input disabled="" type="checkbox"> 今天完成大帅hids的覆盖式推送，测试完成。</li><li><input disabled="" type="checkbox"> 把除多线程处理的任务全部结束</li><li><input checked="" disabled="" type="checkbox"> jump out comfort zone and test some interesting things</li></ul></blockquote><h3 id="2025-1-20星期一"><a href="#2025-1-20星期一" class="headerlink" title="2025.1.20星期一"></a>2025.1.20星期一</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 修改完所有的bug并且加上所有的新特性</li><li><input disabled="" type="checkbox"> 按时上床睡觉，今天回去9点之前可以打游戏；洗漱完之后就开始练琴，11：30吃褪黑素；12点准时睡觉</li><li><input checked="" disabled="" type="checkbox"> 如果有时间的话，刷一下力扣题目</li></ul></blockquote><h3 id="2025-1-15星期三"><a href="#2025-1-15星期三" class="headerlink" title="2025.1.15星期三"></a>2025.1.15星期三</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 修改完aigc无法入库的bug</li><li><input disabled="" type="checkbox"> Get outside and notice five things that are beautiful</li></ul></blockquote><h3 id="2025-1-14星期二"><a href="#2025-1-14星期二" class="headerlink" title="2025.1.14星期二"></a>2025.1.14星期二</h3><blockquote><ul><li>[ ]今天完成hids覆盖式推送</li><li>[x]今天上午完成论文的修改，下午直接交上。</li><li>[ ]完成之后开始sync-data接口</li><li>[x]Eat health food which really nourishes myself</li></ul></blockquote><h3 id="2025-1-13-星期一"><a href="#2025-1-13-星期一" class="headerlink" title="2025.1.13 星期一"></a>2025.1.13 星期一</h3><blockquote><ul><li><input disabled="" type="checkbox"> 开始修改sync-data接口(未开始)</li><li><input disabled="" type="checkbox"> 今天完成论文的修改（院审打回，只修改到了文献的部分）</li><li><input disabled="" type="checkbox"> Try a different route and see what i notice(未做)</li></ul></blockquote><h3 id="2025-1-10-星期五"><a href="#2025-1-10-星期五" class="headerlink" title="2025.1.10 星期五"></a>2025.1.10 星期五</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 完成HIDS服务有效性检测的收尾工作(做完了，现在测试环境跑一下看看)</li><li><input disabled="" type="checkbox"> 开始新接口的设置（多线程方式的aync-data）</li><li><input disabled="" type="checkbox"> 灵神滑动窗口</li><li><input disabled="" type="checkbox"> Thank someone you’re graceful to and tell them why</li></ul></blockquote><h3 id="2025-1-9-星期四"><a href="#2025-1-9-星期四" class="headerlink" title="2025.1.9 星期四"></a>2025.1.9 星期四</h3><blockquote><ul><li><input disabled="" type="checkbox"> 完成HIDS覆盖式推送(这个内容等待龙师傅确认)</li><li><input checked="" disabled="" type="checkbox"> 完成HIDS服务有效性检测（基本上完成了，还差Icron页面没有配置）</li><li><input disabled="" type="checkbox"> 灵神滑动窗口3题</li></ul></blockquote><h3 id="2025-1-8-星期三"><a href="#2025-1-8-星期三" class="headerlink" title="2025.1.8 星期三"></a>2025.1.8 星期三</h3><blockquote><ul><li><input disabled="" type="checkbox"> 完成HIDS覆盖式推送</li><li><input disabled="" type="checkbox"> 完成HIDS服务有效性检测</li><li><input disabled="" type="checkbox"> 灵神滑动窗口3题（可以先整理一下周末的考试题目）</li></ul></blockquote><h3 id="2025-1-7-星期二"><a href="#2025-1-7-星期二" class="headerlink" title="2025.1.7 星期二"></a>2025.1.7 星期二</h3><blockquote><ul><li><input disabled="" type="checkbox"> 完成HIDS覆盖式推送(这两个没有做，先完成AIGC项目的熟悉)</li><li><input disabled="" type="checkbox"> 完成HIDS服务有效性检测</li><li><input disabled="" type="checkbox"> 灵神滑动窗口3题（可以先整理一下周末的考试题目）（没时间做了）</li></ul></blockquote><h3 id="2025-1-6-星期一"><a href="#2025-1-6-星期一" class="headerlink" title="2025.1.6 星期一"></a>2025.1.6 星期一</h3><blockquote><ul><li>请假</li></ul></blockquote><h3 id="2025-1-3-星期五"><a href="#2025-1-3-星期五" class="headerlink" title="2025.1.3 星期五"></a>2025.1.3 星期五</h3><blockquote><ul><li><input disabled="" type="checkbox"> 算法继续刷</li></ul></blockquote><h3 id="2025-1-2-星期四"><a href="#2025-1-2-星期四" class="headerlink" title="2025.1.2 星期四"></a>2025.1.2 星期四</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 修改完vuln页面内容解析不匹配（这个是因为阿里云漏洞库添加反爬虫机制。所以，方案调整为RPA）</li><li><input checked="" disabled="" type="checkbox"> 算法继续刷题2道</li></ul></blockquote>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 计划 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>常见技术栈配置</title>
+      <link href="/2024/12/24/chang-jian-ji-zhu-zhan-pei-zhi/"/>
+      <url>/2024/12/24/chang-jian-ji-zhu-zhan-pei-zhi/</url>
+      
+        <content type="html"><![CDATA[<h3 id="Gradle配置代理"><a href="#Gradle配置代理" class="headerlink" title="Gradle配置代理"></a>Gradle配置代理</h3><p>这里分别配置http、https和socks。让Gradle的流量通过clash达到下载响应包的目的。<br><br>以下内容在项目的gradle.properties文件中添加即可。</p><blockquote><p>systemProp.http.proxyHost=127.0.0.1<br>systemProp.http.proxyPort=7890<br>systemProp.https.proxyHost=127.0.0.1<br>systemProp.https.proxyPort=7890<br>systemProp.socks.proxyHost=127.0.0.1<br>systemProp.socks.proxyPort=7890</p></blockquote>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>喜欢的诗词</title>
+      <link href="/2024/12/04/poetry/"/>
+      <url>/2024/12/04/poetry/</url>
+      
+        <content type="html"><![CDATA[<pre><code>金车欲上怯东风排云见月醉酒空独自仙姿羞半吐冰瓷露白借微红</code></pre><p>这首诗是《知否》中顾廷烨求取明兰时所作的催妆诗。表达了在追求想要的事物时的犹犹豫豫。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 诗词 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>每日计划</title>
+      <link href="/2024/11/21/mei-ri-ji-hua/"/>
+      <url>/2024/11/21/mei-ri-ji-hua/</url>
+      
+        <content type="html"><![CDATA[<h3 id="2024-12-31-星期二"><a href="#2024-12-31-星期二" class="headerlink" title="2024.12.31 星期二"></a>2024.12.31 星期二</h3><blockquote><ul><li><input disabled="" type="checkbox"> 完成之后总结celery的整体过程</li><li><input disabled="" type="checkbox"> 算法2题</li><li><input disabled="" type="checkbox"> neoforge看完Block和Item两个篇章，可以根据Mek来看</li></ul></blockquote><h3 id="2024-12-30-星期一"><a href="#2024-12-30-星期一" class="headerlink" title="2024.12.30 星期一"></a>2024.12.30 星期一</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 完成域名与网站描述的匹配</li><li><input disabled="" type="checkbox"> 完成之后总结celery的整体过程(这个内容后面还要结合celery的redis连接被关闭的问题来处理)</li><li><input disabled="" type="checkbox"> 算法2题</li><li><input disabled="" type="checkbox"> neoforge看完Block和Item两个篇章，可以根据Mek来看</li></ul></blockquote><h3 id="2024-12-27-星期五"><a href="#2024-12-27-星期五" class="headerlink" title="2024.12.27 星期五"></a>2024.12.27 星期五</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 使用脚本拉取全量的资产数据并将关键信息通过excel的形式导出来</li><li><input disabled="" type="checkbox"> 完成之后总结celery的整体过程</li><li><input checked="" disabled="" type="checkbox"> 算法2题</li><li><input checked="" disabled="" type="checkbox"> java今天搞完异常，异常完成之后直接开始neoforge的开发啦</li></ul></blockquote><h3 id="2024-12-26-星期四"><a href="#2024-12-26-星期四" class="headerlink" title="2024.12.26 星期四"></a>2024.12.26 星期四</h3><blockquote><ul><li><input disabled="" type="checkbox"> 今天要看完扫描办公网域名的整体逻辑并且开始加响应的逻辑（需求变更为脚本拉取全量数据）</li><li><input disabled="" type="checkbox"> 完成之后总结celery的整体过程</li><li><input checked="" disabled="" type="checkbox"> 算法2题</li><li><input disabled="" type="checkbox"> java今天搞完异常，异常完成之后直接开始neoforge的开发啦</li></ul></blockquote><h3 id="2024-12-25-星期三"><a href="#2024-12-25-星期三" class="headerlink" title="2024.12.25 星期三"></a>2024.12.25 星期三</h3><blockquote><ul><li><input disabled="" type="checkbox"> 今天问龙师傅要新的任务</li><li><input disabled="" type="checkbox"> 完成之后总结celery的整体过程</li><li><input checked="" disabled="" type="checkbox"> 算法2题</li><li><input disabled="" type="checkbox"> java今天搞完异常，异常完成之后直接开始neoforge的开发啦</li></ul></blockquote><h3 id="2024-12-24-星期二"><a href="#2024-12-24-星期二" class="headerlink" title="2024.12.24 星期二"></a>2024.12.24 星期二</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 处理linux|windows弱密码任务回调SOC端的处理（同时完成了分析中心-风险分析的接口替换）</li><li><input disabled="" type="checkbox"> 完成之后总结celery的整体过程</li><li><input checked="" disabled="" type="checkbox"> 算法2题（灵茶山大佬的题单）</li><li><input disabled="" type="checkbox"> java今天搞完异常（java异常搞到一半了）</li></ul></blockquote><h3 id="2024-12-23-星期一"><a href="#2024-12-23-星期一" class="headerlink" title="2024.12.23 星期一"></a>2024.12.23 星期一</h3><blockquote><ul><li><input disabled="" type="checkbox"> 完成linux|windows弱密码任务的回调处理</li><li><input disabled="" type="checkbox"> 学习一下celery执行的原理，并做好总结（今天必须总结一下，这个任务不能再拖了）</li><li><input disabled="" type="checkbox"> 提前开始准备面试的内容，算法、八股和项目（感觉这里完全可以直接冲八股，soc还是需要重新看一下的，整体的逻辑处理内容，对soc的整体有非常明确的了解）</li><li><input disabled="" type="checkbox"> 算法三题（hot100的内容，这个月必须完成）</li><li><input disabled="" type="checkbox"> java学习，今天完成面向对象编程的内容。（这里搞到了枚举类，今天看完异常处理的地方）</li></ul></blockquote><h3 id="2024-12-20"><a href="#2024-12-20" class="headerlink" title="2024.12.20"></a>2024.12.20</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 完成linux|windows弱密码的扫描任务。修改好具体的网页描述内容，今天可能还需要完成去除待确认的全量推送。</li><li><input disabled="" type="checkbox"> 学习一下celery执行的原理，并做好总结（尚未总结）</li><li><input disabled="" type="checkbox"> 提前开始准备面试的内容，算法、八股和项目（感觉这里完全可以直接冲八股，soc还是需要重新看一下的，整体的逻辑处理内容，对soc的整体有非常明确的了解）</li><li><input disabled="" type="checkbox"> 算法三题（hot100的内容，这个月必须完成）</li><li><input disabled="" type="checkbox"> java学习，今天完成面向对象编程的内容。（只完成到了静态字段和静态方法，还差很多）</li></ul></blockquote><h3 id="2024-12-19"><a href="#2024-12-19" class="headerlink" title="2024.12.19"></a>2024.12.19</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 开始linux|windows弱密码的扫描任务，今天要封装好响应的方法并且和龙师傅对完需要的字段</li><li><input disabled="" type="checkbox"> 学习一下celery执行的原理，并做好总结（尚未总结）</li><li><input disabled="" type="checkbox"> 提前开始准备面试的内容，算法、八股和项目（感觉这里完全可以直接冲八股，soc还是需要重新看一下的，整体的逻辑处理内容，对soc的整体有非常明确的了解）</li><li><input disabled="" type="checkbox"> 算法三题（hot100的内容，这个月必须完成）</li><li><input disabled="" type="checkbox"> java学习，今天完成面向对象编程的内容。（只完成到了静态字段和静态方法，还差很多）</li></ul></blockquote><h3 id="2024-12-18"><a href="#2024-12-18" class="headerlink" title="2024.12.18"></a>2024.12.18</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 今天完成蜜罐的测试，并且开始linux|windows弱密码的扫描任务(蜜罐的任务龙师傅接了)</li><li><input checked="" disabled="" type="checkbox"> 修改论文内容，今天修改完成，并提交。(等待老师审批)</li><li><input disabled="" type="checkbox"> 学习一下celery执行的原理，并做好总结（尚未总结）</li><li><input disabled="" type="checkbox"> 提前开始准备面试的内容，算法、八股和项目（感觉这里完全可以直接冲八股，soc还是需要重新看一下的，整体的逻辑处理内容，对soc的整体有非常明确的了解）</li><li><input disabled="" type="checkbox"> 算法三题（hot100的内容，这个月必须完成）</li></ul></blockquote><h3 id="2024-12-17"><a href="#2024-12-17" class="headerlink" title="2024.12.17"></a>2024.12.17</h3><blockquote><ul><li><input disabled="" type="checkbox"> 今天完成蜜罐的测试，并且开始linux|windows弱密码的扫描任务</li><li><input disabled="" type="checkbox"> 提前开始准备面试的内容，算法、八股和项目（感觉这里完全可以直接冲八股，soc还是需要重新看一下的，整体的逻辑处理内容，对soc的整体有非常明确的了解）</li><li><input disabled="" type="checkbox"> 算法三题（hot100的内容，这个月必须完成）</li></ul></blockquote><h3 id="2024-12-16"><a href="#2024-12-16" class="headerlink" title="2024.12.16"></a>2024.12.16</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 今天努力完成安全点位心跳的处理逻辑</li><li><input disabled="" type="checkbox"> 提前开始准备面试的内容，算法、八股和项目（感觉这里完全可以直接冲八股，soc还是需要重新看一下的，整体的逻辑处理内容，对soc的整体有非常明确的了解）</li><li><input disabled="" type="checkbox"> 算法三题（hot100的内容，这个月必须完成）</li></ul></blockquote><h3 id="2024-11-21"><a href="#2024-11-21" class="headerlink" title="2024.11.21"></a>2024.11.21</h3><blockquote><ul><li>完成告警源任务分派、入库和监听执行（还剩监听未做完）</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容(未做完)</li></ul></blockquote><h3 id="2024-11-22"><a href="#2024-11-22" class="headerlink" title="2024.11.22"></a>2024.11.22</h3><blockquote><ul><li>完成告警源任务监听功能</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容（只完成了RAG部分）</li></ul></blockquote><h3 id="2024-11-22-1"><a href="#2024-11-22-1" class="headerlink" title="2024.11.22"></a>2024.11.22</h3><blockquote><ul><li>完成告警源任务监听功能</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容（要开始系统任务和系统概要设计了，参考文献和概要也要完成了）</li></ul></blockquote><h3 id="2024-11-25"><a href="#2024-11-25" class="headerlink" title="2024.11.25"></a>2024.11.25</h3><blockquote><ul><li>告警源任务监听功能</li><li>算法3题</li><li>论文今天完成背景分析和意义等部分内容（要开始系统任务和系统概要设计了，参考文献和概要也要完成了）</li></ul></blockquote><h3 id="2024-11-26"><a href="#2024-11-26" class="headerlink" title="2024.11.26"></a>2024.11.26</h3><blockquote><ul><li>告警源任务监听功能（没完成，卡bug）</li><li>算法3题</li><li>论文今天完成了系统需求分析</li></ul></blockquote><h3 id="2024-11-27"><a href="#2024-11-27" class="headerlink" title="2024.11.27"></a>2024.11.27</h3><blockquote><ul><li>告警源任务监听功能（仅剩下模型信息保存的内容量了）</li><li>算法3题<br>-论文要完成系统概要设计的部分（如何只是单纯的写字感觉还是挺快的）</li></ul></blockquote><h3 id="2024-12-2"><a href="#2024-12-2" class="headerlink" title="2024.12.2"></a>2024.12.2</h3><blockquote><ul><li>告警源任务监听功能（今天尽力完成soc交互的部分，包含创建、更新、停止等动作）</li><li>算法3题</li><li>今天完成任务，明天就可以请假了</li></ul></blockquote><h3 id="2024-12-3"><a href="#2024-12-3" class="headerlink" title="2024.12.3"></a>2024.12.3</h3><blockquote><ul><li>告警任务完成昨天的测试内容，并且将plugins区分为2块（ucloud和office）并且完成本地测试</li><li>算法3题</li><li>今天完成任务，明天就可以请假了</li></ul></blockquote><h3 id="2024-12-4"><a href="#2024-12-4" class="headerlink" title="2024.12.4"></a>2024.12.4</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 告警任务完成测试环境的测试、debug(告警任务这里因为网络隔离的原因，先暂缓)</li><li><input disabled="" type="checkbox"> 算法3题</li><li><input disabled="" type="checkbox"> java学习完异常处理</li><li><input disabled="" type="checkbox"> erpc开始搞server的内容（至少这部分内容要了解，不然面试时被问就GG）</li></ul></blockquote><h3 id="2024-12-5"><a href="#2024-12-5" class="headerlink" title="2024.12.5"></a>2024.12.5</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 今天尽力完成soc镜像和soc的文件导出状态不匹配和其他问题（还剩2个问题没有解决）</li><li><input disabled="" type="checkbox"> 算法3题</li><li><input disabled="" type="checkbox"> java学习完异常处理</li><li><input disabled="" type="checkbox"> erpc开始搞server的内容（至少这部分内容要了解，不然面试时被问就GG）</li></ul></blockquote><h3 id="2024-12-6"><a href="#2024-12-6" class="headerlink" title="2024.12.6"></a>2024.12.6</h3><blockquote><ul><li><input disabled="" type="checkbox"> 今天尽力完成soc镜像和soc的文件导出状态不匹配和其他问题</li><li><input disabled="" type="checkbox"> 算法3题</li><li><input disabled="" type="checkbox"> java学习完异常处理</li><li><input disabled="" type="checkbox"> erpc开始搞server的内容（至少这部分内容要了解，不然面试时被问就GG）</li></ul></blockquote><h3 id="2024-12-9-2024-12-10-请假"><a href="#2024-12-9-2024-12-10-请假" class="headerlink" title="2024.12.9-2024.12.10 请假"></a>2024.12.9-2024.12.10 请假</h3><h3 id="2024-12-11"><a href="#2024-12-11" class="headerlink" title="2024.12.11"></a>2024.12.11</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 调环境</li></ul></blockquote><h3 id="2024-12-12"><a href="#2024-12-12" class="headerlink" title="2024.12.12"></a>2024.12.12</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 今天再问老师不能够进行上传的原因，把这件事情解决</li><li><input disabled="" type="checkbox"> 提前开始准备面试的内容，算法、八股和项目（感觉这里完全可以直接冲八股）</li><li><input disabled="" type="checkbox"> 算法三题</li><li><input checked="" disabled="" type="checkbox"> 问问龙师傅还有什么任务</li></ul></blockquote><h3 id="2024-12-13"><a href="#2024-12-13" class="headerlink" title="2024.12.13"></a>2024.12.13</h3><blockquote><ul><li><input checked="" disabled="" type="checkbox"> 给龙师傅总结一下rag的内容，能总结多少算多少</li><li><input disabled="" type="checkbox"> 提前开始准备面试的内容，算法、八股和项目（感觉这里完全可以直接冲八股）</li><li><input disabled="" type="checkbox"> 算法三题（hot100的内容，这个月必须完成）</li></ul></blockquote>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 计划 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>hexo搭建流程</title>
+      <link href="/2024/11/15/hexo-da-jian-liu-cheng/"/>
+      <url>/2024/11/15/hexo-da-jian-liu-cheng/</url>
+      
+        <content type="html"><![CDATA[<h1 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h1><h2 id="Hexo下载"><a href="#Hexo下载" class="headerlink" title="Hexo下载"></a><strong>Hexo下载</strong></h2><blockquote><p>npm install hexo</p></blockquote><h2 id="Github创建仓库"><a href="#Github创建仓库" class="headerlink" title="Github创建仓库"></a><strong>Github创建仓库</strong></h2><p>仓库名称应为<code>username.github.io</code><br>例如: <code>Eric-Edward.github.io</code></p><h2 id="Github-Pages部署"><a href="#Github-Pages部署" class="headerlink" title="Github Pages部署"></a><strong>Github Pages部署</strong></h2><p>因为作者想要在多台电脑上编写和发布文章，所以这里写下一种实现的方法。</p><ul><li>创建两个仓库<code>username.github.io</code>(public)和<code>source</code>(private),分别用于github pages构建部署和存储整个项目的源码和资源。</li><li>使用hexo-deploy-git进行一键部署，在hexo的<code>_config.yml</code>中进行如下配置<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">'git'</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">username.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">extend_dirs:</span> <span class="string">.github</span>  <span class="comment">#这里是告诉git上传Github Action构建时使用的工作流文件workflows/jekyll-gp-pages.yml(也可以使用其它的github pages的构建)</span></span><br></pre></td></tr></tbody></table></figure></li><li>在源码项目中进行如下配置<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里的配置是将源码推送到<span class="built_in">source</span>的私人库，这样就可以保护我们的代码是安全的</span></span><br><span class="line">git remote add origin 你的source仓库</span><br><span class="line">git add .</span><br><span class="line">git commit -m ''</span><br><span class="line">git push origin master</span><br></pre></td></tr></tbody></table></figure></li></ul><h2 id="多PC使用"><a href="#多PC使用" class="headerlink" title="多PC使用"></a><strong>多PC使用</strong></h2><ol><li>拉取<code>source</code>仓库的内容<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone xxx  # git pull origin xxx(项目已经存在)</span><br></pre></td></tr></tbody></table></figure></li><li>编写</li><li>hexo部署<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></tbody></table></figure></li><li>推送source源码<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add . &amp;&amp; git commit -m '' &amp;&amp; git push origin master </span><br></pre></td></tr></tbody></table></figure></li></ol><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>通过，将代码和需要部署的静态资源分成两个库来存储就可以实现在多台PC间编辑的目的。<br>同时也避免了将代码和静态资源放在同一个仓库中，秘钥等私密信息泄露的风险。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Algorithm</title>
+      <link href="/2024/11/15/algorithm/"/>
+      <url>/2024/11/15/algorithm/</url>
+      
+        <content type="html"><![CDATA[<h1 id="算法之旅"><a href="#算法之旅" class="headerlink" title="算法之旅"></a>算法之旅</h1>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+            <tag> leetcode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
